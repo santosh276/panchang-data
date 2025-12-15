@@ -1,10 +1,10 @@
-name: Sync Google Doc to Static File
+name: Sync & Clean Google Doc Data
 
 on:
   schedule:
-    # Run every hour (at minute 0)
+    # Runs every hour at minute 0
     - cron: '0 * * * *'
-  # Allow manual trigger button
+  # Allows you to click "Run workflow" manually
   workflow_dispatch:
 
 permissions:
@@ -13,20 +13,92 @@ permissions:
 jobs:
   update-calendar-data:
     runs-on: ubuntu-latest
+    
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Fetch Data from Google Doc
-        run: |
-          # REPLACE THE LINK BELOW WITH YOUR GOOGLE DOC '/pub' LINK
-          curl -L "https://docs.google.com/document/d/e/2PACX-1vQDexcd-amo5HoDI3CmBpRfwmmuYgrruS6WGG1cTxK3vJ4sdcYdebFAz4SKGG4H6dkSWSm5eBwHlXcH/pub" > calendar_data.txt
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
 
-      - name: Check for Changes and Commit
+      - name: Install JSDOM
+        run: npm install jsdom node-fetch
+
+      - name: Fetch and Clean Data
+        env:
+          # REPLACE THIS LINK WITH YOUR GOOGLE DOC '/pub' LINK
+          DOC_URL: "https://docs.google.com/document/d/e/2PACX-1vQDexcd-amo5HoDI3CmBpRfwmmuYgrruS6WGG1cTxK3vJ4sdcYdebFAz4SKGG4H6dkSWSm5eBwHlXcH/pub"
+        run: |
+          node -e "
+          const fs = require('fs');
+          const { JSDOM } = require('jsdom');
+
+          async function run() {
+            try {
+              console.log('Fetching Google Doc...');
+              const response = await fetch(process.env.DOC_URL);
+              if (!response.ok) throw new Error('Failed to fetch doc');
+              const html = await response.text();
+
+              console.log('Parsing and Cleaning HTML...');
+              const dom = new JSDOM(html);
+              const doc = dom.window.document;
+
+              // 1. Remove Unwanted Tags (CSS, JS, Meta)
+              const unwanted = doc.querySelectorAll('style, script, link, meta, title, noscript, svg');
+              unwanted.forEach(el => el.remove());
+
+              // 2. Remove Google Headers/Footers
+              const header = doc.querySelector('#header'); if(header) header.remove();
+              const footer = doc.querySelector('#footer'); if(footer) footer.remove();
+
+              // 3. Custom Text Extractor (Preserves Newlines)
+              function getText(node) {
+                // Text Node
+                if (node.nodeType === 3) return node.nodeValue;
+                // Element Node
+                if (node.nodeType === 1) {
+                  let text = '';
+                  // Traverse children
+                  for (let child of node.childNodes) {
+                    text += getText(child);
+                  }
+                  // Add newlines for block elements
+                  const tag = node.tagName.toLowerCase();
+                  if (['p', 'div', 'br', 'li', 'tr', 'h1', 'h2', 'h3', 'h4', 'h5'].includes(tag)) {
+                    text += '\n';
+                  }
+                  return text;
+                }
+                return '';
+              }
+
+              // Extract from main content
+              const contentNode = doc.querySelector('#contents') || doc.body;
+              let cleanText = getText(contentNode);
+
+              // 4. Formatting Cleanup (Remove excess blank lines)
+              cleanText = cleanText.replace(/\n\s*\n/g, '\n\n').trim();
+
+              console.log('Saving to calendar_data.txt...');
+              fs.writeFileSync('calendar_data.txt', cleanText);
+              console.log('Success! Data saved.');
+
+            } catch (error) {
+              console.error('Error:', error);
+              process.exit(1);
+            }
+          }
+          run();
+          "
+
+      - name: Commit and Push if Changed
         run: |
           git config user.name "Panchang Bot"
           git config user.email "actions@github.com"
           git add calendar_data.txt
-          # Only commit if the file has changed
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update calendar data" && git push)
+          # Check if file changed before committing
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update clean calendar data" && git push)
           
