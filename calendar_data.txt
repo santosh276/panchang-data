@@ -4,7 +4,7 @@
 
 ::: calendar
 ++ January 2026 ++
-01 *  Santosh Kumar sahoo English New Year 2026 Begins [ଇଂରାଜୀ ନୂତନ ବର୍ଷ ୨୦୨୬ ଆରମ୍ଭ]
+01 *  English New Year 2026 Begins [ଇଂରାଜୀ ନୂତନ ବର୍ଷ ୨୦୨୬ ଆରମ୍ଭ]
 03 ^ Pausha Purnima / Shiva Chaturdashi [ପୌଷ ପୂର୍ଣ୍ଣିମା / ଶିବ ଚତୁର୍ଦ୍ଦଶୀ]
 05 > Pushyabhisheka & Rajabhisheka [ପୁଷ୍ୟାଭିଷେକ ଓ ରାଜାଭିଷେକ]
 06 ^ Sankata Chaturthi Brata [ସଂକଟ ଚତୁର୍ଥୀ ବ୍ରତ]
@@ -91,4 +91,75 @@ It is held at Mahima Gadi in Dhenkanal district on Magha Purnima. [ଏହା ମ
 # Rituals
 Sadhus light a massive sacred fire known as 'Jhuna Deepa' for world peace. [ସାଧୁମାନେ ବିଶ୍ୱ ଶାନ୍ତି ପାଇଁ 'ଝୁଣା ଦୀପ' ନାମକ ଏକ ବିଶାଳ ପବିତ୍ର ଅଗ୍ନି ପ୍ରଜ୍ୱଳିତ କରନ୍ତି |]
 Devotees from across the state gather to seek blessings from the Mahima Gosain. [ମହିମା ଗୋସାଇଁଙ୍କଠାରୁ ଆଶୀର୍ବାଦ ଭିକ୍ଷା କରିବାକୁ ରାଜ୍ୟର ବିଭିନ୍ନ ସ୍ଥାନରୁ ଭକ୍ତମାନେ ଏକତ୍ରିତ ହୁଅନ୍ତି |]
+:::
+
+-----------------------------------
+
+::: calendar
+++ February 2026 ++
+01 ^ Magha Purnima / Agni Utsav [ମାଘ ପୂର୍ଣ୍ଣିମା / ଅଗ୍ନ୍ୟୁତ୍ସବ]
+01 > Gaja Uddharana Besha [ଗଜଉଦ୍ଧାରଣ ବେଶ]
+04 > Shab-e-Barat [ସର୍ବେ-ବରାତ୍]
+04 > Madhusudan Das Death Anniv. [ମଧୁସୂଦନ ଦାସଙ୍କ ତିରୋଧାନ ଦିବସ]
+12 > Swami Dayananda Saraswati Jayanti [ସ୍ୱାମୀ ଦୟାନନ୍ଦ ସରସ୍ୱତୀଙ୍କ ଜୟନ୍ତୀ]
+13 ^ Kumbha Sankranti / Pankoddhar Ekadashi [କୁମ୍ଭ ସଂକ୍ରାନ୍ତି / ପଙ୍କୋଦ୍ଧାର ଏକାଦଶୀ]
+15 ! Maha Shivaratri / Jagara [ମହାଶିବରାତ୍ରି / ଜାଗର]
+17 ^ Phalguna Amavasya / Gosahasri Snana [ଫାଲଗୁନ ଅମାବାସ୍ୟା / ଗୋସହସ୍ରୀ ସ୍ନାନ]
+18 > Chandra Darshan [ଦ୍ୱିତୀୟାର ଚନ୍ଦ୍ର ଦର୍ଶନ]
+19 > Ramadan Start / Ramakrishna Jayanti [ରମଜାନ୍ ଆରମ୍ଭ / ରାମକୃଷ୍ଣ ଜୟନ୍ତୀ]
+26 ^ Sudasha Brata / Ghanta Dashami [ସୁଦଶାବ୍ରତ / ଘଣ୍ଟ ଦଶମୀ]
+26 > Chacheri Besha [ଚାଚେରୀ ବେଶ]
+27 ^ Papanasini Ekadashi [ପାପ ନାଶିନୀ ଏକାଦଶୀ]
+28 > Govinda Dwadashi [ଗୋବିନ୍ଦ ଦ୍ୱାଦଶୀ]
+:::
+
+::: details
+>> 01-02-2026
+@ Tag : Full Moon Festival
+
+Magha Purnima marks the conclusion of the holy month of Magha. In Odisha, it is celebrated as 'Agni Utsav', where people bid farewell to the winter season by lighting bonfires. [ମାଘ ପୂର୍ଣ୍ଣିମା ପବିତ୍ର ମାଘ ମାସର ସମାପ୍ତିକୁ ସୂଚିତ କରେ। ଓଡିଶାରେ ଏହାକୁ 'ଅଗ୍ନ୍ୟୁତ୍ସବ' ଭାବରେ ପାଳନ କରାଯାଏ, ଯେଉଁଠାରେ ଲୋକମାନେ ନିଆଁ ଜାଳି ଶୀତଋତୁକୁ ବିଦାୟ ଦିଅନ୍ତି।]
+
+# Significance
+On this day, Lord Jagannath is adorned in the 'Gaja Uddharana Besha', depicting the legendary rescue of the elephant king (Gajendra) from a crocodile. It represents the Lord's compassion for his devotees. [ଏହି ଦିନ, ପ୍ରଭୁ ଜଗନ୍ନାଥ 'ଗଜଉଦ୍ଧାରଣ ବେଶ'ରେ ସଜ୍ଜିତ ହୁଅନ୍ତି, ଯାହା କୁମ୍ଭୀର କବଳରୁ ଗଜରାଜଙ୍କୁ ରକ୍ଷା କରିବାର କିମ୍ବଦନ୍ତୀକୁ ଚିତ୍ରିତ କରେ। ଏହା ଭକ୍ତମାନଙ୍କ ପ୍ରତି ପ୍ରଭୁଙ୍କ କରୁଣାକୁ ପ୍ରତିନିଧିତ୍ୱ କରେ।]
+
+# Rituals
+- Farmers gather heaps of straw and set them on fire (Agni Utsav), praying to the Fire God for good crops. [ଚାଷୀମାନେ ନଡା ଗଦା କରି ସେଥିରେ ନିଆଁ ଲଗାନ୍ତି (ଅଗ୍ନ୍ୟୁତ୍ସବ) ଏବଂ ଭଲ ଫସଲ ପାଇଁ ଅଗ୍ନି ଦେବତାଙ୍କୁ ପ୍ରାର୍ଥନା କରନ୍ତି।]
+- Devotees take a holy dip in rivers and perform heavy pujas in temples marking the end of month-long austerity. [ଭକ୍ତମାନେ ନଦୀରେ ପବିତ୍ର ବୁଡ ପକାନ୍ତି ଏବଂ ମାସବ୍ୟାପୀ ତପସ୍ୟାର ସମାପ୍ତି ପାଇଁ ମନ୍ଦିରରେ ବିଶେଷ ପୂଜା କରନ୍ତି।]
+- In Puri, the specific besha (attire) is viewed by thousands of pilgrims. [ପୁରୀରେ, ହଜାର ହଜାର ଭକ୍ତ ମହାପ୍ରଭୁଙ୍କର ଏହି ନିର୍ଦ୍ଦିଷ୍ଟ ବେଶ ଦର୍ଶନ କରନ୍ତି।]
+
+# Food
+- Special offerings of 'Khai' (fried paddy) and liaison with jaggery are offered to the fire. [ଅଗ୍ନି ଦେବତାଙ୍କ ନିକଟରେ ଖଇ ଏବଂ ଗୁଡ଼ର ମିଶ୍ରଣ ଭୋଗ ଲାଗି କରାଯାଏ।]
+
+>> 15-02-2026
+@ Tag : Major Festival
+
+Maha Shivaratri, locally known as 'Jagara' in Odisha, is the most revered festival dedicated to Lord Shiva. It is a night of spiritual awakening where devotees remain awake all night with oil lamps burning. [ମହାଶିବରାତ୍ରି, ଯାହା ଓଡିଶାରେ 'ଜାଗର' ନାମରେ ଜଣାଶୁଣା, ଭଗବାନ ଶିବଙ୍କ ପାଇଁ ଉତ୍ସର୍ଗୀକୃତ ସବୁଠାରୁ ପବିତ୍ର ପର୍ବ। ଏହା ଆଧ୍ୟାତ୍ମିକ ଜାଗରଣର ରାତି ଯେଉଁଠାରେ ଭକ୍ତମାନେ ତେଲ ଦୀପ ଜାଳି ରାତିସାରା ଉଜାଗର ରୁହନ୍ତି।]
+
+# Significance
+The festival celebrates the celestial wedding of Lord Shiva and Goddess Parvati. In Odisha, the lifting of the 'Mahadipa' (Great Lamp) atop the Lingaraj Temple is the most anticipated moment, signaling the breaking of the fast. [ଏହି ପର୍ବ ଭଗବାନ ଶିବ ଏବଂ ମାତା ପାର୍ବତୀଙ୍କ ବିବାହ ଉତ୍ସବକୁ ପାଳନ କରେ। ଓଡିଶାରେ, ଲିଙ୍ଗରାଜ ମନ୍ଦିର ଉପରକୁ 'ମହାଦୀପ' ଉଠିବା ସବୁଠାରୁ ଗୁରୁତ୍ୱପୂର୍ଣ୍ଣ ମୁହୂର୍ତ୍ତ ଅଟେ, ଯାହା ଉପବାସ ଭାଙ୍ଗିବାର ସଙ୍କେତ ଦେଇଥାଏ।]
+
+# Rituals
+- Devotees observe a strict fast (Nirjala Upavasa) throughout the day without water. [ଭକ୍ତମାନେ ଦିନସାରା ଜଳ ବିନା କଠୋର ଉପବାସ (ନିର୍ଜଳା ଉପବାସ) ପାଳନ କରନ୍ତି।]
+- 'Bel Patra' (Woodapple leaves) and milk are offered to the Shiva Linga. [ଶିବ ଲିଙ୍ଗ ଉପରେ 'ବେଲ ପତ୍ର' ଏବଂ କ୍ଷୀର ଅର୍ପଣ କରାଯାଏ।]
+- People stay awake all night (Jagara) lighting lamps outside temples, chanting "Om Namah Shivaya". [ଲୋକମାନେ ମନ୍ଦିର ବାହାରେ ଦୀପ ଜାଳି, "ଓମ୍ ନମଃ ଶିବୟ" ଜପ କରି ରାତିସାରା ଉଜାଗର (ଜାଗର) ରୁହନ୍ତି।]
+
+# Food
+- During the day, no food is consumed. The fast is broken only after seeing the Mahadipa, usually with fruits or temple Prasad. [ଦିନରେ କୌଣସି ଖାଦ୍ୟ ଗ୍ରହଣ କରାଯାଏ ନାହିଁ। ମହାଦୀପ ଦର୍ଶନ ପରେ ସାଧାରଣତଃ ଫଳ କିମ୍ବା ମନ୍ଦିର ପ୍ରସାଦ ସହିତ ଉପବାସ ଭଙ୍ଗ ହୁଏ।]
+
+>> 26-02-2026
+@ Tag : Women's Festival
+
+Sudasha Brata is a unique and highly auspicious festival observed by married women in Odisha, dedicated to Goddess Lakshmi. It falls whenever Dashami Tithi coincides with a Thursday (Guruvar). [ସୁଦଶା ବ୍ରତ ଓଡିଶାର ବିବାହିତ ମହିଳାମାନଙ୍କ ଦ୍ୱାରା ପାଳିତ ହେଉଥିବା ଏକ ନିଆରା ଏବଂ ଅତ୍ୟନ୍ତ ଶୁଭ ପର୍ବ, ଯାହା ମା ଲକ୍ଷ୍ମୀଙ୍କ ପାଇଁ ଉତ୍ସର୍ଗୀକୃତ। ଯେତେବେଳେ ଦଶମୀ ତିଥି ଗୁରୁବାର ସହିତ ପଡେ ସେତେବେଳେ ଏହା ପାଳନ କରାଯାଏ।]
+
+# Significance
+The word 'Sudasha' implies good fortune. Women perform this Vrata for the well-being, health, and prosperity of their families and to drive away misfortune. [ଶବ୍ଦ 'ସୁଦଶା'ର ଅର୍ଥ ହେଉଛି ଭଲ ଭାଗ୍ୟ। ମହିଳାମାନେ ସେମାନଙ୍କ ପରିବାରର ମଙ୍ଗଳ, ସ୍ୱାସ୍ଥ୍ୟ ଏବଂ ସମୃଦ୍ଧି ପାଇଁ ଏବଂ ଦୁର୍ଭାଗ୍ୟ ଦୂର କରିବା ପାଇଁ ଏହି ବ୍ରତ ପାଳନ କରନ୍ତି।]
+
+# Rituals
+- A sacred yellow thread usually having ten knots is worshipped and tied around the arm. [ଦଶଟି ଗଣ୍ଠି ଥିବା ଏକ ପବିତ୍ର ହଳଦିଆ ସୂତାକୁ ପୂଜା କରାଯାଏ ଏବଂ ବାହୁରେ ବନ୍ଧାଯାଏ।]
+- Ten types of flowers and ten types of fruits are offered to Goddess Lakshmi. [ମା ଲକ୍ଷ୍ମୀଙ୍କ ନିକଟରେ ଦଶ ପ୍ରକାରର ଫୁଲ ଏବଂ ଦଶ ପ୍ରକାରର ଫଳ ଅର୍ପଣ କରାଯାଏ।]
+- The number '10' is significant; rituals often involve counts of ten. [ଏଥିରେ '୧୦' ସଂଖ୍ୟା ଗୁରୁତ୍ୱପୂର୍ଣ୍ଣ; ରୀତିନୀତିଗୁଡ଼ିକରେ ପ୍ରାୟତଃ ଦଶ ଗଣନା ଅନ୍ତର୍ଭୁକ୍ତ ଥାଏ।]
+
+# Food
+- Ten types of 'Pithas' (traditional cakes), especially fried ones like 'Kakara', are prepared and offered. [ଦଶ ପ୍ରକାରର 'ପିଠା', ବିଶେଷକରି 'କାକରା' ପରି ଛଣା ପିଠା ପ୍ରସ୍ତୁତ କରି ଭୋଗ ଲଗାଯାଏ।]
+- The food is strictly vegetarian and is eaten only after the rituals are completed. [ଖାଦ୍ୟ ସମ୍ପୂର୍ଣ୍ଣ ନିରାମିଷ ଅଟେ ଏବଂ ପୂଜା ସମାପ୍ତ ହେବା ପରେ ହିଁ ଖିଆଯାଏ।]
 :::
