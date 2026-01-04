@@ -97,10 +97,8 @@ Devotees from across the state gather to seek blessings from the Mahima Gosain. 
 
 ::: calendar
 ++ February 2026 ++
-01 ^ Magha Purnima / Agni Utsav [ମାଘ ପୂର୍ଣ୍ଣିମା / ଅଗ୍ନ୍ୟୁତ୍ସବ]
-01 > Gaja Uddharana Besha [ଗଜଉଦ୍ଧାରଣ ବେଶ]
-04 > Shab-e-Barat [ସର୍ବେ-ବରାତ୍]
-04 > Madhusudan Das Death Anniv. [ମଧୁସୂଦନ ଦାସଙ୍କ ତିରୋଧାନ ଦିବସ]
+01 ^ Magha Purnima / Agni Utsav / Gaja Uddharana Besha [ମାଘ ପୂର୍ଣ୍ଣିମା / ଅଗ୍ନ୍ୟୁତ୍ସବ / ଗଜଉଦ୍ଧାରଣ ବେଶ]
+04 > Shab-e-Barat / Madhusudan Das Death Anniv. [ସର୍ବେ-ବରାତ୍ / ମଧୁସୂଦନ ଦାସଙ୍କ ତିରୋଧାନ ଦିବସ]
 12 > Swami Dayananda Saraswati Jayanti [ସ୍ୱାମୀ ଦୟାନନ୍ଦ ସରସ୍ୱତୀଙ୍କ ଜୟନ୍ତୀ]
 13 ^ Kumbha Sankranti / Pankoddhar Ekadashi [କୁମ୍ଭ ସଂକ୍ରାନ୍ତି / ପଙ୍କୋଦ୍ଧାର ଏକାଦଶୀ]
 15 ! Maha Shivaratri / Jagara [ମହାଶିବରାତ୍ରି / ଜାଗର]
