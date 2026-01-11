@@ -2,37 +2,40 @@ name: Sync & Clean Google Doc Data
 
 on:
   schedule:
-    # [span_0](start_span)Runs every 6 hours (at minute 0 of every 6th hour)[span_0](end_span)
+    # Runs every 6 hours (at 00:00, 06:00, 12:00, 18:00 UTC)
     - cron: '0 */6 * * *'
-  [span_1](start_span)workflow_dispatch:[span_1](end_span)
+  # Allows you to click "Run workflow" manually
+  workflow_dispatch:
 
 permissions:
-  [span_2](start_span)contents: write[span_2](end_span)
+  contents: write
 
 jobs:
   update-calendar-data:
-    [span_3](start_span)runs-on: ubuntu-latest[span_3](end_span)
+    runs-on: ubuntu-latest
     
     steps:
       - name: Checkout Repository
-        [span_4](start_span)uses: actions/checkout@v3[span_4](end_span)
+        uses: actions/checkout@v3
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          [span_5](start_span)node-version: '18'[span_5](end_span)
+          node-version: '18'
 
       - name: Install JSDOM
-        [span_6](start_span)run: npm install jsdom node-fetch[span_6](end_span)
+        run: npm install jsdom node-fetch
 
       - name: Fetch and Clean Data
         env:
-          [span_7](start_span)DOC_URL: "https://docs.google.com/document/d/e/2PACX-1vQDexcd-amo5HoDI3CmBpRfwmmuYgrruS6WGG1cTxK3vJ4sdcYdebFAz4SKGG4H6dkSWSm5eBwHlXcH/pub"[span_7](end_span)
+          # REPLACE THIS LINK WITH YOUR GOOGLE DOC '/pub' LINK
+          DOC_URL: "https://docs.google.com/document/d/e/2PACX-1vQDexcd-amo5HoDI3CmBpRfwmmuYgrruS6WGG1cTxK3vJ4sdcYdebFAz4SKGG4H6dkSWSm5eBwHlXcH/pub"
         run: |
           node -e "
           const fs = require('fs');
           const { JSDOM } = require('jsdom');
 
+          // --- SMART FETCH FUNCTION (Retry Logic) ---
           async function fetchWithRetry(url, retries = 3, delay = 5000) {
             for (let i = 0; i < retries; i++) {
               try {
@@ -42,8 +45,8 @@ jobs:
                 return await response.text();
               } catch (err) {
                 console.log('Attempt ' + (i + 1) + ' failed: ' + err.message);
-                if (i === retries - 1) throw err;
-                console.log('Waiting ' + (delay/1000) + ' seconds before trying again...');
+                if (i === retries - 1) throw err; // If last attempt fails, crash
+                console.log('Waiting 5 seconds before trying again...');
                 await new Promise(res => setTimeout(res, delay));
               }
             }
@@ -51,53 +54,61 @@ jobs:
 
           async function run() {
             try {
-              [span_8](start_span)const html = await fetchWithRetry(process.env.DOC_URL);[span_8](end_span)
+              // Use the smart fetch instead of standard fetch
+              const html = await fetchWithRetry(process.env.DOC_URL);
 
               console.log('Parsing and Cleaning HTML...');
-              [span_9](start_span)const dom = new JSDOM(html);[span_9](end_span)
-              [span_10](start_span)const doc = dom.window.document;[span_10](end_span)
+              const dom = new JSDOM(html);
+              const doc = dom.window.document;
 
-              [span_11](start_span)const unwanted = doc.querySelectorAll('style, script, link, meta, title, noscript, svg');[span_11](end_span)
-              [span_12](start_span)unwanted.forEach(el => el.remove());[span_12](end_span)
+              // 1. Remove Unwanted Tags
+              const unwanted = doc.querySelectorAll('style, script, link, meta, title, noscript, svg');
+              unwanted.forEach(el => el.remove());
 
-              [span_13](start_span)const header = doc.querySelector('#header'); if(header) header.remove();[span_13](end_span)
-              [span_14](start_span)const footer = doc.querySelector('#footer'); if(footer) footer.remove();[span_14](end_span)
+              // 2. Remove Google Headers/Footers
+              const header = doc.querySelector('#header'); if(header) header.remove();
+              const footer = doc.querySelector('#footer'); if(footer) footer.remove();
 
+              // 3. Custom Text Extractor (Preserves Newlines)
               function getText(node) {
-                [span_15](start_span)if (node.nodeType === 3) return node.nodeValue;[span_15](end_span)
-                [span_16](start_span)if (node.nodeType === 1) {[span_16](end_span)
-                  [span_17](start_span)let text = '';[span_17](end_span)
-                  [span_18](start_span)for (let child of node.childNodes) {[span_18](end_span)
-                    [span_19](start_span)text += getText(child);[span_19](end_span)
-                  [span_20](start_span)}
-                  const tag = node.tagName.toLowerCase();[span_20](end_span)
-                  [span_21](start_span)if (['p', 'div', 'br', 'li', 'tr', 'h1', 'h2', 'h3', 'h4', 'h5'].includes(tag)) {[span_21](end_span)
-                    [span_22](start_span)text += '\n';[span_22](end_span)
-                  [span_23](start_span)}
-                  return text;[span_23](end_span)
-                [span_24](start_span)}
-                return '';[span_24](end_span)
+                if (node.nodeType === 3) return node.nodeValue; // Text Node
+                if (node.nodeType === 1) { // Element Node
+                  let text = '';
+                  for (let child of node.childNodes) {
+                    text += getText(child);
+                  }
+                  const tag = node.tagName.toLowerCase();
+                  if (['p', 'div', 'br', 'li', 'tr', 'h1', 'h2', 'h3', 'h4', 'h5'].includes(tag)) {
+                    text += '\n';
+                  }
+                  return text;
+                }
+                return '';
               }
 
-              [span_25](start_span)const contentNode = doc.querySelector('#contents') || doc.body;[span_25](end_span)
-              [span_26](start_span)let cleanText = getText(contentNode);[span_26](end_span)
+              // Extract from main content
+              const contentNode = doc.querySelector('#contents') || doc.body;
+              let cleanText = getText(contentNode);
 
-              [span_27](start_span)cleanText = cleanText.replace(/\n\s*\n/g, '\n\n').trim();[span_27](end_span)
-              [span_28](start_span)console.log('Saving to calendar_data.txt...');[span_28](end_span)
-              [span_29](start_span)fs.writeFileSync('calendar_data.txt', cleanText);[span_29](end_span)
-              [span_30](start_span)console.log('Success! Data saved.');[span_30](end_span)
+              // 4. Formatting Cleanup (Remove excess blank lines)
+              cleanText = cleanText.replace(/\n\s*\n/g, '\n\n').trim();
+              
+              console.log('Saving to calendar_data.txt...');
+              fs.writeFileSync('calendar_data.txt', cleanText);
+              console.log('Success! Data saved.');
 
             } catch (error) {
-              [span_31](start_span)console.error('Final Error:', error);[span_31](end_span)
-              [span_32](start_span)process.exit(1);[span_32](end_span)
+              console.error('Final Error:', error);
+              process.exit(1);
             }
           }
-          [span_33](start_span)run();[span_33](end_span)
+          run();
           "
 
       - name: Commit and Push if Changed
         run: |
-          [span_34](start_span)git config user.name "Panchang Bot"[span_34](end_span)
-          [span_35](start_span)git config user.email "actions@github.com"[span_35](end_span)
-          [span_36](start_span)git add calendar_data.txt[span_36](end_span)
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update clean calendar data" && git push) [span_37](start_span)
+          git config user.name "Panchang Bot"
+          git config user.email "actions@github.com"
+          git add calendar_data.txt
+          # Check if file changed before committing
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update clean calendar data" && git push)
