@@ -1,4 +1,5 @@
 ::: config
+@ Title : Vaidik Calendar
 @ Language : or
 :::
 
