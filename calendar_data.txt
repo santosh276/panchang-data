@@ -1,7 +1,6 @@
 ::: config
 @ Title : Vaidik Calendar
 @ Language : or
-@ Live Sync GitHub trigger in every : 15 minute
 :::
 
 ::: calendar
