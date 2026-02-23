@@ -6,7 +6,7 @@
 
 ::: calendar
 ++ January 2026 ++
-01 * my English New Year 2026 Begins [ଇଂରାଜୀ ନୂତନ ବର୍ଷ ୨୦୨୬ ଆରମ୍ଭ]
+01 * English New Year 2026 Begins [ଇଂରାଜୀ ନୂତନ ବର୍ଷ ୨୦୨୬ ଆରମ୍ଭ]
 03 ^ Pausha Purnima / Shiva Chaturdashi [ପୌଷ ପୂର୍ଣ୍ଣିମା / ଶିବ ଚତୁର୍ଦ୍ଦଶୀ]
 05 > Pushyabhisheka & Rajabhisheka [ପୁଷ୍ୟାଭିଷେକ ଓ ରାଜାଭିଷେକ]
 06 ^ Sankata Chaturthi Brata [ସଂକଟ ଚତୁର୍ଥୀ ବ୍ରତ]
