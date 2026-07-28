@@ -82,7 +82,18 @@
     "lbl_lucky_stone": "ଶୁଭ ରତ୍ନ",
     "lbl_lucky_numbers": "ଶୁଭ ଅଙ୍କ",
     "lbl_lucky_days": "ଶୁଭ ବାର",
-    "dash_panchang_reveals": "ଆପଣଙ୍କର ଜନ୍ମ ପାଞ୍ଜିର ରହସ୍ୟ"
+    "dash_panchang_reveals": "ଆପଣଙ୍କର ଜନ୍ମ ପାଞ୍ଜିର ରହସ୍ୟ",
+    "astro_details_title": "ମୂଳ ଜ୍ୟୋତିଷ ବିବରଣୀ",
+    "astro_details_desc": "ଏହି ବିଭାଗଟି ଆପଣଙ୍କ ଜନ୍ମ ସମୟର ପାଞ୍ଜି ବିବରଣୀ ସହିତ ଆପଣଙ୍କର ମୂଳ ଜ୍ୟୋତିଷ ତଥ୍ୟ ପ୍ରଦାନ କରିଥାଏ।",
+    "lbl_ascendant": "ଲଗ୍ନ",
+    "lbl_sign": "ରାଶି",
+    "lbl_sign_lord": "ରାଶି ସ୍ୱାମୀ",
+    "lbl_nak_lord": "ନକ୍ଷତ୍ର ସ୍ୱାମୀ",
+    "lbl_charan": "ଚରଣ",
+    "lbl_karan": "କରଣ",
+    "lbl_yog": "ଯୋଗ",
+    "lbl_yunja": "ଯୁଞ୍ଜ",
+    "lbl_paya_nak": "ପାୟା (ନକ୍ଷତ୍ର ଅନୁଯାୟୀ)"
   },
   "panchang_reveals": {
     "Deva": "ଆପଣଙ୍କର 'ଦେବ ଗଣ' ଦର୍ଶାଉଛି ଯେ ଆପଣଙ୍କର ସ୍ୱଭାବ ଅତ୍ୟନ୍ତ କୋମଳ, ଦୟାଳୁ ଏବଂ ପବିତ୍ର ଅଟେ।",
@@ -118,6 +129,10 @@
   "metals_or": ["ତାମ୍ର/ସୁବର୍ଣ୍ଣ", "ରୌପ୍ୟ", "କାଂସ୍ୟ/ସୁବର୍ଣ୍ଣ", "ସୁବର୍ଣ୍ଣ/ତାମ୍ର", "ସୁବର୍ଣ୍ଣ/ରୌପ୍ୟ", "ଲୌହ/ରୌପ୍ୟ", "ଲୌହ", "ସୁବର୍ଣ୍ଣ"],
   "stones": ["Red Coral", "Diamond/Opal", "Emerald", "Pearl", "Ruby", "Diamond", "Yellow Sapphire", "Blue Sapphire", "Cat's Eye"],
   "stones_or": ["ପ୍ରବାଳ (Red Coral)", "ହୀରା/ଓପାଲ୍", "ପାନ୍ନା (Emerald)", "ମୁକ୍ତା (Pearl)", "ମାଣିକ୍ୟ (Ruby)", "ହୀରା (Diamond)", "ପୁଖରାଜ (Yellow Sapphire)", "ନୀଳା (Blue Sapphire)", "ଲହସୁନିଆ (Cat's Eye)"],
+  "karanas": ["Bava", "Balava", "Kaulava", "Taitil", "Gara", "Vanija", "Vishti", "Shakuni", "Chatushpada", "Naga", "Kintughna"],
+  "karanas_or": ["ବବ", "ବାଳବ", "କୌଳବ", "ତୈତିଳ", "ଗର", "ବଣିଜ", "ବିଷ୍ଟି", "ଶକୁନି", "ଚତୁଷ୍ପଦ", "ନାଗ", "କିଂସ୍ତୁଘ୍ନ"],
+  "yunja": ["Purva", "Madhya", "Antya"],
+  "yunja_or": ["ପୂର୍ବ", "ମଧ୍ୟ", "ଅନ୍ତ୍ୟ"],
   "samvatsaras": ["Prabhava", "Vibhava", "Shukla", "Pramoda", "Prajapati", "Angira", "Shrimukha", "Bhava", "Yuva", "Dhatri", "Ishvara", "Bahudhanya", "Pramathi", "Vikrama", "Vrushapraja", "Chitrabhanu", "Subhanu", "Tarana", "Parthiva", "Vyaya", "Sarvajit", "Sarvadhari", "Virodhi", "Vikruti", "Khara", "Nandana", "Vijaya", "Jaya", "Manmatha", "Durmukha", "Hevilambi", "Vilambi", "Vikari", "Sharvari", "Plava", "Shubhakrit", "Shobhan", "Krodhi", "Vishvavasu", "Parabhava", "Plavanga", "Kilaka", "Saumya", "Sadharana", "Virodhakrit", "Paridhavi", "Pramadi", "Ananda", "Rakshasa", "Nala", "Pingala", "Kalayukta", "Siddharthi", "Raudra", "Durmati", "Dundubhi", "Rudhirodgari", "Raktaksha", "Krodhana", "Kshaya"],
   "samvatsaras_or": ["ପ୍ରଭବ", "ବିଭବ", "ଶୁକ୍ଳ", "ପ୍ରମୋଦ", "ପ୍ରଜାପତି", "ଅଙ୍ଗିରା", "ଶ୍ରୀମୁଖ", "ଭାବ", "ଯୁବା", "ଧାତା", "ଈଶ୍ୱର", "ବହୁଧାନ୍ୟ", "ପ୍ରମାଥୀ", "ବିକ୍ରମ", "ବୃଷପ୍ରଜା", "ଚିତ୍ରଭାନୁ", "ସୁଭାନୁ", "ତାରଣ", "ପାର୍ଥିବ", "ବ୍ୟୟ", "ସର୍ବଜିତ୍", "ସର୍ବଧାରୀ", "ବିରୋଧୀ", "ବିକୃତି", "ଖର", "ନନ୍ଦନ", "ବିଜୟ", "ଜୟ", "ମନ୍ମଥ", "ଦୁର୍ମୁଖ", "ହେବିଲମ୍ବୀ", "ବିଳମ୍ବୀ", "ବିକାରୀ", "ଶାର୍ବରୀ", "ପ୍ଳବ", "ଶୁଭକୃତ୍", "ଶୋଭନ", "କ୍ରୋଧୀ", "ବିଶ୍ୱାବସୁ", "ପରାଭବ", "ପ୍ଲବଙ୍ଗ", "କୀଳକ", "ସୌମ୍ୟ", "ସାଧାରଣ", "ବିରୋଧକୃତ୍", "ପରିଧାବୀ", "ପ୍ରମାଦୀ", "ଆନନ୍ଦ", "ରାକ୍ଷସ", "ନଳ", "ପିଙ୍ଗଳ", "କାଳଯୁକ୍ତ", "ସିଦ୍ଧାର୍ଥୀ", "ରୌଦ୍ର", "ଦୁର୍ମତି", "ଦୁନ୍ଦୁଭି", "ରୁଧିରୋଦ୍ଗାରୀ", "ରକ୍ତାକ୍ଷ", "କ୍ରୋଧନ", "କ୍ଷୟ"],
   
