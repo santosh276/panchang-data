@@ -263,7 +263,8 @@
     "lbl_house_full": "ଭାବ",
     "lbl_signifies": "ପ୍ରତୀକ/ଦର୍ଶାଏ",
     "lbl_direction": "ଦିଗ",
-    "lbl_planets_inside": "ଅବସ୍ଥିତ ଗ୍ରହ"
+    "lbl_planets_inside": "ଅବସ୍ଥିତ ଗ୍ରହ",
+    "tab_graha": "ଗ୍ରହ"
   },
   "bhava_details": {
     "1": { "name": "ନିଜସ୍ୱ/ଲଗ୍ନ", "dir": "ପୂର୍ବ", "keywords": "ବ୍ୟକ୍ତିତ୍ୱ, ସ୍ୱାସ୍ଥ୍ୟ, ଶକ୍ତି" },
