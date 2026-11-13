@@ -1,5 +1,19 @@
-/* 1. Icons */
+/* --- Engine Script 2 --- */
+(function(){
 
+window.logData = function(data) {
+    console.log("Panchang Data:", JSON.stringify({
+        tithi: data.tithi,
+        nakshatra: data.nakshatra,
+        yoga: data.yoga,
+        karana: data.karana
+    }, null, 2));
+};
+
+})();
+
+/* --- Engine Script 4 --- */
+(function(){
 
 (function() {
   const icons = {
@@ -104,9 +118,9 @@
   };
 })();
 
+})();
 
-/* 2. Astronomy Engine */
-
+/* --- Engine Script 6 --- */
 (function(){
 
 var exports = {}; // Shim for CommonJS
@@ -737,8 +751,382 @@ window.enhancePanchang = function(data, date, location) {
 
 })();
 
-/* 3. Samvatsara & Festival Engine */
+/* --- Engine Script 7 --- */
+(function(){
 
+window.NOAA = {
+  safeMod: (n, m) => ((n % m) + m) % m,
+  degToRad: (deg) => deg * Math.PI / 180,
+  radToDeg: (rad) => rad * 180 / Math.PI,
+  calculate: function(date, lat, long, timezoneOffset) {
+            const jd = (date.getTime() / 86400000) + 2440587.5;
+    const T = (jd - 2451545.0) / 36525.0;
+    let geomMeanLongSun = this.safeMod(280.46646 + T * (36000.76983 + T * 0.0003032), 360);
+    if (geomMeanLongSun < 0) geomMeanLongSun += 360;
+    const geomMeanAnomSun = 357.52911 + T * (35999.05029 - 0.0001537 * T);
+    const anomRad = this.degToRad(geomMeanAnomSun);
+    const sunEqOfCtr = Math.sin(anomRad) * (1.914602 - T * 0.004817 - T * T * 0.000014) +
+                       Math.sin(2 * anomRad) * (0.019993 - T * 0.000101) +
+                       Math.sin(3 * anomRad) * 0.000289;
+    const sunTrueLong = geomMeanLongSun + sunEqOfCtr;
+    const omega = 125.04 - 1934.136 * T;
+    const sunAppLong = sunTrueLong - 0.00569 - 0.00478 * Math.sin(this.degToRad(omega));
+    const meanObliq = 23 + (26 + ((21.448 - T * (46.815 + T * (0.00059 - T * 0.001813)))) / 60) / 60;
+    const obliqCorr = meanObliq + 0.00256 * Math.cos(this.degToRad(omega));
+    const sunDeclin = this.radToDeg(Math.asin(Math.sin(this.degToRad(obliqCorr)) * Math.sin(this.degToRad(sunAppLong))));
+    const y = Math.pow(Math.tan(this.degToRad(obliqCorr) / 2), 2);
+    const eccent = 0.016708634 - 0.000042037 * T - 0.0000001267 * T * T;
+    const gmlsRad = this.degToRad(geomMeanLongSun);
+        const gmasRad = this.degToRad(geomMeanAnomSun);
+    const eqTime = 4 * this.radToDeg(
+      y * Math.sin(2 * gmlsRad) -
+      2 * eccent * Math.sin(gmasRad) +
+      4 * eccent * y * Math.sin(gmasRad) * Math.cos(2 * gmlsRad) -
+      0.5 * y * y * Math.sin(4 * gmlsRad) -
+      1.25 * eccent * eccent * Math.sin(2 * gmasRad)
+    );
+    const latRad = this.degToRad(lat);
+    const declinRad = this.degToRad(sunDeclin);
+    const cosHa = (Math.cos(this.degToRad(90.833333)) - Math.sin(latRad) * Math.sin(declinRad)) / (Math.cos(latRad) * Math.cos(declinRad));
+    let haArg = 0;
+    if (cosHa >= -1 && cosHa <= 1) {
+      haArg = this.radToDeg(Math.acos(cosHa));
+    } else {
+      haArg = 0; 
+    }
+    const solarNoon = this.safeMod(720 - 4 * long - eqTime + timezoneOffset, 1440);
+    const sunrise = this.safeMod(solarNoon - haArg * 4, 1440);
+    const sunset = this.safeMod(solarNoon + haArg * 4, 1440);
+    return {
+      solarNoon: solarNoon,
+      sunrise: sunrise,
+      sunset: sunset
+    };
+  }
+};
+window.VedicPlanner = {
+  matrix: [
+    [0, 1, 2, 3, 4, 5, 6, 0], // Sun
+    [3, 4, 5, 6, 0, 1, 2, 3], // Mon
+    [6, 0, 1, 2, 3, 4, 5, 6], // Tue
+    [2, 3, 4, 5, 6, 0, 1, 2], // Wed
+    [5, 6, 0, 1, 2, 3, 4, 5], // Thu
+    [1, 2, 3, 4, 5, 6, 0, 1], // Fri
+    [4, 5, 6, 0, 1, 2, 3, 4]  // Sat
+  ],
+  nightMatrix: [
+    [5, 3, 1, 6, 4, 2, 0, 5], // Sun
+    [1, 6, 4, 2, 0, 5, 3, 1], // Mon
+    [4, 2, 0, 5, 3, 1, 6, 4], // Tue
+    [0, 5, 3, 1, 6, 4, 2, 0], // Wed
+    [3, 1, 6, 4, 2, 0, 5, 3], // Thu
+    [6, 4, 2, 0, 5, 3, 1, 6], // Fri
+    [2, 0, 5, 3, 1, 6, 4, 2]  // Sat
+  ],
+  names: ["Udveg", "Chal", "Labh", "Amrit", "Kaal", "Shubh", "Rog"],
+  qualities: ["Bad", "Neutral", "Good", "Good", "Bad", "Good", "Bad"],
+  rahuKaalSlots: [7, 1, 6, 4, 5, 3, 2], 
+  vaarVelaSlots: [[3], [6], [1], [4], [7], [2], [5]],
+  kaalVelaSlots: [[4], [1], [5], [2], [6], [3], [0, 7]],
+  kaalRatriSlots: [[5], [3], [1], [6], [4], [2], [0, 7]],
+  calculate: function(dateObj, lat, long, timezoneOffset) {
+    const noaa = window.NOAA.calculate(dateObj, lat, long, timezoneOffset);
+    const nextDateObj = new Date(dateObj.getTime() + 24 * 60 * 60 * 1000);
+    const noaaNext = window.NOAA.calculate(nextDateObj, lat, long, timezoneOffset);
+
+    const formatter = new Intl.DateTimeFormat("en-US", {
+         timeZone: (window.currentTz || "Asia/Kolkata"),
+         year: "numeric",
+         month: "numeric",
+         day: "numeric"
+     });
+
+    const getFullDate = (targetDate, minutes) => {
+         const parts = formatter.formatToParts(targetDate);
+         const year = parseInt(parts.find(p => p.type === 'year').value);
+         const month = parseInt(parts.find(p => p.type === 'month').value) - 1;
+         const day = parseInt(parts.find(p => p.type === 'day').value);
+         return new Date(Date.UTC(year, month, day, 0, minutes - timezoneOffset, 0));
+    };
+
+    const sunriseTime = getFullDate(dateObj, noaa.sunrise);
+    let sunsetTime = getFullDate(dateObj, noaa.sunset);
+    let nextSunriseTime = getFullDate(nextDateObj, noaaNext.sunrise);
+
+    if (sunsetTime <= sunriseTime) {
+        sunsetTime = new Date(sunsetTime.getTime() + 24 * 60 * 60 * 1000);
+    }
+    if (nextSunriseTime <= sunsetTime) {
+        nextSunriseTime = new Date(nextSunriseTime.getTime() + 24 * 60 * 60 * 1000);
+    }
+
+    const dayDuration = sunsetTime.getTime() - sunriseTime.getTime();
+    const nightDuration = nextSunriseTime.getTime() - sunsetTime.getTime();
+    
+    const daySlotDur = dayDuration / 8;
+    const nightSlotDur = nightDuration / 8;
+
+    const localDate = new Date(dateObj.toLocaleString("en-US", { timeZone: (window.currentTz || "Asia/Kolkata") }));
+    const dayIndex = localDate.getDay();
+    const daySequence = this.matrix[dayIndex];
+    const nightSequence = this.nightMatrix[dayIndex];
+    const rahuSlotIndex = this.rahuKaalSlots[dayIndex];
+    
+    const slots = [];
+
+    const formatTime = (d) => d.toLocaleTimeString("en-US", {
+        hour: "2-digit", 
+        minute: "2-digit", 
+        hour12: window.currentTimeFormat !== "24h",
+        timeZone: (window.currentTz || "UTC")
+    });
+
+    for (let i = 0; i < 8; i++) {
+        const start = new Date(sunriseTime.getTime() + i * daySlotDur);
+        const end = new Date(start.getTime() + daySlotDur);
+        const typeIndex = daySequence[i];
+        let name = this.names[typeIndex];
+        const quality = this.qualities[typeIndex];
+        const badges = [];
+        if (i === rahuSlotIndex) {
+            name += " (Rahu Kaal)";
+            badges.push("Rahu Kaal");
+        }
+        if (this.vaarVelaSlots[dayIndex]?.includes(i)) {
+            badges.push("Vaar Vela");
+        }
+        if (this.kaalVelaSlots[dayIndex]?.includes(i)) {
+            badges.push("Kaal Vela");
+        }
+        slots.push({
+            name: name,
+            startTime: formatTime(start),
+            endTime: formatTime(end),
+            quality: quality,
+            type: "Day",
+            badges: badges
+        });
+    }
+
+    for (let i = 0; i < 8; i++) {
+        const start = new Date(sunsetTime.getTime() + i * nightSlotDur);
+        const end = new Date(start.getTime() + nightSlotDur);
+        const typeIndex = nightSequence[i];
+        let name = this.names[typeIndex];
+        const quality = this.qualities[typeIndex];
+        const badges = [];
+        if (this.kaalRatriSlots[dayIndex]?.includes(i)) {
+            badges.push("Kaal Ratri");
+        }
+        slots.push({
+            name: name,
+            startTime: formatTime(start),
+            endTime: formatTime(end),
+            quality: quality,
+            type: "Night",
+            badges: badges
+        });
+    }
+
+    return slots;
+  }
+};
+window.generateVedicPlan = function(dateObj, lat, long) {
+  const LAT = lat !== undefined ? lat : 28.6;
+  const LONG = long !== undefined ? long : 77.2;
+  let TZ_OFFSET = 330;
+  if (window.currentTz) {
+      const dStr = new Intl.DateTimeFormat("en-US", {timeZone: window.currentTz, timeZoneName: "shortOffset"}).format(dateObj);
+      const match = dStr.match(/GMT([+-])(\d{1,2})(?::(\d{2}))?/);
+      if (match) TZ_OFFSET = (match[1] === '-' ? -1 : 1) * (parseInt(match[2], 10) * 60 + (match[3] ? parseInt(match[3], 10) : 0));
+      else if (dStr.includes("GMT")) TZ_OFFSET = 0;
+  }
+  return window.VedicPlanner.calculate(dateObj, LAT, LONG, TZ_OFFSET);
+};
+
+window.HoraPlanner = {
+  planets: ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn"],
+  qualities: {
+    "Sun": { quality: "Neutral", dayDesc: "Good for government work, administrative tasks, and taking charge.", nightDesc: "Good for self-reflection, planning for tomorrow, and spiritual reading.", theme: "neutral" },
+    "Moon": { quality: "Good", dayDesc: "Favorable for auspicious works, public dealing, travel, and meetings.", nightDesc: "Excellent for romance, family bonding, relaxing, and creative thinking.", theme: "good" },
+    "Mars": { quality: "Bad", dayDesc: "Inauspicious for gentle tasks. Good for sports or physical labor.", nightDesc: "Prone to arguments. Avoid late-night driving. Good for security shifts.", theme: "bad" },
+    "Mercury": { quality: "Good", dayDesc: "Favorable for business, banking, communication, and education.", nightDesc: "Great for studying, writing, reading, planning, and intellectual discussions.", theme: "good" },
+    "Jupiter": { quality: "Good", dayDesc: "Highly auspicious for wealth, meetings with elders, and spiritual activities.", nightDesc: "Excellent for meditation, higher learning, mantra chanting, and peaceful time.", theme: "good" },
+    "Venus": { quality: "Good", dayDesc: "Favorable for arts, buying clothes/jewelry, entertainment, and socializing.", nightDesc: "Best for dates, romance, music, artistic hobbies, and enjoying comforts.", theme: "good" },
+    "Saturn": { quality: "Bad", dayDesc: "Causes delays. Good only for laying foundations or hard, repetitive work.", nightDesc: "Good for deep sleep or solitary focused tasks. Avoid starting night journeys.", theme: "bad" }
+  },
+  calculate: function(dateObj, lat, long, timezoneOffset) {
+    const noaa = window.NOAA.calculate(dateObj, lat, long, timezoneOffset);
+    const nextDateObj = new Date(dateObj.getTime() + 24 * 60 * 60 * 1000);
+    const noaaNext = window.NOAA.calculate(nextDateObj, lat, long, timezoneOffset);
+
+    const formatter = new Intl.DateTimeFormat("en-US", { timeZone: (window.currentTz || "Asia/Kolkata"), year: "numeric", month: "numeric", day: "numeric" });
+    const getFullDate = (targetDate, minutes) => {
+         const parts = formatter.formatToParts(targetDate);
+         const year = parseInt(parts.find(p => p.type === 'year').value);
+         const month = parseInt(parts.find(p => p.type === 'month').value) - 1;
+         const day = parseInt(parts.find(p => p.type === 'day').value);
+         return new Date(Date.UTC(year, month, day, 0, minutes - timezoneOffset, 0));
+    };
+
+    const sunriseTime = getFullDate(dateObj, noaa.sunrise);
+    let sunsetTime = getFullDate(dateObj, noaa.sunset);
+    let nextSunriseTime = getFullDate(nextDateObj, noaaNext.sunrise);
+
+    if (sunsetTime <= sunriseTime) sunsetTime = new Date(sunsetTime.getTime() + 24 * 60 * 60 * 1000);
+    if (nextSunriseTime <= sunsetTime) nextSunriseTime = new Date(nextSunriseTime.getTime() + 24 * 60 * 60 * 1000);
+
+    const dayDuration = sunsetTime.getTime() - sunriseTime.getTime();
+    const nightDuration = nextSunriseTime.getTime() - sunsetTime.getTime();
+    
+    const daySlotDur = dayDuration / 12;
+    const nightSlotDur = nightDuration / 12;
+
+    const localDate = new Date(dateObj.toLocaleString("en-US", { timeZone: (window.currentTz || "Asia/Kolkata") }));
+    const dayIndex = localDate.getDay();
+    let currentPlanetIdx = dayIndex;
+    
+    const horas = { day: [], night: [] };
+    const formatTime = (d) => d.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: window.currentTimeFormat !== "24h", timeZone: (window.currentTz || "UTC") });
+
+    for (let i = 0; i < 12; i++) {
+        const start = new Date(sunriseTime.getTime() + i * daySlotDur);
+        const end = new Date(start.getTime() + daySlotDur);
+        const planet = this.planets[currentPlanetIdx];
+        const info = this.qualities[planet];
+        horas.day.push({ name: planet + " Hora", startTime: formatTime(start), endTime: formatTime(end), quality: info.quality, desc: info.dayDesc, themeKey: info.theme });
+        currentPlanetIdx = (currentPlanetIdx + 5) % 7;
+    }
+
+    for (let i = 0; i < 12; i++) {
+        const start = new Date(sunsetTime.getTime() + i * nightSlotDur);
+        const end = new Date(start.getTime() + nightSlotDur);
+        const planet = this.planets[currentPlanetIdx];
+        const info = this.qualities[planet];
+        horas.night.push({ name: planet + " Hora", startTime: formatTime(start), endTime: formatTime(end), quality: info.quality, desc: info.nightDesc, themeKey: info.theme });
+        currentPlanetIdx = (currentPlanetIdx + 5) % 7;
+    }
+
+    return horas;
+  }
+};
+
+window.generateHoraPlan = function(dateObj, lat, long) {
+  const LAT = lat !== undefined ? lat : 28.6;
+  const LONG = long !== undefined ? long : 77.2;
+  let TZ_OFFSET = 330;
+  if (window.currentTz) {
+      const dStr = new Intl.DateTimeFormat("en-US", {timeZone: window.currentTz, timeZoneName: "shortOffset"}).format(dateObj);
+      const match = dStr.match(/GMT([+-])(\d{1,2})(?::(\d{2}))?/);
+      if (match) TZ_OFFSET = (match[1] === '-' ? -1 : 1) * (parseInt(match[2], 10) * 60 + (match[3] ? parseInt(match[3], 10) : 0));
+      else if (dStr.includes("GMT")) TZ_OFFSET = 0;
+  }
+  return window.HoraPlanner.calculate(dateObj, LAT, LONG, TZ_OFFSET);
+};
+
+window.GowriPlanner = {
+  names: ["Uthi", "Amrutham", "Rogam", "Laabam", "Dhanam", "Sugam", "Soram", "Visham"],
+  qualities: ["Good", "Good", "Bad", "Good", "Good", "Good", "Bad", "Bad"],
+  descriptions: [
+    "Useful for starting practical work with steady effort.", 
+    "A highly favourable slot for auspicious everyday actions.", 
+    "Usually avoided for fresh starts and sensitive work.", 
+    "Helpful for gains, trade, purchases, and money matters.", 
+    "Useful for wealth, accounts, and material planning.", 
+    "Good for comfort, travel, easy starts, and routine tasks.", 
+    "Generally weak for new beginnings; use caution.", 
+    "Inauspicious or difficult; avoid important starts."
+  ],
+  dayMatrix: [
+    [0, 1, 2, 3, 4, 5, 6, 7], // Sun
+    [1, 7, 2, 3, 4, 5, 6, 0], // Mon
+    [2, 3, 4, 5, 6, 0, 7, 1], // Tue
+    [3, 4, 5, 6, 7, 0, 1, 2], // Wed
+    [4, 5, 6, 0, 1, 7, 2, 3], // Thu
+    [5, 6, 0, 7, 1, 2, 3, 4], // Fri
+    [6, 0, 7, 1, 2, 3, 4, 5]  // Sat
+  ],
+  nightMatrix: [
+    [4, 5, 6, 7, 0, 1, 2, 3], // Sun
+    [5, 6, 0, 1, 7, 2, 3, 4], // Mon
+    [6, 0, 7, 1, 2, 3, 4, 5], // Tue
+    [0, 1, 2, 3, 4, 5, 6, 7], // Wed
+    [1, 7, 2, 3, 4, 5, 6, 0], // Thu
+    [2, 3, 4, 5, 6, 0, 7, 1], // Fri
+    [3, 4, 5, 6, 0, 7, 1, 2]  // Sat
+  ],
+  calculate: function(dateObj, lat, long, timezoneOffset) {
+    const noaa = window.NOAA.calculate(dateObj, lat, long, timezoneOffset);
+    const nextDateObj = new Date(dateObj.getTime() + 24 * 60 * 60 * 1000);
+    const noaaNext = window.NOAA.calculate(nextDateObj, lat, long, timezoneOffset);
+
+    const formatter = new Intl.DateTimeFormat("en-US", { timeZone: (window.currentTz || "Asia/Kolkata"), year: "numeric", month: "numeric", day: "numeric" });
+    const getFullDate = (targetDate, minutes) => {
+         const parts = formatter.formatToParts(targetDate);
+         const year = parseInt(parts.find(p => p.type === 'year').value);
+         const month = parseInt(parts.find(p => p.type === 'month').value) - 1;
+         const day = parseInt(parts.find(p => p.type === 'day').value);
+         return new Date(Date.UTC(year, month, day, 0, minutes - timezoneOffset, 0));
+    };
+
+    const sunriseTime = getFullDate(dateObj, noaa.sunrise);
+    let sunsetTime = getFullDate(dateObj, noaa.sunset);
+    let nextSunriseTime = getFullDate(nextDateObj, noaaNext.sunrise);
+
+    if (sunsetTime <= sunriseTime) sunsetTime = new Date(sunsetTime.getTime() + 24 * 60 * 60 * 1000);
+    if (nextSunriseTime <= sunsetTime) nextSunriseTime = new Date(nextSunriseTime.getTime() + 24 * 60 * 60 * 1000);
+
+    const dayDuration = sunsetTime.getTime() - sunriseTime.getTime();
+    const nightDuration = nextSunriseTime.getTime() - sunsetTime.getTime();
+    
+    const daySlotDur = dayDuration / 8;
+    const nightSlotDur = nightDuration / 8;
+
+    const localDate = new Date(dateObj.toLocaleString("en-US", { timeZone: (window.currentTz || "Asia/Kolkata") }));
+    const dayIndex = localDate.getDay();
+    const gowri = { day: [], night: [] };
+    const formatTime = (d) => d.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: window.currentTimeFormat !== "24h", timeZone: (window.currentTz || "UTC") });
+
+    for (let i = 0; i < 8; i++) {
+        const start = new Date(sunriseTime.getTime() + i * daySlotDur);
+        const end = new Date(start.getTime() + daySlotDur);
+        const idx = this.dayMatrix[dayIndex][i];
+        gowri.day.push({ name: this.names[idx], startTime: formatTime(start), endTime: formatTime(end), quality: this.qualities[idx], desc: this.descriptions[idx] });
+    }
+
+    for (let i = 0; i < 8; i++) {
+        const start = new Date(sunsetTime.getTime() + i * nightSlotDur);
+        const end = new Date(start.getTime() + nightSlotDur);
+        const idx = this.nightMatrix[dayIndex][i];
+        gowri.night.push({ name: this.names[idx], startTime: formatTime(start), endTime: formatTime(end), quality: this.qualities[idx], desc: this.descriptions[idx] });
+    }
+    return gowri;
+  }
+};
+
+window.generateGowriPlan = function(dateObj, lat, long) {
+  const LAT = lat !== undefined ? lat : 28.6;
+  const LONG = long !== undefined ? long : 77.2;
+  let TZ_OFFSET = 330;
+  if (window.currentTz) {
+      const dStr = new Intl.DateTimeFormat("en-US", {timeZone: window.currentTz, timeZoneName: "shortOffset"}).format(dateObj);
+      const match = dStr.match(/GMT([+-])(\d{1,2})(?::(\d{2}))?/);
+      if (match) TZ_OFFSET = (match[1] === '-' ? -1 : 1) * (parseInt(match[2], 10) * 60 + (match[3] ? parseInt(match[3], 10) : 0));
+      else if (dStr.includes("GMT")) TZ_OFFSET = 0;
+  }
+  return window.GowriPlanner.calculate(dateObj, LAT, LONG, TZ_OFFSET);
+};
+
+
+
+
+
+
+
+})();
+
+/* --- Engine Script 8 --- */
+(function(){
 
 // --- HIGH PRECISION SAMVATSARA & SHAKA SAMVAT ALGORITHM ---
 (function() {
@@ -2337,9 +2725,9 @@ const prevSunrise = prevSunriseRes ? prevSunriseRes.date : new Date(dPrev.getTim
     };
 })();
 
+})();
 
-/* 4. React App & Resilient Mount */
-
+/* --- React App & Resilient Mount --- */
 (function(){
 (function(){const h=document.createElement("link").relList;if(h&&h.supports&&h.supports("modulepreload"))return;for(const A of document.querySelectorAll('link[rel="modulepreload"]'))o(A);new MutationObserver(A=>{for(const T of A)if(T.type==="childList")for(const H of T.addedNodes)H.tagName==="LINK"&&H.rel==="modulepreload"&&o(H);}).observe(document,{childList:!0,subtree:!0});function b(A){const T={};return A.integrity&&(T.integrity=A.integrity),A.referrerPolicy&&(T.referrerPolicy=A.referrerPolicy),A.crossOrigin==="use-credentials"?T.credentials="include":A.crossOrigin==="anonymous"?T.credentials="omit":T.credentials="same-origin",T;}function o(A){if(A.ep)return;A.ep=!0;const T=b(A);fetch(A.href,T);}})();function V0(r){return r&&r.__esModule&&Object.prototype.hasOwnProperty.call(r,"default")?r.default:r;}var Ar={exports:{}},Ki={};/**
  * @license React
@@ -9975,7 +10363,7 @@ const LocationModal = ({ isOpen, onClose, onSave }) => {
             const blkData = distData[selectedBlock];
             if (blkData && blkData._panchayats) {
                 const p = blkData._panchayats.find(x => x[0] === selectedPanchayat);
-                if (p) {
+                              if (p) {
                     onSave({ latitude: p[2], longitude: p[1], name: `${p[0]}, ${selectedBlock}` });
                     return;
                 }
@@ -10168,6 +10556,7 @@ const LocationModal = ({ isOpen, onClose, onSave }) => {
 
                                                     // 2. Char Dham Header
                                                     s.jsx("div", { style: { gridColumn: "span 2", fontSize: "8px", fontWeight: 900, color: "#EA580C", letterSpacing: "0.6px", textTransform: "uppercase", marginTop: "3px", marginBottom: "1px" }, children: "🛕 MAHA CHAR DHAM & KEDARNATH" }),
+
                                                     // Char Dham Cards
                                                     charDhams.map((t, idx) => s.jsxs("button", {
                                                         key: "cd_" + idx, type: "button", onClick: () => onSave({ latitude: t.lat, longitude: t.lon, name: t.name }),
