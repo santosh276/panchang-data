@@ -240,14 +240,14 @@ Error generating stack: `+l.message+`
                 }
             }
             Pl.push(...activeKaranas);
-            const ju = jl(Ze + 1),an=q.sun,Ke=Math.floor(an/30),tn=Ke*30,Tu=X=>{let w=Ln(X).sun;return w>an+10&&(w-=360),w;};let as=D0(z-32,z,Tu,tn);const Mu=xa(as),ts=new Date(r.toLocaleString("en-US",{timeZone:xe})),Je=new Date(Mu.toLocaleString("en-US",{timeZone:xe}));ts.setHours(0,0,0,0),Je.setHours(0,0,0,0);let yt=Math.round((ts.getTime()-Je.getTime())/864e5)+1;yt+=1;const ft=Math.floor(q.moon/30),pt=(ft+1)*30,es=X=>Ln(X).moon,Au=R0(z,es,pt),qt=xa(Au),ke=q.sun/(360/27),Tl=Math.floor(ke),en=Wi[Tl%27],ye=Math.floor((ke-Tl)*4)+1,Ml=[];let ve=z;const ls=360/27/4;for(let X=0;X<4;X++){const w=Ln(ve).moon,ca=Math.floor(w/ls),ba=(ca+1)*ls,Xa=Math.floor(ca/4),Za=ca%4+1,Ka=Wi[Xa%27],Xt=R0(ve,es,ba);Ml.push({name:Ka,pada:Za,endTimeStr:V(xa(Xt))}),ve=Xt+1e-4;}const ln=Br(z).apparentLon,Al=q.sun,ns=ln>=270||ln<90?"Uttarayana":"Dakshinayana",is=Al>=270||Al<90?"Uttarayana":"Dakshinayana",Kn=X=>{const w=Ua(X);return w>=270&&w<330?"Shishir (Winter)":w>=330||w<30?"Vasant (Spring)":w>=30&&w<90?"Grishma (Summer)":w>=90&&w<150?"Varsha (Monsoon)":w>=150&&w<210?"Sharad (Autumn)":"Hemant (Prewinter)";},sn=Kn(ln),Jn=Kn(Al);let kn="",Wn="";if(A&&T){const X=T.getTime()-A.getTime(),w=864e5-X;kn=U0(X),Wn=U0(w);}const Da=r.getDay();let Ga=null,it=null,te=null,Dl=null,un=null,$n=null,cn=null,pe=null,El="--:--",be=null,ce=null,We=null,Se=null,Qa=null,Fn=null,In=null,re=null,Ne=null,ss=null,Pn=null,ai=null,ti="",zl="--:--";if(A&&T&&U){const X=T.getTime()-A.getTime(),w=U.getTime()-T.getTime(),ca=X/8,ba=[8,2,7,5,6,4,3],Xa=[5,4,3,2,1,7,6],Za=[7,6,5,4,3,2,1];Ga=new Date(A.getTime()+(ba[Da]-1)*ca),it=new Date(Ga.getTime()+ca),te=new Date(A.getTime()+(Xa[Da]-1)*ca),Dl=new Date(te.getTime()+ca),un=new Date(A.getTime()+(Za[Da]-1)*ca),$n=new Date(un.getTime()+ca);const Ka=X/15;cn=new Date(A.getTime()+7*Ka),pe=new Date(A.getTime()+8*Ka),El={0:[14],1:[9,12],2:[2,6],3:[8],4:[5],5:[3,7],6:[1,4]}[Da].map(Ot=>{const le=new Date(A.getTime()+(Ot-1)*Ka),Ie=new Date(A.getTime()+Ot*Ka);return`${nt(le)} to ${nt(Ie)}`;}).join(", ");const _t=w/15;be=new Date(A.getTime()-2*_t),ce=new Date(A.getTime()-1*_t),We=ce,Se=A,Qa=new Date(A.getTime()+10*Ka),Fn=new Date(A.getTime()+11*Ka),In=new Date(T.getTime()-12*6e4),re=new Date(T.getTime()+12*6e4),Ne=T,ss=new Date(T.getTime()+_t),Pn=new Date(T.getTime()+7*_t),ai=new Date(T.getTime()+8*_t);const Zt=Ph[Da]||[],Fe=Zt.includes(Nl),Hl=Zt.includes(Qn);if(Fe){const Ot=A,le=xa(La);ti=Q(Ot,le);}else if(Hl){const Ot=xa(La);ti=Q(Ot,U);}const $a=tx(z,Ma,wa),ot=$h[wa%27]||0,st=$a+ot*24/1440,Kt=st+96/1440,Me=xa(st),Ae=xa(Kt);zl=Q(Me,Ae);}const _l=H0(wa,Da),Vt=H0((wa+1)%27,Da),Nt=C0(wa,Da),us=C0((wa+1)%27,Da),{jeeva:Eu,netra:ei}=ex(wa),li=[],horaData={day:[],night:[]},gowriData={day:[],night:[]};if(A&&T){const vs=window.generateVedicPlan(A,h.latitude,h.longitude);vs.forEach(s=>li.push(s));if(window.generateHoraPlan){const hs=window.generateHoraPlan(A,h.latitude,h.longitude);horaData.day=hs.day;horaData.night=hs.night;}if(window.generateGowriPlan){const gs=window.generateGowriPlan(A,h.latitude,h.longitude);gowriData.day=gs.day;gowriData.night=gs.night;}}const Ol=lx(ua+1,Da),cs=Y0(ua+1),jt=Y0(ua+2),fs=["West","East","North","North","South","West","East"][Da],ni=B0(ft);let je=null,ii=null;if(qt&&U&&qt<U){ii=V(qt);const X=(ft+1)%12;je=B0(X);}const $e=["East","North-West","North","North-East","South","South-East","East"][Da],os=Da===0?1:Da+1,si=wa+1,ds=(si+os-1)%9,ui=O0[ds],_u=(si+1+os-1)%9,rn=O0[_u],Lt=Math.floor(ke),fn=wa,on=w0(fn,Lt),Te=w0(fn+1,Lt),zt=[];ua%30===29&&(zt.push("Amavasya"),Ke===9&&zt.push("Mauni Amavasya"),Ke===9&&zt.push("Thai Amavasai")),r.getMonth()===0&&r.getDate()>=14&&r.getDate()<=16&&Math.abs(an-270)<1.5&&(zt.push("Makara Sankranti"),zt.push("Magha Bihu"));const fe={chandrabalam:[],tarabalam:[]},dn=G0(ft),ms=q0(wa),Ul=qt<U?qt:U;
+            const ju = jl(Ze + 1),an=q.sun,Ke=Math.floor(an/30),tn=Ke*30,Tu=X=>{let w=Ln(X).sun;return w>an+10&&(w-=360),w;};let as=D0(z-32,z,Tu,tn);const Mu=xa(as),ts=new Date(r.toLocaleString("en-US",{timeZone:xe})),Je=new Date(Mu.toLocaleString("en-US",{timeZone:xe}));ts.setHours(0,0,0,0),Je.setHours(0,0,0,0);let yt=Math.round((ts.getTime()-Je.getTime())/864e5)+1;yt+=1;const ft=Math.floor(q.moon/30),pt=(ft+1)*30,es=X=>Ln(X).moon,Au=R0(z,es,pt),qt=xa(Au),ke=q.sun/(360/27),Tl=Math.floor(ke),en=Wi[Tl%27],ye=Math.floor((ke-Tl)*4)+1,Ml=[];let ve=z;const ls=360/27/4;for(let X=0;X<4;X++){const w=Ln(ve).moon,ca=Math.floor(w/ls),ba=(ca+1)*ls,Xa=Math.floor(ca/4),Za=ca%4+1,Ka=Wi[Xa%27],Xt=R0(ve,es,ba);Ml.push({name:Ka,pada:Za,endTimeStr:V(xa(Xt))}),ve=Xt+1e-4;}const ln=Br(z).apparentLon,Al=q.sun,ns=ln>=270||ln<90?"Uttarayana":"Dakshinayana",is=Al>=270||Al<90?"Uttarayana":"Dakshinayana",Kn=X=>{const w=Ua(X);return w>=270&&w<330?"Shishir (Winter)":w>=330||w<30?"Vasant (Spring)":w>=30&&w<90?"Grishma (Summer)":w>=90&&w<150?"Varsha (Monsoon)":w>=150&&w<210?"Sharad (Autumn)":"Hemant (Prewinter)";},sn=Kn(ln),Jn=Kn(Al);let kn="",Wn="";if(A&&T){const X=T.getTime()-A.getTime(),w=864e5-X;const dG=(X/60000)/24,dGhati=Math.floor(dG),dPala=Math.floor((dG-dGhati)*60);const rG=(w/60000)/24,rGhati=Math.floor(rG),rPala=Math.floor((rG-rGhati)*60);kn=`${dGhati} Ghati ${dPala} Pala (${Math.floor(X/3600000)}h ${Math.floor((X%3600000)/60000)}m)`;Wn=`${rGhati} Ghati ${rPala} Pala (${Math.floor(w/3600000)}h ${Math.floor((w%3600000)/60000)}m)`;}const Da=r.getDay();let Ga=null,it=null,te=null,Dl=null,un=null,$n=null,cn=null,pe=null,El="--:--",be=null,ce=null,We=null,Se=null,Qa=null,Fn=null,In=null,re=null,Ne=null,ss=null,Pn=null,ai=null,ti="",zl="--:--";if(A&&T&&U){const X=T.getTime()-A.getTime(),w=U.getTime()-T.getTime(),ca=X/8,ba=[8,2,7,5,6,4,3],Xa=[5,4,3,2,1,7,6],Za=[7,6,5,4,3,2,1];Ga=new Date(A.getTime()+(ba[Da]-1)*ca),it=new Date(Ga.getTime()+ca),te=new Date(A.getTime()+(Xa[Da]-1)*ca),Dl=new Date(te.getTime()+ca),un=new Date(A.getTime()+(Za[Da]-1)*ca),$n=new Date(un.getTime()+ca);const Ka=X/15;cn=new Date(A.getTime()+7*Ka),pe=new Date(A.getTime()+8*Ka),El={0:[14],1:[9,12],2:[2,6],3:[8],4:[5],5:[3,7],6:[1,4]}[Da].map(Ot=>{const le=new Date(A.getTime()+(Ot-1)*Ka),Ie=new Date(A.getTime()+Ot*Ka);return`${nt(le)} to ${nt(Ie)}`;}).join(", ");const _t=w/15;be=new Date(A.getTime()-2*_t),ce=new Date(A.getTime()-1*_t),We=ce,Se=A,Qa=new Date(A.getTime()+10*Ka),Fn=new Date(A.getTime()+11*Ka),In=new Date(T.getTime()-12*6e4),re=new Date(T.getTime()+12*6e4),Ne=T,ss=new Date(T.getTime()+_t),Pn=new Date(T.getTime()+7*_t),ai=new Date(T.getTime()+8*_t);const Zt=Ph[Da]||[],Fe=Zt.includes(Nl),Hl=Zt.includes(Qn);if(Fe){const Ot=A,le=xa(La);ti=Q(Ot,le);}else if(Hl){const Ot=xa(La);ti=Q(Ot,U);}const $a=tx(z,Ma,wa),ot=$h[wa%27]||0,st=$a+ot*24/1440,Kt=st+96/1440,Me=xa(st),Ae=xa(Kt);zl=Q(Me,Ae);}const _l=H0(wa,Da),Vt=H0((wa+1)%27,Da),Nt=C0(wa,Da),us=C0((wa+1)%27,Da),{jeeva:Eu,netra:ei}=ex(wa),li=[],horaData={day:[],night:[]},gowriData={day:[],night:[]};if(A&&T){const vs=window.generateVedicPlan(A,h.latitude,h.longitude);vs.forEach(s=>li.push(s));if(window.generateHoraPlan){const hs=window.generateHoraPlan(A,h.latitude,h.longitude);horaData.day=hs.day;horaData.night=hs.night;}if(window.generateGowriPlan){const gs=window.generateGowriPlan(A,h.latitude,h.longitude);gowriData.day=gs.day;gowriData.night=gs.night;}}const Ol=lx(ua+1,Da),cs=Y0(ua+1),jt=Y0(ua+2),fs=["West","East","North","North","South","West","East"][Da],ni=B0(ft);let je=null,ii=null;if(qt&&U&&qt<U){ii=V(qt);const X=(ft+1)%12;je=B0(X);}const $e=["East","North-West","North","North-East","South","South-East","East"][Da],os=Da===0?1:Da+1,si=wa+1,ds=(si+os-1)%9,ui=O0[ds],_u=(si+1+os-1)%9,rn=O0[_u],Lt=Math.floor(ke),fn=wa,on=w0(fn,Lt),Te=w0(fn+1,Lt),zt=[];ua%30===29&&(zt.push("Amavasya"),Ke===9&&zt.push("Mauni Amavasya"),Ke===9&&zt.push("Thai Amavasai")),r.getMonth()===0&&r.getDate()>=14&&r.getDate()<=16&&Math.abs(an-270)<1.5&&(zt.push("Makara Sankranti"),zt.push("Magha Bihu"));const fe={chandrabalam:[],tarabalam:[]},dn=G0(ft),ms=q0(wa),Ul=qt<U?qt:U;
 if(fe.chandrabalam.push({endTimeStr:V(Ul).replace("upto ",""),items:dn.good,badItem:dn.ashtama}),fe.tarabalam.push({endTimeStr:V(xa(La)).replace("upto ",""),items:ms}),qt&&qt<U){const X=G0((ft+1)%12);fe.chandrabalam.push({endTimeStr:"next day sunrise",items:X.good,badItem:X.ashtama});}else qt&&qt>U&&(fe.chandrabalam[0].endTimeStr="next day sunrise");
 const getCBStatus=(c)=>[1,3,6,7,10,11].includes(c)?"Good":[4,8,12].includes(c)?"Bad":"Puja Needed";
 fe.detailedChandrabalam={currentMoonSign:Le[ft],nextMoonSign:(qt&&qt<U)?Le[(ft+1)%12]:null,transitTime:(qt&&qt<U)?V(qt).replace("upto ",""):null,rashis:Le.map((rashiName,idx)=>{const c1=(ft-idx+12)%12+1;const res={name:rashiName,current:{count:c1,status:getCBStatus(c1)},next:null};if(qt&&qt<U){const c2=((ft+1)%12-idx+12)%12+1;res.next={count:c2,status:getCBStatus(c2)};}return res;})};
 const Qt=xa(La);if(Qt&&Qt<U){const X=q0((wa+1)%27);fe.tarabalam.push({endTimeStr:"next day sunrise",items:X});}else fe.tarabalam[0].endTimeStr="next day sunrise";
 const getTBInfo=(c)=>{const m={1:{name:"Janma",desc:"Not Good",status:"Bad"},2:{name:"Sampata",desc:"Very Good",status:"Good"},3:{name:"Vipata",desc:"Bad",status:"Bad"},4:{name:"Kshema",desc:"Good",status:"Good"},5:{name:"Pratyari",desc:"Not Good",status:"Bad"},6:{name:"Sadhaka",desc:"Very Good",status:"Good"},7:{name:"Naidhana",desc:"Totally Bad",status:"Bad"},8:{name:"Mitra",desc:"Good",status:"Good"},9:{name:"Param Mitra",desc:"Good",status:"Good"}};return m[c];};
 fe.detailedTarabalam={currentNakshatra:Wi[wa],nextNakshatra:(Qt&&Qt<U)?Wi[(wa+1)%27]:null,transitTime:(Qt&&Qt<U)?V(Qt).replace("upto ",""):null,nakshatras:Wi.map((nakName,idx)=>{let c1=((wa-idx+27)%27)+1;let t1=c1%9;if(t1===0)t1=9;let res={name:nakName,current:{count:t1,info:getTBInfo(t1)},next:null};if(Qt&&Qt<U){let c2=(((wa+1)%27-idx+27)%27)+1;let t2=c2%9;if(t2===0)t2=9;res.next={count:t2,info:getTBInfo(t2)};}return res;})};
-const Rl={lagnas:[],panchaka:[]};if(A&&U){const X=[];let w=ge(A);const ca=ge(U),ba=$a=>M0($a,h.latitude,h.longitude),Xa=ba(w);let Ka=Math.floor(Xa/30),Xt=A;let wB=w;for(let i=0;i<20;i++){wB-=15/1440;if(Math.floor(ba(wB)/30)!==Ka%12){Xt=xa(((O,I,le)=>{for(let ci=0;ci<20;ci++){const M=(O+I)/2;Math.floor(ba(M)/30)===le?I=M:O=M;}return I;})(wB,wB+15/1440,Ka%12));break;}}for(;w<ca;){let $a=w,ot=!1;for(let Me=0;Me<12;Me++){$a+=15/1440;const Ae=ba($a);if(Math.floor(Ae/30)!==Ka%12){ot=!0;break;}}let st=ca;ot&&(st=((Ae,Ot,le)=>{let Ie=Ae,Cl=Ot;for(let ci=0;ci<20;ci++){const Yl=(Ie+Cl)/2,Bl=ba(Yl);Math.floor(Bl/30)===le?Ie=Yl:Cl=Yl;}return Cl;})(w,$a,Ka%12)),st>ca&&(st=ca);const Kt=xa(st);if(X.push({sign:Le[Ka%12],startTime:Xt,endTime:Kt,timeRange:Q(Xt,Kt)}),Xt=Kt,w=st+1e-4,Ka++,w>=ca)break;}Rl.lagnas=X;const Ca=new Set();Ca.add(ge(A)),Ca.add(ge(U)),X.forEach($a=>Ca.add(ge($a.endTime))),ga>ge(A)&&ga<ca&&Ca.add(ga);const ee=Rr(ga+.1,ua+2);ee<ca&&Ca.add(ee),La>ge(A)&&La<ca&&Ca.add(La);const _t=Hr(La+.1,Ma,wa+2);_t<ca&&Ca.add(_t);const Zt=Array.from(Ca).sort(($a,ot)=>$a-ot),Fe=[],Hl=Da+1;for(let $a=0;$a<Zt.length-1;$a++){const ot=Zt[$a],st=Zt[$a+1];if(st<=ot+1e-5)continue;const Kt=(ot+st)/2,Me=W(Kt),Ae=Math.floor(Me)+1,Ot=Ma(Kt),le=Math.floor(Ot)+1,Ie=M0(Kt,h.latitude,h.longitude),Cl=Math.floor(Ie/30)+1,Yl=(Ae+Hl+le+Cl)%9;let Bl="Bad",Ut="";switch(Yl){case 1:Ut="Mrityu Panchaka";break;case 2:Ut="Agni Panchaka";break;case 4:Ut="Raja Panchaka";break;case 6:Ut="Chora Panchaka";break;case 8:Ut="Roga Panchaka";break;case 0:case 3:case 5:case 7:case 9:Ut="Good Muhurta",Bl="Good";break;default:Ut="Good Muhurta",Bl="Good";}const Pe=Fe[Fe.length-1];if(Pe&&Pe.name===Ut)Pe.endTime=xa(st),Pe.timeRange=Q(Pe.startTime,Pe.endTime);else{const hs=xa(ot),xs=xa(st);Fe.push({name:Ut,type:Bl,startTime:hs,endTime:xs,timeRange:Q(hs,xs)});}}Rl.panchaka=Fe;}return{date:r,location:h,sunrise:nt(A),sunset:nt(T),moonrise:O?window.formatMoonTime(O,b):"No Rise",moonset:S?window.formatMoonTime(S,b):"No Set",tithi:{name:Wa,number:ua+1,paksha:pa,endTime:Ta,endTimeStr:V(Ta),description:pa==="Shukla"?"Waxing Moon":"Waning Moon",next:{name:Ra}},nakshatra:{name:Nl,number:wa+1,ruler:["Ketu","Venus","Sun","Moon","Mars","Rahu","Jupiter","Saturn","Mercury"][wa%9],endTime:xa(La),endTimeStr:V(xa(La)),next:{name:Qn}},yoga:{name:Xn,number:Xe+1,meaning:"Yoga",endTime:xa(Fi),endTimeStr:V(xa(Fi)),next:{name:Ii}},karana:{name:Pi.name,number:Ze+1,type:Pi.type,endTime:Pl[0].endTime,endTimeStr:Pl[0].endTimeStr,next:{name:ju.name},sequence:Pl},sunSign:{western:Le[Math.floor(q.sun/30)],indian:Le[Ke],longitude:parseFloat(q.sun.toFixed(2))},moonSign:{western:Le[Math.floor(q.moon/30)],indian:Le[ft],longitude:parseFloat(q.moon.toFixed(2))},ayana:ns,ritu:sn,vikramSamvat:et,shakaSamvat:Ha,amantaMonth:Ba,purnimantaMonth:za,weekday:ax[Da],choghadiya:li,hora:horaData,gowri:gowriData,muhurats:{rahuKaal:`${nt(Ga)} - ${nt(it)}`,yamagandam:`${nt(te)} - ${nt(Dl)}`,gulika:`${nt(un)} - ${nt($n)}`,abhijit:`${nt(cn)} - ${nt(pe)}`,dushtaMuhurta:El},samvatDetails:{vikram:{year:et,name:M},shaka:{year:Ha,name:B},gujarati:{year:N,name:C},samvatsara:{name:M,nextName:R,endTimeStr:`upto ${V(rt).replace("upto ","")}`},chandramasa:{purnimanta:`${za} - Purnimanta`,amanta:`${Ba} - Amanta`},pravishte:yt},rashiNakshatra:{moonSign:{name:Le[ft],endTimeStr:V(qt),nextName:Le[(ft+1)%12]},sunSign:Le[Ke],suryaNakshatra:{name:en,pada:ye},nakshatraPadas:Ml},rituAyana:{drikRitu:sn,vedicRitu:Jn,drikAyana:ns,vedicAyana:is,dinamana:kn,ratrimana:Wn,madhyahna:H?nt(H):"--:--"},auspiciousTimings:{brahmaMuhurta:Q(be,ce),pratahSandhya:Q(We,Se),abhijit:Q(cn,pe),vijayaMuhurta:Q(Qa,Fn),godhuliMuhurta:Q(In,re),sayahnaSandhya:Q(Ne,ss),amritKalam:"--:-- to --:--",nishitaMuhurta:Q(Pn,ai),},inauspiciousTimings:{rahuKalam:Q(Ga,it),yamaganda:Q(te,Dl),gulikaiKalam:Q(un,$n),varjyam:zl,aadalYoga:`${nt(A)} to ${V(xa(La)).replace("upto ","")}`,vidaalYoga:`${V(xa(La)).replace("upto ","")} to ${nt(U)}`,baana:`Raja upto ${V(xa(La)).replace("upto ","")}`},anandadiTamil:{anandadiYoga:{name:_l.name,status:_l.status,endTimeStr:V(xa(La)),nextName:Vt.name,nextStatus:Vt.status},tamilYoga:{name:Nt,endTimeStr:V(xa(La)),nextName:us},jeevanama:Eu,netrama:ei},nivasShool:{homahuti:{current:ui,next:rn,endTimeStr:V(xa(La))},agnivasa:{location:Ol.location,description:Ol.description,endTimeStr:V(Ta)},shivavasa:{current:cs.location,next:jt.location,description:cs.description,endTimeStr:V(Ta)},dishaShool:fs,chandraVasa:{current:ni,next:je,endTimeStr:ii},rahuVasa:$e,kumbhaChakra:{current:on.location,next:Te.location,currentStatus:on.status,nextStatus:Te.status,endTimeStr:V(xa(La))}},otherEpochs:ct,taraChandra:fe,panchakaLagna:Rl,significantEvents:zt,auspiciousness:75};},
+const Rl={lagnas:[],panchaka:[]};if(A&&U){const X=[];let w=ge(A);const ca=ge(U),ba=$a=>M0($a,h.latitude,h.longitude),Xa=ba(w);let Ka=Math.floor(Xa/30),Xt=A;let wB=w;for(let i=0;i<20;i++){wB-=15/1440;if(Math.floor(ba(wB)/30)!==Ka%12){Xt=xa(((O,I,le)=>{for(let ci=0;ci<20;ci++){const M=(O+I)/2;Math.floor(ba(M)/30)===le?I=M:O=M;}return I;})(wB,wB+15/1440,Ka%12));break;}}for(;w<ca;){let $a=w,ot=!1;for(let Me=0;Me<12;Me++){$a+=15/1440;const Ae=ba($a);if(Math.floor(Ae/30)!==Ka%12){ot=!0;break;}}let st=ca;ot&&(st=((Ae,Ot,le)=>{let Ie=Ae,Cl=Ot;for(let ci=0;ci<20;ci++){const Yl=(Ie+Cl)/2,Bl=ba(Yl);Math.floor(Bl/30)===le?Ie=Yl:Cl=Yl;}return Cl;})(w,$a,Ka%12)),st>ca&&(st=ca);const Kt=xa(st);if(X.push({sign:Le[Ka%12],startTime:Xt,endTime:Kt,timeRange:Q(Xt,Kt)}),Xt=Kt,w=st+1e-4,Ka++,w>=ca)break;}Rl.lagnas=X;const Ca=new Set();Ca.add(ge(A)),Ca.add(ge(U)),X.forEach($a=>Ca.add(ge($a.endTime))),ga>ge(A)&&ga<ca&&Ca.add(ga);const ee=Rr(ga+.1,ua+2);ee<ca&&Ca.add(ee),La>ge(A)&&La<ca&&Ca.add(La);const _t=Hr(La+.1,Ma,wa+2);_t<ca&&Ca.add(_t);const Zt=Array.from(Ca).sort(($a,ot)=>$a-ot),Fe=[],Hl=Da+1;for(let $a=0;$a<Zt.length-1;$a++){const ot=Zt[$a],st=Zt[$a+1];if(st<=ot+1e-5)continue;const Kt=(ot+st)/2,Me=W(Kt),Ae=Math.floor(Me)+1,Ot=Ma(Kt),le=Math.floor(Ot)+1,Ie=M0(Kt,h.latitude,h.longitude),Cl=Math.floor(Ie/30)+1,Yl=(Ae+Hl+le+Cl)%9;let Bl="Bad",Ut="Good Muhurta",key="shubha";switch(Yl){case 1:Ut="Mrityu Panchaka";key="mrityu";break;case 2:Ut="Agni Panchaka";key="agni";break;case 4:Ut="Raja Panchaka";key="raja";break;case 6:Ut="Chora Panchaka";key="chora";break;case 8:Ut="Roga Panchaka";key="roga";break;default:Ut="Good Muhurta";Bl="Good";key="shubha";}const lagnaName=Le[(Cl-1)%12];const matchingLagna=X.find(l=>l.sign===lagnaName);const lagnaPreStart=(matchingLagna&&matchingLagna.startTime<A)?matchingLagna.startTime:null;const hs=xa(ot),xs=xa(st);const Pe=Fe[Fe.length-1];if(Pe&&Pe.key===key&&Pe.lagna===lagnaName){Pe.endTime=xs;Pe.timeRange=Q(Pe.startTime,xs);}else{Fe.push({name:Ut,key:key,type:Bl,lagna:lagnaName,lagnaIdx:Cl,tithiIdx:Ae,tithiName:E0[(Ae-1)%30],varaIdx:Hl,nakIdx:le,nakName:Wi[(le-1)%27],sum:Ae+Hl+le+Cl,rem:Yl,startTime:hs,endTime:xs,timeRange:Q(hs,xs),preStart:lagnaPreStart});}}Rl.panchaka=Fe;}return{date:r,location:h,sunrise:nt(A),sunset:nt(T),moonrise:O?window.formatMoonTime(O,b):"No Rise",moonset:S?window.formatMoonTime(S,b):"No Set",tithi:{name:Wa,number:ua+1,paksha:pa,endTime:Ta,endTimeStr:V(Ta),description:pa==="Shukla"?"Waxing Moon":"Waning Moon",next:{name:Ra}},nakshatra:{name:Nl,number:wa+1,ruler:["Ketu","Venus","Sun","Moon","Mars","Rahu","Jupiter","Saturn","Mercury"][wa%9],endTime:xa(La),endTimeStr:V(xa(La)),next:{name:Qn}},yoga:{name:Xn,number:Xe+1,meaning:"Yoga",endTime:xa(Fi),endTimeStr:V(xa(Fi)),next:{name:Ii}},karana:{name:Pi.name,number:Ze+1,type:Pi.type,endTime:Pl[0].endTime,endTimeStr:Pl[0].endTimeStr,next:{name:ju.name},sequence:Pl},sunSign:{western:Le[Math.floor(q.sun/30)],indian:Le[Ke],longitude:parseFloat(q.sun.toFixed(2))},moonSign:{western:Le[Math.floor(q.moon/30)],indian:Le[ft],longitude:parseFloat(q.moon.toFixed(2))},ayana:ns,ritu:sn,vikramSamvat:et,shakaSamvat:Ha,amantaMonth:Ba,purnimantaMonth:za,weekday:ax[Da],choghadiya:li,hora:horaData,gowri:gowriData,muhurats:{rahuKaal:`${nt(Ga)} - ${nt(it)}`,yamagandam:`${nt(te)} - ${nt(Dl)}`,gulika:`${nt(un)} - ${nt($n)}`,abhijit:`${nt(cn)} - ${nt(pe)}`,dushtaMuhurta:El},samvatDetails:{vikram:{year:et,name:M},shaka:{year:Ha,name:B},gujarati:{year:N,name:C},samvatsara:{name:M,nextName:R,endTimeStr:`upto ${V(rt).replace("upto ","")}`},chandramasa:{purnimanta:`${za} - Purnimanta`,amanta:`${Ba} - Amanta`},pravishte:yt},rashiNakshatra:{moonSign:{name:Le[ft],endTimeStr:V(qt),nextName:Le[(ft+1)%12]},sunSign:Le[Ke],suryaNakshatra:{name:en,pada:ye},nakshatraPadas:Ml},rituAyana:{drikRitu:sn,vedicRitu:Jn,drikAyana:ns,vedicAyana:is,dinamana:kn,ratrimana:Wn,madhyahna:H?nt(H):"--:--"},auspiciousTimings:{brahmaMuhurta:Q(be,ce),pratahSandhya:Q(We,Se),abhijit:Q(cn,pe),vijayaMuhurta:Q(Qa,Fn),godhuliMuhurta:Q(In,re),sayahnaSandhya:Q(Ne,ss),amritKalam:"--:-- to --:--",nishitaMuhurta:Q(Pn,ai),},inauspiciousTimings:{rahuKalam:Q(Ga,it),yamaganda:Q(te,Dl),gulikaiKalam:Q(un,$n),varjyam:zl,aadalYoga:`${nt(A)} to ${V(xa(La)).replace("upto ","")}`,vidaalYoga:`${V(xa(La)).replace("upto ","")} to ${nt(U)}`,baana:`Raja upto ${V(xa(La)).replace("upto ","")}`},anandadiTamil:{anandadiYoga:{name:_l.name,status:_l.status,endTimeStr:V(xa(La)),nextName:Vt.name,nextStatus:Vt.status},tamilYoga:{name:Nt,endTimeStr:V(xa(La)),nextName:us},jeevanama:Eu,netrama:ei},nivasShool:{homahuti:{current:ui,next:rn,endTimeStr:V(xa(La))},agnivasa:{location:Ol.location,description:Ol.description,endTimeStr:V(Ta)},shivavasa:{current:cs.location,next:jt.location,description:cs.description,endTimeStr:V(Ta)},dishaShool:fs,chandraVasa:{current:ni,next:je,endTimeStr:ii},rahuVasa:$e,kumbhaChakra:{current:on.location,next:Te.location,currentStatus:on.status,nextStatus:Te.status,endTimeStr:V(xa(La))}},otherEpochs:ct,taraChandra:fe,panchakaLagna:Rl,significantEvents:zt,auspiciousness:75};},
 
 ActiveTimer = ({ render }) => {
     const [currentTime, setCurrentTime] = ki.useState(new Date());
@@ -1227,26 +1227,35 @@ ChoghadiyaPlanner = ({slots: r}) => {
                                         s.jsx("span", {className: "text-label-31", "data-i18n": cleanName, style: {fontSize: "1.02rem", fontWeight: 900, lineHeight: 1.15, margin: 0}, children: displayChName}),
                                         s.jsx("span", {style: {color: pctColorHex, fontSize: "11px", fontWeight: 800}, children: chMeaning})
                                     ]}),
-                                    s.jsxs("div", {style: {display: "flex", alignItems: "center", gap: "8px", marginTop: "2px", flexWrap: "wrap"}, children: [
+                                    s.jsxs("div", {style: {display: "flex", alignItems: "center", gap: "6px", marginTop: "2px", flexWrap: "wrap"}, children: [
                                         s.jsxs("span", {className: "ch-lord-text", style: {fontSize: "9.5px", fontWeight: 700, color: "#6B7280"}, children: [curLang === 'or' ? "ସ୍ୱାମୀ: " : "Lord: ", curLang === 'or' ? chogMeta.lordOr : chogMeta.lordEn]}),
-                                        isRahu && s.jsxs("span", {
-                                            className: "ch-rahu-badge",
-                                            style: {
-                                                fontSize: "8.5px",
-                                                fontWeight: 800,
-                                                padding: "1px 6px",
-                                                borderRadius: "5px",
-                                                background: "#FEF2F2",
-                                                color: "#B91C1C",
-                                                border: "1px solid #FCA5A5",
-                                                display: "inline-flex",
-                                                alignItems: "center",
-                                                gap: "3px"
-                                            },
-                                            children: [
-                                                "⚠️ ",
-                                                s.jsx("span", {"data-i18n": "Rahu Kaal", children: curLang === 'or' ? "ରାହୁ କାଳ" : "Rahu Kaal"})
-                                            ]
+                                        (ch.badges || (isRahu ? ["Rahu Kaal"] : [])).map((bName, bIdx) => {
+                                            const bLabels = {
+                                                "Rahu Kaal": curLang === 'or' ? "ରାହୁ କାଳ" : "Rahu Kaal",
+                                                "Vaar Vela": curLang === 'or' ? "ବାର ବେଳା" : "Vaar Vela",
+                                                "Kaal Vela": curLang === 'or' ? "କାଳ ବେଳା" : "Kaal Vela",
+                                                "Kaal Ratri": curLang === 'or' ? "କାଳ ରାତ୍ରି" : "Kaal Ratri"
+                                            };
+                                            return s.jsxs("span", {
+                                                key: bIdx,
+                                                className: "ch-rahu-badge",
+                                                style: {
+                                                    fontSize: "8.5px",
+                                                    fontWeight: 800,
+                                                    padding: "1px 6px",
+                                                    borderRadius: "5px",
+                                                    background: "#FEF2F2",
+                                                    color: "#B91C1C",
+                                                    border: "1px solid #FCA5A5",
+                                                    display: "inline-flex",
+                                                    alignItems: "center",
+                                                    gap: "3px"
+                                                },
+                                                children: [
+                                                    "⚠️ ",
+                                                    s.jsx("span", {"data-i18n": bName, children: bLabels[bName] || bName})
+                                                ]
+                                            });
                                         })
                                     ]})
                                 ]})
@@ -3016,33 +3025,33 @@ const RashiNakshatraTab = ({data: r}) => {
 
             // Classical Vedic Avakahada Janma Aksharas (108 Pada Syllables)
             const padaAksharas = {
-                "Ashwini": ["Chu (ଚୁ)", "Che (ଚେ)", "Cho (ଚୋ)", "La (ଲା)"],
-                "Bharani": ["Lee (ଲୀ)", "Lu (ଲୁ)", "Le (ଲେ)", "Lo (ଲୋ)"],
-                "Krittika": ["A (ଅ)", "Ee (ଇ)", "U (ଉ)", "E (ଏ)"],
-                "Rohini": ["O (ଓ)", "Va (ଭା)", "Vee (ଭି)", "Vu (ଭୁ)"],
-                "Mrigashira": ["Ve (ଭେ)", "Vo (ଭୋ)", "Ka (କା)", "Kee (କୀ)"],
-                "Ardra": ["Ku (କୁ)", "Gha (ଘ)", "Nga (ଙ)", "Chha (ଛ)"],
-                "Punarvasu": ["Ke (କେ)", "Ko (କୋ)", "Ha (ହା)", "Hee (ହୀ)"],
-                "Pushya": ["Hu (ହୁ)", "He (ହେ)", "Ho (ହୋ)", "Da (ଡା)"],
-                "Ashlesha": ["Dee (ଡୀ)", "Du (ଡୁ)", "De (ଡେ)", "Do (ଡୋ)"],
-                "Magha": ["Ma (ମା)", "Mee (ମୀ)", "Mu (ମୁ)", "Me (ମେ)"],
-                "Purva Phalguni": ["Mo (ମୋ)", "Ta (ଟା)", "Tee (ଟୀ)", "Tu (ଟୁ)"],
-                "Uttara Phalguni": ["Te (ଟେ)", "To (ଟୋ)", "Paa (ପା)", "Pee (ପୀ)"],
-                "Hasta": ["Pu (ପୁ)", "Sha (ଷ)", "Na (ଣ)", "Dha (ଢ)"],
-                "Chitra": ["Pe (ପେ)", "Po (ପୋ)", "Ra (ରା)", "Ree (ରୀ)"],
-                "Swati": ["Ru (ରୁ)", "Re (ରେ)", "Ro (ରୋ)", "Taa (ତା)"],
-                "Vishakha": ["Tee (ତୀ)", "Tu (ତୁ)", "Te (ତେ)", "To (ତୋ)"],
-                "Anuradha": ["Na (ନା)", "Nee (ନୀ)", "Nu (ନୁ)", "Ne (ନେ)"],
-                "Jyeshtha": ["No (ନୋ)", "Ya (ୟା)", "Yee (ୟୀ)", "Yu (ୟୁ)"],
-                "Mula": ["Ye (ୟେ)", "Yo (ୟୋ)", "Bha (ଭା)", "Bhee (ଭୀ)"],
-                "Purva Ashadha": ["Bhu (ଭୁ)", "Dha (ଧା)", "Bha (ଭ)", "Dha (ଢ଼)"],
-                "Uttara Ashadha": ["Bhe (ଭେ)", "Bho (ଭୋ)", "Ja (ଜା)", "Jee (ଜୀ)"],
-                "Shravana": ["Ju (ଜୁ)", "Je (ଜେ)", "Jo (ଜୋ)", "Gha (ଘା)"],
-                "Dhanishta": ["Ga (ଗା)", "Gee (ଗୀ)", "Gu (ଗୁ)", "Ge (ଗେ)"],
-                "Shatabhisha": ["Go (ଗୋ)", "Sa (ସା)", "See (ସୀ)", "Su (ସୁ)"],
-                "Purva Bhadrapada": ["Se (ସେ)", "So (ସୋ)", "Da (ଦା)", "Dee (ଦୀ)"],
-                "Uttara Bhadrapada": ["Du (ଦୁ)", "Tha (ଥ)", "Jha (ଝ)", "Na (ଞ)"],
-                "Revati": ["De (ଦେ)", "Do (ଦୋ)", "Chaa (ଚା)", "Chee (ଚୀ)"]
+                "Ashwini": ["Chu", "Che", "Cho", "La"],
+                "Bharani": ["Lee", "Lu", "Le", "Lo"],
+                "Krittika": ["A", "Ee", "U", "E"],
+                "Rohini": ["O", "Va", "Vee", "Vu"],
+                "Mrigashira": ["Ve", "Vo", "Ka", "Kee"],
+                "Ardra": ["Ku", "Gha", "Nga", "Chha"],
+                "Punarvasu": ["Ke", "Ko", "Ha", "Hee"],
+                "Pushya": ["Hu", "He", "Ho", "Da"],
+                "Ashlesha": ["Dee", "Du", "De", "Do"],
+                "Magha": ["Ma", "Mee", "Mu", "Me"],
+                "Purva Phalguni": ["Mo", "Ta", "Tee", "Tu"],
+                "Uttara Phalguni": ["Te", "To", "Paa", "Pee"],
+                "Hasta": ["Pu", "Sha", "Na", "Dha"],
+                "Chitra": ["Pe", "Po", "Ra", "Ree"],
+                "Swati": ["Ru", "Re", "Ro", "Taa"],
+                "Vishakha": ["Tee", "Tu", "Te", "To"],
+                "Anuradha": ["Na", "Nee", "Nu", "Ne"],
+                "Jyeshtha": ["No", "Ya", "Yee", "Yu"],
+                "Mula": ["Ye", "Yo", "Bha", "Bhee"],
+                "Purva Ashadha": ["Bhu", "Dha", "Bha", "Dha"],
+                "Uttara Ashadha": ["Bhe", "Bho", "Ja", "Jee"],
+                "Shravana": ["Ju", "Je", "Jo", "Gha"],
+                "Dhanishta": ["Ga", "Gee", "Gu", "Ge"],
+                "Shatabhisha": ["Go", "Sa", "See", "Su"],
+                "Purva Bhadrapada": ["Se", "So", "Da", "Dee"],
+                "Uttara Bhadrapada": ["Du", "Tha", "Jha", "Na"],
+                "Revati": ["De", "Do", "Chaa", "Chee"]
             };
 
             const moonSignKey = r?.rashiNakshatra?.moonSign?.name || r?.moonSign?.indian || "Vrishabha";
@@ -3209,7 +3218,7 @@ const RashiNakshatraTab = ({data: r}) => {
                                     s.jsx("i", {className: "fa-solid fa-star-of-life", style: {fontSize: "10px", color: "#F97316"}}),
                                     s.jsx("span", {"data-i18n": "Nakshatra Pada Schedule", children: "Nakshatra Pada Schedule"})
                                 ]}),
-                                s.jsx("span", {style: {fontSize: "9px", fontWeight: 800, color: "#9CA3AF", textTransform: "uppercase", letterSpacing: "0.5px"}, "data-i18n": "Syllable & Timings", children: "Syllable & Timings"})
+                                s.jsx("span", {style: {fontSize: "9px", fontWeight: 800, color: "#9CA3AF", textTransform: "uppercase", letterSpacing: "0.5px"}, "data-i18n": "Baby Letter & Timings", children: curLang === 'or' ? "ନାମାକ୍ଷର ଓ ସମୟ" : "Baby Letter & Timings"})
                             ]}),
                             s.jsx("div", {className: "nak-pada-list-grid", children: 
                                 chandraPadasList.map((T, H) => {
@@ -3230,14 +3239,24 @@ const RashiNakshatraTab = ({data: r}) => {
                                         ]}),
                                         s.jsxs("div", {className: "nak-pada-right", children: [
                                             letterStr ? s.jsxs("span", {className: "nak-syllable-badge", children: [
-                                                s.jsx("span", {"data-i18n": "Name:", children: "Name: "}),
+                                                s.jsx("span", {"data-i18n": "Letter:", children: curLang === 'or' ? "ନାମାକ୍ଷର: " : "Letter: "}),
                                                 s.jsx("strong", {children: letterStr})
                                             ]}) : null,
                                             s.jsx("span", {className: "nak-pada-time-pill", children: timeStr})
                                         ]})
                                     ]});
                                 })
-                            })
+                            }),
+                            s.jsxs("div", {className: "nak-pada-footer-note", children: [
+                                s.jsx("span", {style: {fontSize: "11px", flexShrink: 0}, children: "👶"}),
+                                s.jsxs("div", {children: [
+                                    s.jsx("strong", {children: curLang === 'or' ? "ଶିଶୁ ନାମାକ୍ଷର (Namakshara): " : "Baby Name Letter (Namakshara): "}),
+                                    s.jsx("span", {children: curLang === 'or'
+                                        ? "ଏହି ନକ୍ଷତ୍ର ପାଦ ସମୟରେ ଜନ୍ମିତ ଶିଶୁର ନାମକରଣ ପାଇଁ ପ୍ରଥମ ଅକ୍ଷର ବା ଧ୍ୱନି ଏଠାରୁ ନିଆଯାଏ।"
+                                        : "Auspicious starting letter/syllable for naming a baby born during these specific hours."
+                                    })
+                                ]})
+                            ]})
                         ]})
                     })
                 ]})
@@ -4248,15 +4267,23 @@ const KumbhaStatusBadge = ({ isGood }) => s.jsx("span", {
 
 const VedicClock = ({ data: r }) => {
     const curLang = (window.getCurrentPanchangLang && window.getCurrentPanchangLang()) || 'en';
+    const [ghatiMode, setGhatiMode] = ki.useState(() => {
+        try { return localStorage.getItem("vedic_clock_mode") || "60"; } catch(e) { return "60"; }
+    });
     const [vedicTime, setVedicTime] = ki.useState({
         ghati: "00",
         pala: "00",
         vipala: "00",
         totalGhati: 0,
+        cycleMax: 60,
         muhurta: 1,
+        muhurtaTotal: 30,
         muhurtaName: "Rudra",
         prahara: "1st Prahara (Morning)",
-        elapsedStr: "--:--:--"
+        praharaWatch: "Morning",
+        elapsedStr: "--:--:--",
+        cycleLabel: "of Day Elapsed",
+        subtitle: "Ishta Kaala · Elapsed from Sunrise"
     });
 
     ki.useEffect(() => {
@@ -4267,69 +4294,130 @@ const VedicClock = ({ data: r }) => {
             const now = new Date(realNow.toLocaleString("en-US", { timeZone: tz }));
 
             let sr = window.parseTimeUniversal ? window.parseTimeUniversal(r.sunrise, now) : null;
-            if (!sr) return;
+            let ss = window.parseTimeUniversal ? window.parseTimeUniversal(r.sunset, now) : null;
+            if (!sr || !ss) return;
 
-            let startSr = new Date(sr);
-            let endSr = new Date(sr);
+            if (ss <= sr) ss.setDate(ss.getDate() + 1);
 
-            if (now < sr) {
-                startSr.setDate(startSr.getDate() - 1);
+            let nextSr = new Date(sr); nextSr.setDate(nextSr.getDate() + 1);
+            let prevSs = new Date(ss); prevSs.setDate(prevSs.getDate() - 1);
+            let prevSr = new Date(sr); prevSr.setDate(prevSr.getDate() - 1);
+
+            const isDay = now >= sr && now < ss;
+            const is60 = ghatiMode === "60";
+
+            let startRef, endRef, cycleMax, cycleLabel, subtitle, elapsedAnchor;
+
+            if (is60) {
+                cycleMax = 60;
+                cycleLabel = "of Day Elapsed";
+                subtitle = "Ishta Kaala · Elapsed from Sunrise";
+                if (now < sr) {
+                    startRef = prevSr;
+                    endRef = sr;
+                } else {
+                    startRef = sr;
+                    endRef = nextSr;
+                }
+                elapsedAnchor = startRef;
             } else {
-                endSr.setDate(endSr.getDate() + 1);
+                cycleMax = 30;
+                if (isDay) {
+                    startRef = sr;
+                    endRef = ss;
+                    cycleLabel = "of Daytime Elapsed";
+                    subtitle = "Dinamana · 30 Ghati Day Cycle";
+                    elapsedAnchor = sr;
+                } else {
+                    if (now >= ss) {
+                        startRef = ss;
+                        endRef = nextSr;
+                    } else {
+                        startRef = prevSs;
+                        endRef = sr;
+                    }
+                    cycleLabel = "of Nighttime Elapsed";
+                    subtitle = "Ratrimana · 30 Ghati Night Cycle";
+                    elapsedAnchor = startRef;
+                }
             }
 
-            const totalAhoratraMs = endSr.getTime() - startSr.getTime();
-            const elapsedMs = Math.max(0, now.getTime() - startSr.getTime());
+            const totalDurationMs = Math.max(1, endRef.getTime() - startRef.getTime());
+            const elapsedMs = Math.max(0, now.getTime() - startRef.getTime());
 
-            const totalGhati = (elapsedMs / totalAhoratraMs) * 60;
-            const ghati = Math.floor(totalGhati) % 60;
+            const totalGhati = (elapsedMs / totalDurationMs) * cycleMax;
+            const ghati = Math.floor(totalGhati) % cycleMax;
             const totalPala = (totalGhati - Math.floor(totalGhati)) * 60;
             const pala = Math.floor(totalPala) % 60;
             const totalVipala = (totalPala - Math.floor(totalPala)) * 60;
             const vipala = Math.floor(totalVipala) % 60;
 
-            const currentMuhurta = Math.min(30, Math.floor(totalGhati / 2) + 1);
-            const currentPraharaNum = Math.min(8, Math.floor(totalGhati / 7.5) + 1);
-
-            const praharaNames = [
-                "1st Prahara (Morning)",
-                "2nd Prahara (Midday)",
-                "3rd Prahara (Afternoon)",
-                "4th Prahara (Evening)",
-                "5th Prahara (Pradosha)",
-                "6th Prahara (Nishitha)",
-                "7th Prahara (Triyama)",
-                "8th Prahara (Brahma)"
-            ];
-
-            const muhurtaNames = [
+            const allMuhurtas = [
                 "Rudra", "Ahi", "Mitra", "Pitru", "Vasu", "Varaha", "Vishvedeva", "Abhijit", "Sutamukhi", "Puruhuta",
                 "Vahini", "Naktanachara", "Varuna", "Aryama", "Bhaga", "Girisha", "Ajapada", "Ahirbudhnya", "Pushya", "Ashwini",
                 "Yama", "Agni", "Vidhatru", "Kanda", "Aditi", "Jiva", "Vishnu", "Dyumani", "Brahma", "Samudra"
             ];
 
-            const elapsedSecTotal = Math.floor(elapsedMs / 1000);
+            let muhurta, muhurtaTotal, muhurtaName, prahara, praharaWatch;
+
+            if (is60) {
+                muhurta = Math.min(30, Math.floor(totalGhati / 2) + 1);
+                muhurtaTotal = 30;
+                muhurtaName = allMuhurtas[muhurta - 1] || "Muhurta";
+                const pNum = Math.min(8, Math.floor(totalGhati / 7.5) + 1);
+                const pList = ["1st Prahara", "2nd Prahara", "3rd Prahara", "4th Prahara", "5th Prahara", "6th Prahara", "7th Prahara", "8th Prahara"];
+                const wList = ["Morning", "Midday", "Afternoon", "Evening", "Pradosha", "Nishitha", "Triyama", "Brahma"];
+                prahara = pList[pNum - 1] || "Prahara";
+                praharaWatch = wList[pNum - 1] || "Watch";
+            } else {
+                muhurtaTotal = 15;
+                const mIdxInHalf = Math.min(15, Math.floor(totalGhati / 2) + 1);
+                muhurta = mIdxInHalf;
+                const globalMIdx = isDay ? (mIdxInHalf - 1) : (15 + mIdxInHalf - 1);
+                muhurtaName = allMuhurtas[globalMIdx] || "Muhurta";
+                const pNum = Math.min(4, Math.floor(totalGhati / 7.5) + 1);
+                const pList = ["1st Prahara", "2nd Prahara", "3rd Prahara", "4th Prahara"];
+                const wList = isDay ? ["Morning", "Midday", "Afternoon", "Evening"] : ["Pradosha", "Nishitha", "Triyama", "Usha"];
+                prahara = pList[pNum - 1] || "Prahara";
+                praharaWatch = wList[pNum - 1] || "Watch";
+            }
+
+            const elapsedAnchorMs = Math.max(0, now.getTime() - elapsedAnchor.getTime());
+            const elapsedSecTotal = Math.floor(elapsedAnchorMs / 1000);
             const eH = Math.floor(elapsedSecTotal / 3600);
             const eM = Math.floor((elapsedSecTotal % 3600) / 60);
             const eS = elapsedSecTotal % 60;
             const elapsedStr = `${eH}h ${eM}m ${String(eS).padStart(2, '0')}s`;
+
+            const dDur = Math.max(1, ss.getTime() - sr.getTime());
+            const nDur = Math.max(1, nextSr.getTime() - ss.getTime());
+            const dG_tot = (dDur / 60000) / 24, dG_val = Math.floor(dG_tot), dP_val = Math.floor((dG_tot - dG_val) * 60);
+            const nG_tot = (nDur / 60000) / 24, nG_val = Math.floor(nG_tot), nP_val = Math.floor((nG_tot - nG_val) * 60);
 
             setVedicTime({
                 ghati: String(ghati).padStart(2, "0"),
                 pala: String(pala).padStart(2, "0"),
                 vipala: String(vipala).padStart(2, "0"),
                 totalGhati: totalGhati,
-                muhurta: currentMuhurta,
-                muhurtaName: muhurtaNames[currentMuhurta - 1] || "Muhurta",
-                prahara: praharaNames[currentPraharaNum - 1] || "Prahara",
-                elapsedStr
+                cycleMax: cycleMax,
+                muhurta: muhurta,
+                muhurtaTotal: muhurtaTotal,
+                muhurtaName: muhurtaName,
+                prahara: prahara,
+                praharaWatch: praharaWatch,
+                elapsedStr: elapsedStr,
+                cycleLabel: cycleLabel,
+                subtitle: subtitle,
+                dinamanaStr: `${dG_val} Ghati ${dP_val} Pala`,
+                ratrimanaStr: `${nG_val} Ghati ${nP_val} Pala`,
+                isDaytime: isDay
             });
         };
 
         update();
         const timer = setInterval(update, 1000);
         return () => clearInterval(timer);
-    }, [r]);
+    }, [r, ghatiMode]);
 
     return s.jsxs("div", {
         className: "panchang-element-150",
@@ -4364,21 +4452,58 @@ const VedicClock = ({ data: r }) => {
                                     }),
                                     s.jsx("p", {
                                         className: "text-label-155",
-                                        "data-i18n": "Ishta Kaala · Elapsed from Sunrise",
-                                        children: "Ishta Kaala · Elapsed from Sunrise"
+                                        "data-i18n": vedicTime.subtitle,
+                                        children: vedicTime.subtitle
                                     })
                                 ]
                             })
                         ]
                     }),
-                    s.jsx("span", {
-                        className: "text-label-156",
-                        "data-i18n": "60 GHATI CYCLE",
-                        style: {
-                            background: "linear-gradient(90deg, #FF6B00 0%, #F43F5E 100%)",
-                            boxShadow: "0 3px 10px rgba(244, 63, 94, 0.25)"
-                        },
-                        children: "60 GHATI CYCLE"
+                    s.jsxs("div", {
+                        className: "vedic-toggle-wrapper",
+                        style: { flexShrink: 0 },
+                        children: [
+                            s.jsx("button", {
+                                type: "button",
+                                onClick: () => { setGhatiMode("60"); try { localStorage.setItem("vedic_clock_mode", "60"); } catch(e){} },
+                                style: {
+                                    background: ghatiMode === "60" ? "linear-gradient(90deg, #FF6B00 0%, #F43F5E 100%)" : "transparent",
+                                    color: ghatiMode === "60" ? "#ffffff" : "#6B7280",
+                                    border: "none",
+                                    borderRadius: "9999px",
+                                    padding: "2.5px 7px",
+                                    fontSize: "8.5px",
+                                    fontWeight: 900,
+                                    letterSpacing: "0.3px",
+                                    whiteSpace: "nowrap",
+                                    cursor: "pointer",
+                                    boxShadow: ghatiMode === "60" ? "0 2px 6px rgba(244, 63, 94, 0.35)" : "none",
+                                    transition: "all 0.2s ease"
+                                },
+                                "data-i18n": "60 Ghati",
+                                children: "60 GHATI"
+                            }),
+                            s.jsx("button", {
+                                type: "button",
+                                onClick: () => { setGhatiMode("30"); try { localStorage.setItem("vedic_clock_mode", "30"); } catch(e){} },
+                                style: {
+                                    background: ghatiMode === "30" ? "linear-gradient(90deg, #FF6B00 0%, #F43F5E 100%)" : "transparent",
+                                    color: ghatiMode === "30" ? "#ffffff" : "#6B7280",
+                                    border: "none",
+                                    borderRadius: "9999px",
+                                    padding: "2.5px 7px",
+                                    fontSize: "8.5px",
+                                    fontWeight: 900,
+                                    letterSpacing: "0.3px",
+                                    whiteSpace: "nowrap",
+                                    cursor: "pointer",
+                                    boxShadow: ghatiMode === "30" ? "0 2px 6px rgba(244, 63, 94, 0.35)" : "none",
+                                    transition: "all 0.2s ease"
+                                },
+                                "data-i18n": "30 Ghati",
+                                children: "30 GHATI"
+                            })
+                        ]
                     })
                 ]
             }),
@@ -4464,28 +4589,85 @@ const VedicClock = ({ data: r }) => {
                     })
                 ]
             }),
-            // 60-Ghati Ahoratra Progress Bar Capsule
+            // Dynamic Ghati Progress Bar Capsule (60 vs 30)
             s.jsxs("div", {
                 style: { width: "100%", padding: "2px 2px 4px 2px", display: "flex", flexDirection: "column", gap: "3px" },
                 children: [
                     s.jsxs("div", {
+                        className: "vedic-ghati-progress-text",
                         style: { display: "flex", alignItems: "center", justifyContent: "space-between", fontSize: "8px", fontWeight: 800, color: "#92400E", letterSpacing: "0.4px" },
                         children: [
-                            s.jsxs("span", { children: [(vedicTime.totalGhati || 0).toFixed(1), " / 60 ", curLang === 'or' ? "ଘଡ଼ି" : "Ghati"] }),
-                            s.jsxs("span", { children: [Math.round(((vedicTime.totalGhati || 0) / 60) * 100), "% ", curLang === 'or' ? "ଅହୋରାତ୍ର ଅତିବାହିତ" : "of Day Elapsed"] })
+                            s.jsxs("span", { className: "digit", children: [(vedicTime.totalGhati || 0).toFixed(1), ` / ${vedicTime.cycleMax} `, s.jsx("span", { "data-i18n": "Ghati", children: "Ghati" })] }),
+                            s.jsxs("span", { children: [Math.round(((vedicTime.totalGhati || 0) / (vedicTime.cycleMax || 60)) * 100), "% ", s.jsx("span", { "data-i18n": vedicTime.cycleLabel, children: vedicTime.cycleLabel })] })
                         ]
                     }),
                     s.jsx("div", {
+                        className: "vedic-ghati-progress-track",
                         style: { width: "100%", height: "4.5px", borderRadius: "999px", background: "rgba(0, 0, 0, 0.06)", overflow: "hidden" },
                         children: s.jsx("div", {
                             style: {
-                                width: `${Math.max(2, Math.min(100, Math.round(((vedicTime.totalGhati || 0) / 60) * 100)))}%`,
+                                width: `${Math.max(2, Math.min(100, Math.round(((vedicTime.totalGhati || 0) / (vedicTime.cycleMax || 60)) * 100)))}%`,
                                 height: "100%",
                                 borderRadius: "999px",
                                 background: "linear-gradient(90deg, #FF6B00 0%, #F43F5E 100%)",
                                 transition: "width 1s linear"
                             }
                         })
+                    })
+                ]
+            }),
+
+            // Dinamana & Ratrimana Dual Cards
+            s.jsxs("div", {
+                style: { display: "grid", gridTemplateColumns: "repeat(2, minmax(0, 1fr))", gap: "6px", width: "100%", marginTop: "6px" },
+                children: [
+                    s.jsxs("div", {
+                        className: "vedic-mana-card is-dinamana",
+                        style: {
+                            background: vedicTime.isDaytime ? "linear-gradient(135deg, #FFFDF8 0%, #FEF3C7 100%)" : "rgba(255, 255, 255, 0.7)",
+                            border: vedicTime.isDaytime ? "1.5px solid rgba(245, 158, 11, 0.5)" : "1px solid rgba(0, 0, 0, 0.06)",
+                            borderRadius: "12px",
+                            padding: "6px 8px",
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: "2px",
+                            boxShadow: vedicTime.isDaytime ? "0 2px 8px rgba(245, 158, 11, 0.15)" : "0 1px 3px rgba(0,0,0,0.02)"
+                        },
+                        children: [
+                            s.jsxs("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between" }, children: [
+                                s.jsxs("div", { style: { display: "flex", alignItems: "center", gap: "4px" }, children: [
+                                    s.jsx("span", { style: { fontSize: "11px" }, children: "☀️" }),
+                                    s.jsx("span", { style: { fontSize: "8px", fontWeight: 800, color: "#92400E", textTransform: "uppercase", letterSpacing: "0.5px" }, "data-i18n": "Dinamana", children: "DINAMANA" })
+                                ] }),
+                                vedicTime.isDaytime && s.jsx("span", { style: { fontSize: "7px", fontWeight: 900, background: "#F59E0B", color: "#FFFFFF", padding: "1px 5px", borderRadius: "999px" }, "data-i18n": "ACTIVE", children: "ACTIVE" })
+                            ] }),
+                            s.jsx("span", { className: "digit", style: { fontSize: "11.5px", fontWeight: 900, color: "#B45309", lineHeight: 1.2 }, children: vedicTime.dinamanaStr || "--:--" }),
+                            s.jsx("span", { style: { fontSize: "7.5px", fontWeight: 600, color: "#6B7280", lineHeight: 1.2 }, "data-i18n": "Daylight, sunrise to sunset", children: "Daylight, sunrise to sunset" })
+                        ]
+                    }),
+                    s.jsxs("div", {
+                        className: "vedic-mana-card is-ratrimana",
+                        style: {
+                            background: !vedicTime.isDaytime ? "linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%)" : "rgba(255, 255, 255, 0.7)",
+                            border: !vedicTime.isDaytime ? "1.5px solid rgba(59, 130, 246, 0.5)" : "1px solid rgba(0, 0, 0, 0.06)",
+                            borderRadius: "12px",
+                            padding: "6px 8px",
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: "2px",
+                            boxShadow: !vedicTime.isDaytime ? "0 2px 8px rgba(59, 130, 246, 0.15)" : "0 1px 3px rgba(0,0,0,0.02)"
+                        },
+                        children: [
+                            s.jsxs("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between" }, children: [
+                                s.jsxs("div", { style: { display: "flex", alignItems: "center", gap: "4px" }, children: [
+                                    s.jsx("span", { style: { fontSize: "11px" }, children: "🌙" }),
+                                    s.jsx("span", { style: { fontSize: "8px", fontWeight: 800, color: "#1E40AF", textTransform: "uppercase", letterSpacing: "0.5px" }, "data-i18n": "Ratrimana", children: "RATRIMANA" })
+                                ] }),
+                                !vedicTime.isDaytime && s.jsx("span", { style: { fontSize: "7px", fontWeight: 900, background: "#3B82F6", color: "#FFFFFF", padding: "1px 5px", borderRadius: "999px" }, "data-i18n": "ACTIVE", children: "ACTIVE" })
+                            ] }),
+                            s.jsx("span", { className: "digit", style: { fontSize: "11.5px", fontWeight: 900, color: "#1D4ED8", lineHeight: 1.2 }, children: vedicTime.ratrimanaStr || "--:--" }),
+                            s.jsx("span", { style: { fontSize: "7.5px", fontWeight: 600, color: "#6B7280", lineHeight: 1.2 }, "data-i18n": "Night, sunset to the next sunrise", children: "Night, sunset to the next sunrise" })
+                        ]
                     })
                 ]
             }),
@@ -4502,8 +4684,8 @@ const VedicClock = ({ data: r }) => {
                                 s.jsx("span", { style: { width: "5px", height: "5px", borderRadius: "50%", background: "#F59E0B", display: "inline-block", flexShrink: 0, boxShadow: "0 0 5px #F59E0B" } }),
                                 s.jsx("span", { className: "vedic-chip-title", "data-i18n": "Prahara", children: "PRAHARA" })
                             ] }),
-                            s.jsx("div", { className: "vedic-chip-val", "data-i18n": (vedicTime.prahara || "").split(" ")[0], children: (vedicTime.prahara || "1st").split(" ")[0] + " Prahara" }),
-                            s.jsx("span", { className: "vedic-chip-badge", children: (vedicTime.prahara || "").includes("(") ? (vedicTime.prahara.match(/\((.*?)\)/)?.[1] || "Watch") : "Watch" })
+                            s.jsxs("div", { className: "vedic-chip-val", children: [s.jsx("span", { "data-i18n": vedicTime.prahara, children: vedicTime.prahara })] }),
+                            s.jsx("span", { className: "vedic-chip-badge", "data-i18n": vedicTime.praharaWatch, children: vedicTime.praharaWatch })
                         ]
                     }),
 
@@ -4517,9 +4699,9 @@ const VedicClock = ({ data: r }) => {
                             ] }),
                             s.jsxs("div", { className: "vedic-chip-val digit", children: [
                                 `${vedicTime.muhurta || 1}`,
-                                s.jsx("span", { style: { fontSize: "10px", opacity: 0.6, fontWeight: 700 }, children: " / 30" })
+                                s.jsx("span", { style: { fontSize: "10px", opacity: 0.6, fontWeight: 700 }, children: ` / ${vedicTime.muhurtaTotal || 30}` })
                             ] }),
-                            s.jsx("span", { className: "vedic-chip-badge", children: `${vedicTime.muhurtaName || 'Agni'} Muhurta` })
+                            s.jsxs("span", { className: "vedic-chip-badge", children: [s.jsx("span", { "data-i18n": vedicTime.muhurtaName, children: vedicTime.muhurtaName }), " Muhurta"] })
                         ]
                     }),
 
@@ -4529,11 +4711,11 @@ const VedicClock = ({ data: r }) => {
                         children: [
                             s.jsxs("div", { className: "vedic-chip-header", children: [
                                 s.jsx("span", { style: { width: "5px", height: "5px", borderRadius: "50%", background: "#F43F5E", display: "inline-block", flexShrink: 0, boxShadow: "0 0 5px #F43F5E" } }),
-                                s.jsx("span", { className: "vedic-chip-title", "data-i18n": "Since Sunrise", children: "ELAPSED" })
+                                s.jsx("span", { className: "vedic-chip-title", "data-i18n": ghatiMode === "30" ? "Elapsed Period" : "Since Sunrise", children: "ELAPSED" })
                             ] }),
                             s.jsx("div", { className: "vedic-chip-val digit", style: { color: "#E11D48" }, children: vedicTime.elapsedStr }),
                             s.jsxs("span", { className: "vedic-chip-badge", children: [
-                                Math.round(((vedicTime.totalGhati || 0) / 60) * 100), "% of Day"
+                                Math.round(((vedicTime.totalGhati || 0) / (vedicTime.cycleMax || 60)) * 100), "% ", s.jsx("span", { "data-i18n": ghatiMode === "30" ? "of Cycle" : "of Day", children: ghatiMode === "30" ? "of Cycle" : "of Day" })
                             ] })
                         ]
                     })
@@ -4591,7 +4773,7 @@ const NightStarsLayer = () => {
 };
 
 const DayNightCycleCard = ({ data: r }) => {
-    const [cycleState, setCycleState] = ki.useState({ pct: 0, isDay: true, remTime: '-- Hours -- minutes -- seconds', hrs: '--', mins: '--', sec: '--', phaseLabel: 'Day', untilLabel: 'Sunset', pctStr: '--%', cx: 30, cy_val: 175 });
+    const [cycleState, setCycleState] = ki.useState({ pct: 0, isDay: true, remTime: '-- Hours -- minutes -- seconds', hrs: '--', mins: '--', sec: '--', phaseLabel: 'Day', untilLabel: 'Sunset', pctStr: '--%', cx: 30, cy_val: 175, dayLength: '--', nightLength: '--' });
 
     ki.useEffect(() => {
         let interval;
@@ -4640,6 +4822,17 @@ const DayNightCycleCard = ({ data: r }) => {
             const hrs = Math.floor(remainingMs / 3600000);
             const mins = Math.floor((remainingMs % 3600000) / 60000);
             const sec = Math.floor((remainingMs % 60000) / 1000);
+
+            let dDur = ss.getTime() - sr.getTime();
+            if (dDur < 0) dDur += 86400000;
+            const dH = Math.floor(dDur / 3600000);
+            const dM = Math.floor((dDur % 3600000) / 60000);
+            const dayLength = `${dH}h ${dM}m`;
+
+            const nDur = 86400000 - dDur;
+            const nH = Math.floor(nDur / 3600000);
+            const nM = Math.floor((nDur % 3600000) / 60000);
+            const nightLength = `${nH}h ${nM}m`;
             
 const angle = Math.PI + ((pct/100) * Math.PI);
             const arc_cx = 160;
@@ -4657,7 +4850,9 @@ const angle = Math.PI + ((pct/100) * Math.PI);
                 untilLabel,
                 pctStr: Math.floor(pct) + '%',
                 cx: ix,
-                cy_val: iy
+                cy_val: iy,
+                dayLength,
+                nightLength
             });
         };
         
@@ -4824,24 +5019,58 @@ const angle = Math.PI + ((pct/100) * Math.PI);
                             s.jsx("div", { id: "progressBarCycle", className: "shimmer-bar", style: { position: "absolute", top: "0", left: "0", height: "100%", width: cycleState.pctStr, borderRadius: "999px", transition: "width 1s ease, box-shadow 1s ease", background: cycleState.isDay ? "#f59e0b" : "#6366f1" } })
                         })
                     }),
-                    s.jsxs("div", { className: "flex-col-222 cycle-glass", style: { padding: "12px 10px", gap: "4px" }, children: [
-                        s.jsxs("div", { style: { fontSize: "15px", fontWeight: "500", color: "rgba(255,255,255,0.85)", letterSpacing: "0.02em", display: "flex", alignItems: "center", justifyContent: "center", gap: "4px" }, children: [
-                            s.jsx("span", { id: "statPctStrCycle", className: "digit", style: { fontSize: "22px", fontWeight: "800", color: cycleState.isDay ? "#fbbf24" : "#a78bfa" }, children: cycleState.pctStr }),
-                            s.jsx("span", { "data-i18n": "of", children: "of" }),
-                            s.jsx("span", { id: "phaseLabelStrCycle", "data-i18n": cycleState.phaseLabel, style: { fontWeight: "700" }, children: cycleState.phaseLabel }),
-                            s.jsx("span", { "data-i18n": "Passed", children: "Passed" })
-                        ]}),
-                        s.jsxs("div", { style: { fontSize: "13px", fontWeight: "400", color: "rgba(255,255,255,0.6)", letterSpacing: "0.03em", display: "flex", alignItems: "center", flexWrap: "wrap", justifyContent: "center", gap: "4px" }, children: [
-                            s.jsxs("span", { id: "remTimeStrCycle", style: { color: "#f8fafc", fontWeight: "600", display: "flex", alignItems: "center", gap: "4px" }, children: [
-                                s.jsx("span", { className: "digit", children: cycleState.hrs }),
-                                s.jsx("span", { "data-i18n": "Hours", children: "Hours" }),
-                                s.jsx("span", { className: "digit", children: cycleState.mins }),
-                                s.jsx("span", { "data-i18n": "minutes", children: "minutes" }),
-                                s.jsx("span", { className: "digit", children: cycleState.sec }),
-                                s.jsx("span", { "data-i18n": "seconds", children: "seconds" })
+                    s.jsxs("div", { className: "flex-col-222 cycle-glass", style: { padding: "10px 10px 12px 10px", gap: "8px", transform: "translateZ(0)" }, children: [
+                        s.jsxs("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", flexWrap: "wrap", gap: "6px" }, children: [
+                            s.jsxs("div", { style: { display: "flex", alignItems: "baseline", gap: "6px" }, children: [
+                                s.jsx("span", { id: "statPctStrCycle", className: "digit", style: { fontSize: "22px", fontWeight: "900", color: cycleState.isDay ? "#fde047" : "#a78bfa", lineHeight: 1, textShadow: cycleState.isDay ? "0 0 3px rgba(253, 224, 71, 0.35)" : "0 0 3px rgba(167, 139, 250, 0.35)" }, children: cycleState.pctStr }),
+                                s.jsxs("span", { style: { fontSize: "10px", fontWeight: "800", letterSpacing: "0.6px", color: "rgba(255,255,255,0.85)", textTransform: "uppercase" }, children: [
+                                    s.jsx("span", { "data-i18n": "OF", children: "OF " }),
+                                    s.jsx("span", { id: "phaseLabelStrCycle", "data-i18n": cycleState.phaseLabel.toUpperCase(), children: cycleState.phaseLabel.toUpperCase() }),
+                                    s.jsx("span", { "data-i18n": "PASSED", children: " PASSED" })
+                                ]})
                             ]}),
-                            s.jsx("span", { "data-i18n": "until", children: "until" }),
-                            s.jsx("span", { id: "untilLabelStrCycle", "data-i18n": cycleState.untilLabel, style: { fontWeight: "600", textTransform: "capitalize" }, children: cycleState.untilLabel })
+                            s.jsxs("div", { style: { background: "rgba(255, 255, 255, 0.08)", border: "1px solid rgba(255, 255, 255, 0.16)", borderRadius: "9999px", padding: "3.5px 10px", display: "inline-flex", alignItems: "center", gap: "4px", fontSize: "11px", fontWeight: "600", color: "rgba(255,255,255,0.9)" }, children: [
+                                s.jsxs("span", { id: "remTimeStrCycle", className: "digit", style: { fontWeight: "800", color: "#ffffff" }, children: [
+                                    cycleState.hrs, " h ", cycleState.mins, " m"
+                                ]}),
+                                s.jsx("span", { "data-i18n": "left until", style: { color: "rgba(255,255,255,0.65)", fontSize: "10.5px" }, children: "left until" }),
+                                s.jsx("span", { id: "untilLabelStrCycle", "data-i18n": cycleState.untilLabel, style: { fontWeight: "800", color: cycleState.isDay ? "#fde047" : "#a78bfa", textShadow: cycleState.isDay ? "0 0 3px rgba(253, 224, 71, 0.35)" : "0 0 3px rgba(167, 139, 250, 0.35)" }, children: cycleState.untilLabel })
+                            ]})
+                        ]}),
+                        s.jsxs("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px", width: "100%" }, children: [
+                            s.jsxs("div", { style: { background: cycleState.isDay ? "rgba(245, 158, 11, 0.14)" : "rgba(255, 255, 255, 0.04)", border: cycleState.isDay ? "1.5px solid rgba(245, 158, 11, 0.6)" : "1px solid rgba(255, 255, 255, 0.1)", borderRadius: "12px", padding: "8px 10px", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center", gap: "2px", boxShadow: cycleState.isDay ? "0 0 12px rgba(245, 158, 11, 0.18)" : "none", transition: "all 0.3s ease" }, children: [
+                                s.jsxs("div", { style: { display: "flex", alignItems: "center", justifyContent: "center", gap: "5px", width: "100%" }, children: [
+                                    s.jsxs("svg", { viewBox: "0 0 24 24", width: "15", height: "15", fill: "none", style: { filter: cycleState.isDay ? "drop-shadow(0 0 4px rgba(245, 158, 11, 0.7))" : "none", flexShrink: 0 }, children: [
+                                        s.jsxs("defs", { children: [
+                                            s.jsxs("linearGradient", { id: "sunVectorGrad", x1: "0%", y1: "0%", x2: "100%", y2: "100%", children: [
+                                                s.jsx("stop", { offset: "0%", stopColor: "#FFF08A" }),
+                                                s.jsx("stop", { offset: "100%", stopColor: "#F59E0B" })
+                                            ]})
+                                        ]}),
+                                        s.jsx("circle", { cx: "12", cy: "12", r: "5.2", fill: cycleState.isDay ? "url(#sunVectorGrad)" : "#94A3B8" }),
+                                        s.jsx("path", { d: "M12 1.8v2.4M12 19.8V22M1.8 12h2.4M19.8 12H22M4.8 4.8l1.7 1.7M17.5 17.5l1.7 1.7M4.8 19.2l1.7-1.7M17.5 6.5l1.7-1.7", stroke: cycleState.isDay ? "#F59E0B" : "#94A3B8", strokeWidth: "2.4", strokeLinecap: "round" })
+                                    ]}),
+                                    s.jsx("span", { "data-i18n": "DAY LENGTH", style: { fontSize: "8.5px", fontWeight: 800, letterSpacing: "0.5px", color: cycleState.isDay ? "#FDE047" : "#94A3B8", textTransform: "uppercase" }, children: "DAY LENGTH" })
+                                ]}),
+                                s.jsx("span", { className: "digit", style: { fontSize: "1.05rem", fontWeight: 900, color: "#FFFFFF", letterSpacing: "-0.2px", textAlign: "center", width: "100%" }, children: cycleState.dayLength })
+                            ]}),
+                            s.jsxs("div", { style: { background: !cycleState.isDay ? "rgba(99, 102, 241, 0.16)" : "rgba(255, 255, 255, 0.04)", border: !cycleState.isDay ? "1.5px solid rgba(129, 140, 248, 0.6)" : "1px solid rgba(255, 255, 255, 0.1)", borderRadius: "12px", padding: "8px 10px", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center", gap: "2px", boxShadow: !cycleState.isDay ? "0 0 12px rgba(99, 102, 241, 0.2)" : "none", transition: "all 0.3s ease" }, children: [
+                                s.jsxs("div", { style: { display: "flex", alignItems: "center", justifyContent: "center", gap: "5px", width: "100%" }, children: [
+                                    s.jsxs("svg", { viewBox: "0 0 24 24", width: "15", height: "15", fill: "none", style: { filter: !cycleState.isDay ? "drop-shadow(0 0 5px rgba(165, 180, 252, 0.75))" : "none", flexShrink: 0 }, children: [
+                                        s.jsxs("defs", { children: [
+                                            s.jsxs("linearGradient", { id: "moonCrescentGrad", x1: "0%", y1: "0%", x2: "100%", y2: "100%", children: [
+                                                s.jsx("stop", { offset: "0%", stopColor: "#E0E7FF" }),
+                                                s.jsx("stop", { offset: "50%", stopColor: "#C7D2FE" }),
+                                                s.jsx("stop", { offset: "100%", stopColor: "#818CF8" })
+                                            ]})
+                                        ]}),
+                                        s.jsx("path", { d: "M20.5 13.2A8.8 8.8 0 1 1 10.8 3.5a7 7 0 0 0 9.7 9.7z", fill: !cycleState.isDay ? "url(#moonCrescentGrad)" : "#94A3B8" }),
+                                        s.jsx("path", { d: "M18 3.5 Q18 6.2 15.3 6.2 Q18 6.2 18 8.9 Q18 6.2 20.7 6.2 Q18 6.2 18 3.5 Z", fill: !cycleState.isDay ? "#FFFFFF" : "#CBD5E1", opacity: !cycleState.isDay ? "0.95" : "0.75" })
+                                    ]}),
+                                    s.jsx("span", { "data-i18n": "NIGHT LENGTH", style: { fontSize: "8.5px", fontWeight: 800, letterSpacing: "0.5px", color: !cycleState.isDay ? "#C7D2FE" : "#94A3B8", textTransform: "uppercase" }, children: "NIGHT LENGTH" })
+                                ]}),
+                                s.jsx("span", { className: "digit", style: { fontSize: "1.05rem", fontWeight: 900, color: "#FFFFFF", letterSpacing: "-0.2px", textAlign: "center", width: "100%" }, children: cycleState.nightLength })
+                            ]})
                         ]})
                     ]})
                 ]})
@@ -4947,11 +5176,41 @@ const ChandraMoonPhaseCard = ({ data: r }) => {
                 className: "chandra-card-header",
                 children: [
                     s.jsxs("div", {
-                        style: { display: "flex", alignItems: "center", gap: "6px" },
+                        style: { display: "flex", alignItems: "center", gap: "8px" },
                         children: [
-                            s.jsx("svg", {
-                                width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.4", strokeLinecap: "round", strokeLinejoin: "round", style: { flexShrink: 0, opacity: 0.95 },
-                                children: s.jsx("path", { d: "M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" })
+                            s.jsx("div", {
+                                className: "chandra-header-badge-orb",
+                                style: {
+                                    width: "26px",
+                                    height: "26px",
+                                    borderRadius: "9px",
+                                    background: "linear-gradient(135deg, rgba(255, 107, 0, 0.18) 0%, rgba(244, 63, 94, 0.12) 100%)",
+                                    border: "1px solid rgba(255, 107, 0, 0.38)",
+                                    display: "inline-flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    flexShrink: 0,
+                                    boxShadow: "0 2px 6px rgba(255, 107, 0, 0.15), inset 0 1px 1px rgba(255, 255, 255, 0.8)"
+                                },
+                                children: s.jsxs("svg", {
+                                    viewBox: "0 0 24 24",
+                                    width: "16",
+                                    height: "16",
+                                    fill: "none",
+                                    style: { filter: "drop-shadow(0 0 3px rgba(255, 107, 0, 0.5))", flexShrink: 0 },
+                                    children: [
+                                        s.jsxs("defs", { children: [
+                                            s.jsxs("linearGradient", { id: "chandraMiniBadgeMoon", x1: "0%", y1: "0%", x2: "100%", y2: "100%", children: [
+                                                s.jsx("stop", { offset: "0%", stopColor: "#FF8A00" }),
+                                                s.jsx("stop", { offset: "100%", stopColor: "#E11D48" })
+                                            ]})
+                                        ]}),
+                                        s.jsx("path", {
+                                            d: "M20.5 13.2A8.8 8.8 0 1 1 10.8 3.5a7 7 0 0 0 9.7 9.7z",
+                                            fill: "url(#chandraMiniBadgeMoon)"
+                                        })
+                                    ]
+                                })
                             }),
                             s.jsx("span", {
                                 className: "chandra-header-text",
@@ -5173,7 +5432,7 @@ const CurrentRituCard = ({ data: r }) => {
                 range: "MID-OCTOBER TO MID-DECEMBER (23 OCT - 21 DEC)",
                 color: "#2DD4BF",
                 bgImage: "https://images.unsplash.com/photo-1476820865390-c52aeebb9891?auto=format&fit=crop&w=1200&q=80",
-                icon: "🍂"
+                icon: "🍁"
             },
             shishir: {
                 title: { or: "ଶିଶିର", hi: "शिशिर", en: "Shishir (Winter)", bn: "শিশির", mr: "शिशिर", gu: "શિશિર", ta: "பின்பனி", te: "శిశిరము", kn: "ಶಿಶಿರ", ml: "ശിശിരം", pa: "ਸਿਆਲ", as: "শিশিৰ" },
@@ -5312,6 +5571,23 @@ const DailyPanchangView = ({data: r, settings, onOpen12Months}) => {
     const curLang = (window.getCurrentPanchangLang && window.getCurrentPanchangLang()) || 'en';
     const topI18n = (typeof TOP_SECTION_I18N !== 'undefined' && TOP_SECTION_I18N[curLang]) || (typeof TOP_SECTION_I18N !== 'undefined' && TOP_SECTION_I18N.en) || {};
     const fmt = (str) => (typeof formatLocalTimeDisplay === 'function') ? formatLocalTimeDisplay(str, curLang) : (str || '--:--');
+
+    const vList = [
+        { name: "Ravivara", en: "Sunday", lord: "Sun", ruler: "Sun (Surya)", deity: "Shiva", nature: "Dhruva · Krura", isSaumya: false, grad: "linear-gradient(90deg, #EA580C 0%, #E11D48 100%)", icon: "fa-solid fa-sun" },
+        { name: "Somavara", en: "Monday", lord: "Moon", ruler: "Moon (Chandra)", deity: "Parvati", nature: "Chara · Saumya", isSaumya: true, grad: "linear-gradient(90deg, #2563EB 0%, #06B6D4 100%)", icon: "fa-solid fa-moon" },
+        { name: "Mangalavara", en: "Tuesday", lord: "Mars", ruler: "Mars (Mangal)", deity: "Kartikeya", nature: "Ugra · Krura", isSaumya: false, grad: "linear-gradient(90deg, #DC2626 0%, #991B1B 100%)", icon: "fa-solid fa-fire" },
+        { name: "Budhavara", en: "Wednesday", lord: "Mercury", ruler: "Mercury (Budha)", deity: "Vishnu", nature: "Mishra · Saumya", isSaumya: true, grad: "linear-gradient(90deg, #059669 0%, #10B981 100%)", icon: "fa-solid fa-feather" },
+        { name: "Guruvara", en: "Thursday", lord: "Jupiter", ruler: "Jupiter (Guru)", deity: "Brahma", nature: "Laghu · Saumya", isSaumya: true, grad: "linear-gradient(90deg, #D97706 0%, #F59E0B 100%)", icon: "fa-solid fa-crown" },
+        { name: "Shukravara", en: "Friday", lord: "Venus", ruler: "Venus (Shukra)", deity: "Indra", nature: "Mridu · Saumya", isSaumya: true, grad: "linear-gradient(90deg, #E11D48 0%, #EC4899 100%)", icon: "fa-solid fa-gem" },
+        { name: "Shanivara", en: "Saturday", lord: "Saturn", ruler: "Saturn (Shani)", deity: "Yama", nature: "Daruna · Krura", isSaumya: false, grad: "linear-gradient(90deg, #4F46E5 0%, #4338CA 100%)", icon: "fa-solid fa-hourglass-half" }
+    ];
+    const curDayIdx = (r?.date ? new Date(r.date) : new Date()).getDay();
+    const curVara = vList[curDayIdx];
+    const nxtVara = vList[(curDayIdx + 1) % 7];
+    const nxtD = new Date(r?.date ? new Date(r.date) : new Date());
+    nxtD.setDate(nxtD.getDate() + 1);
+    const nxtDStr = nxtD.toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: (window.currentTz || "Asia/Kolkata") });
+    const nxtSunriseEndStr = `upto ${r?.sunrise || "--:--"}, ${nxtDStr}`;
 
     const getSouraDinaInfo = (pravStr) => {
         if (!pravStr || typeof pravStr !== "string") return null;
@@ -5693,40 +5969,23 @@ const DailyPanchangView = ({data: r, settings, onOpen12Months}) => {
                         s.jsx("span",{className:"samvat-card-title shaka-card-title","data-i18n":"Shaka Samvat",children:"Shaka Samvat"}),
                         s.jsxs("p",{className:"samvat-card-val",children:[r.samvatDetails.shaka.year,s.jsx("br",{}),s.jsx("span",{className:"samvat-card-sub","data-i18n":r.samvatDetails.shaka.name,children:r.samvatDetails.shaka.name})]})
                     ]}),
-                    // Card 3: Soura Dina (for East / Solar) OR Ayana
-                    s.jsxs("div",{className:"samvat-card ayana-card",children:[
-                        (settings?.region === "east" || settings?.monthSystem === "solar" || settings?.newYear === "solar") && souraInfo ? s.jsxs(s.Fragment, {children:[
-                            s.jsx("span",{className:"samvat-card-title ayana-card-title","data-i18n":"Soura Dina",children:"Soura Dina"}),
-                            s.jsxs("p",{className:"samvat-card-val",style:{fontSize:"clamp(9px, 2.3vw, 11.5px)"},children:[
-                                souraInfo.enText,
-                                s.jsx("br",{}),
-                                s.jsx("span",{className:"samvat-card-sub",style:{color:"#C2410C",fontWeight:800},children:`${souraInfo.solarMonthName} Month`})
-                            ]})
-                        ]}) : s.jsxs(s.Fragment, {children:[
-                            s.jsx("span",{className:"samvat-card-title ayana-card-title","data-i18n":"Ayana",children:"Ayana"}),
-                            s.jsx("p",{className:"samvat-card-val","data-i18n":r.ayana,children:r.ayana})
+                    // Card 3: Samvatsara (Clean Subtext without long timestamp)
+                    s.jsxs("div",{className:"samvat-card samvatsara-card",children:[
+                        s.jsx("span",{className:"samvat-card-title","data-i18n":"Samvatsara",children:"Samvatsara"}),
+                        s.jsxs("p",{className:"samvat-card-val",style:{fontSize:"clamp(9.5px, 2.4vw, 12px)"},children:[
+                            s.jsx("span",{"data-i18n":r.samvatDetails.samvatsara?.list?.[0]?.name || r.samvatDetails.vikram.name,children:r.samvatDetails.samvatsara?.list?.[0]?.name || r.samvatDetails.vikram.name}),
+                            s.jsx("br",{}),
+                            s.jsx("span",{className:"samvat-card-sub",style:{color:"#C2410C",fontWeight:800},"data-i18n":"Jovian Cycle",children:curLang === 'or' ? "ବୃହସ୍ପତି ଚକ୍ର" : "Jovian Cycle"})
                         ]})
                     ]}),
-                    // Card 4: Month System Adaptive Card
-                    s.jsxs("div",{className:"samvat-card paksha-card",children:[
-                        settings?.monthSystem === "amanta" ? s.jsxs(s.Fragment, {children:[
-                            s.jsx("span",{className:"samvat-card-title paksha-card-title","data-i18n":"Amanta Masa",children:"Amanta Masa"}),
-                            s.jsxs("p",{className:"samvat-card-val",style:{fontSize:"clamp(9px, 2.3vw, 11px)"},children:[
-                                s.jsx("span",{"data-i18n":r.samvatDetails.chandramasa.amanta.replace(' - Amanta', ''),children:r.samvatDetails.chandramasa.amanta.replace(' - Amanta', '')}),
-                                s.jsx("br",{}),
-                                s.jsx("span",{className:"samvat-card-sub","data-i18n":r.tithi.paksha,children:r.tithi.paksha})
-                            ]})
-                        ]}) : (settings?.monthSystem === "solar" && souraInfo ? s.jsxs(s.Fragment, {children:[
-                            s.jsx("span",{className:"samvat-card-title paksha-card-title","data-i18n":"Soura Masa",children:"Soura Masa"}),
-                            s.jsxs("p",{className:"samvat-card-val",children:[s.jsx("span",{"data-i18n":souraInfo.rashiEn,children:souraInfo.rashiEn}), s.jsx("br",{}), s.jsx("span",{className:"samvat-card-sub","data-i18n":r.tithi.paksha,children:r.tithi.paksha})]})
-                        ]}) : s.jsxs(s.Fragment, {children:[
-                            s.jsx("span",{className:"samvat-card-title paksha-card-title","data-i18n":"Purnimanta",children:"Purnimanta"}),
-                            s.jsxs("p",{className:"samvat-card-val",style:{fontSize:"clamp(9px, 2.3vw, 11px)"},children:[
-                                s.jsx("span",{"data-i18n":r.samvatDetails.chandramasa.purnimanta.replace(' - Purnimanta', ''),children:r.samvatDetails.chandramasa.purnimanta.replace(' - Purnimanta', '')}),
-                                s.jsx("br",{}),
-                                s.jsx("span",{className:"samvat-card-sub","data-i18n":r.tithi.paksha,children:r.tithi.paksha})
-                            ]})
-                        ]}))
+                    // Card 4: Ayana (Transferred to Position 4)
+                    s.jsxs("div",{className:"samvat-card ayana-card",children:[
+                        s.jsx("span",{className:"samvat-card-title ayana-card-title","data-i18n":"Ayana",children:"Ayana"}),
+                        s.jsxs("p",{className:"samvat-card-val",children:[
+                            s.jsx("span",{"data-i18n":r.ayana,children:r.ayana}),
+                            s.jsx("br",{}),
+                            s.jsx("span",{className:"samvat-card-sub","data-i18n":r.ayana === "Uttarayana" ? "Sun Northern Course" : "Sun Southern Course",children:r.ayana === "Uttarayana" ? "Sun Northern Course" : "Sun Southern Course"})
+                        ]})
                     ]})
                 ]})
             ]}),
@@ -5748,7 +6007,8 @@ const DailyPanchangView = ({data: r, settings, onOpen12Months}) => {
                             const evalDate = r?.date ? new Date(r.date) : new Date();
                             const tz = window.currentTz || "Asia/Kolkata";
                             if (!Astro) return { full: "", short: "" };
-                            const t_now = Astro.MakeTime(new Date(evalDate.getFullYear(), evalDate.getMonth(), evalDate.getDate(), 12, 0, 0));
+                            const sunriseD = window.parseTimeUniversal ? (window.parseTimeUniversal(r?.sunrise, evalDate) || new Date(evalDate.getFullYear(), evalDate.getMonth(), evalDate.getDate(), 6, 0, 0)) : new Date(evalDate.getFullYear(), evalDate.getMonth(), evalDate.getDate(), 6, 0, 0);
+                            const t_now = Astro.MakeTime(sunriseD);
                             let dStart = null, dEnd = null;
 
                             if (mode === "amanta") {
@@ -5770,13 +6030,7 @@ const DailyPanchangView = ({data: r, settings, onOpen12Months}) => {
                                     searchT = fm.AddDays(1);
                                 }
                             } else if (mode === "solar") {
-                                const getSidSun = (t) => {
-                                    const elon = Astro.Ecliptic(Astro.GeoVector(Astro.Body.Sun, t, true)).elon;
-                                    let ay = 23.85045 + (50.27972 / 3600.0) * (t.tt / 365.25);
-                                    if (window.selectedAyanamsha === "kp") ay -= 0.0986;
-                                    else if (window.selectedAyanamsha === "raman") ay -= 1.4444;
-                                    return ((elon - ay) % 360 + 360) % 360;
-                                };
+                                const getSidSun = (t) => window.getSiderealSunLon ? window.getSiderealSunLon(t) : 0;
                                 const curRashi = Math.floor(getSidSun(t_now) / 30);
                                 const targetS = curRashi * 30;
                                 const targetE = ((curRashi + 1) % 12) * 30;
@@ -5806,7 +6060,8 @@ const DailyPanchangView = ({data: r, settings, onOpen12Months}) => {
                             const curCivil = toCivilDate(evalDate);
 
                             if (mode === "purnimanta" || mode === "amanta") {
-                                const obsL = new Astro.Observer(r?.location?.latitude || 28.6139, r?.location?.longitude || 77.2090, 0);
+                                // Fix location nullish coalescing so latitude 0 on equator is respected
+                                const obsL = new Astro.Observer(r?.location?.latitude ?? 28.6139, r?.location?.longitude ?? 77.2090, 0);
                                 
                                 // Month Start: First sunrise strictly on/after the culminating phase of previous month
                                 const phaseStartT = Astro.MakeTime(dStart);
@@ -5825,7 +6080,8 @@ const DailyPanchangView = ({data: r, settings, onOpen12Months}) => {
                                 }
                             }
 
-                            const totalDays = Math.max(28, Math.min(32, Math.round((endCivil.getTime() - startCivil.getTime()) / 86400000) + 1));
+                            // True Astronomical Civil Day Count without artificial 28-32 hard limits
+                            const totalDays = Math.max(1, Math.round((endCivil.getTime() - startCivil.getTime()) / 86400000) + 1);
                             let currentDay = Math.max(1, Math.min(totalDays, Math.round((curCivil.getTime() - startCivil.getTime()) / 86400000) + 1));
                             if (mode === "solar" && souraInfo?.day) {
                                 currentDay = Math.min(totalDays, parseInt(souraInfo.day, 10));
@@ -5838,7 +6094,59 @@ const DailyPanchangView = ({data: r, settings, onOpen12Months}) => {
                             const sMonthShort = startCivil.toLocaleDateString("en-US", { month: "short", timeZone: tz });
                             const eMonthShort = endCivil.toLocaleDateString("en-US", { month: "short", timeZone: tz });
 
-                            let fullStr, shortStr;
+                            const is12H = window.currentTimeFormat !== "24h";
+                            
+                            const formatVedicBoundary = (dateObj, isStart) => {
+                                if (!dateObj) return "";
+                                const timeStr = dateObj.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: is12H, timeZone: tz });
+                                let isBeforeSunrise = false;
+                                try {
+                                    // Classical Ujjain Meridian (23.1765° N, 75.7685° E) - The Universal Zero-Point for Indian Month Reckoning
+                                    const obsUjjain = new window.Astronomy.Observer(23.1765, 75.7685, 0);
+                                    const dParts = new Intl.DateTimeFormat('en-US', { timeZone: tz, hour: 'numeric', minute: 'numeric', hour12: false }).formatToParts(dateObj);
+                                    const hr = parseInt(dParts.find(p => p.type === 'hour').value, 10);
+                                    const min = parseInt(dParts.find(p => p.type === 'minute').value, 10);
+                                    if (hr >= 8) {
+                                        isBeforeSunrise = false;
+                                    } else if (hr < 4) {
+                                        isBeforeSunrise = true;
+                                    } else {
+                                        const elapsedMins = hr * 60 + min;
+                                        const approxMidnight = new Date(dateObj.getTime() - elapsedMins * 60000 - 3600000);
+                                        const srEvent = window.Astronomy.SearchAltitude(window.Astronomy.Body.Sun, obsUjjain, +1, window.Astronomy.MakeTime(approxMidnight), 1, -0.833333);
+                                        if (srEvent) {
+                                            isBeforeSunrise = dateObj.getTime() < srEvent.date.getTime();
+                                        } else {
+                                            isBeforeSunrise = hr < 6;
+                                        }
+                                    }
+                                } catch(e) {
+                                    const hr = parseInt(dateObj.toLocaleTimeString("en-US", { hour: "numeric", hour12: false, timeZone: tz }));
+                                    isBeforeSunrise = hr < 6;
+                                }
+
+                                let displayDate = new Date(dateObj.toLocaleString("en-US", { timeZone: tz }));
+                                if (isBeforeSunrise) {
+                                    displayDate.setDate(displayDate.getDate() - 1);
+                                }
+                                if (isStart) {
+                                    displayDate.setDate(displayDate.getDate() + 1);
+                                }
+
+                                const day = displayDate.getDate();
+                                const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                                const month = monthNames[displayDate.getMonth()];
+
+                                if (curLang === 'or') {
+                                    const odiaMShort = ["ଜାନୁ","ଫେବୃ","ମାର୍ଚ୍ଚ","ଏପ୍ରି","ମଇ","ଜୁନ୍","ଜୁଲା","ଅଗଷ୍ଟ","ସେପ୍ଟେ","ଅକ୍ଟୋ","ନଭେ","ଡିସେ"];
+                                    const dNumOd = toLocalDigits(day, 'or');
+                                    const timeOd = toLocalDigits(timeStr, 'or');
+                                    return `${dNumOd} ${odiaMShort[displayDate.getMonth()]}, ${timeOd}`;
+                                }
+                                return `${day} ${month}, ${timeStr}`;
+                            };
+
+                            let fullStr, shortStr, exactSpan;
                             if (curLang === 'or') {
                                 const odiaMFull = ["ଜାନୁଆରୀ","ଫେବୃଆରୀ","ମାର୍ଚ୍ଚ","ଏପ୍ରିଲ୍","ମଇ","ଜୁନ୍","ଜୁଲାଇ","ଅଗଷ୍ଟ","ସେପ୍ଟେମ୍ବର","ଅକ୍ଟୋବର","ନଭେମ୍ବର","ଡିସେମ୍ବର"];
                                 const odiaMShort = ["ଜାନୁ","ଫେବୃ","ମାର୍ଚ୍ଚ","ଏପ୍ରି","ମଇ","ଜୁନ୍","ଜୁଲା","ଅଗଷ୍ଟ","ସେପ୍ଟେ","ଅକ୍ଟୋ","ନଭେ","ଡିସେ"];
@@ -5858,7 +6166,23 @@ const DailyPanchangView = ({data: r, settings, onOpen12Months}) => {
                                 fullStr = `${mSpan} (${dSpan})`;
                                 shortStr = dSpan;
                             }
-                            return { full: fullStr, short: shortStr, totalDays, currentDay };
+                            
+                            // Pure Astronomical + Civil Vedic Rule applied (100% Match with Panjikas)
+                            if (mode === "solar") {
+                                const sTimeStr = dStart ? dStart.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: is12H, timeZone: tz }) : "";
+                                const eTimeStr = dEnd ? dEnd.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: is12H, timeZone: tz }) : "";
+                                const sD = startCivil.getDate(); const sM = startCivil.toLocaleDateString("en-US", { month: "short", timeZone: tz });
+                                const eD = endCivil.getDate(); const eM = endCivil.toLocaleDateString("en-US", { month: "short", timeZone: tz });
+                                exactSpan = `${sD} ${sM}, ${sTimeStr} – ${eD} ${eM}, ${eTimeStr}`;
+                                if (curLang === 'or') {
+                                    const odiaMShort = ["ଜାନୁ","ଫେବୃ","ମାର୍ଚ୍ଚ","ଏପ୍ରି","ମଇ","ଜୁନ୍","ଜୁଲା","ଅଗଷ୍ଟ","ସେପ୍ଟେ","ଅକ୍ଟୋ","ନଭେ","ଡିସେ"];
+                                    exactSpan = `${toLocalDigits(sD, 'or')} ${odiaMShort[startCivil.getMonth()]}, ${toLocalDigits(sTimeStr, 'or')} – ${toLocalDigits(eD, 'or')} ${odiaMShort[endCivil.getMonth()]}, ${toLocalDigits(eTimeStr, 'or')}`;
+                                }
+                            } else {
+                                exactSpan = `${formatVedicBoundary(dStart, true)} – ${formatVedicBoundary(dEnd, false)}`;
+                            }
+                            
+                            return { full: fullStr, short: shortStr, exactSpan, totalDays, currentDay };
                         } catch (e) {
                             return { full: "", short: "", totalDays: 30, currentDay: 1 };
                         }
@@ -5955,19 +6279,42 @@ const DailyPanchangView = ({data: r, settings, onOpen12Months}) => {
                                 children: [
                                     s.jsx("div", {
                                         className: "month-icon-circle",
-                                        style: {
-                                            width: "48px",
-                                            height: "48px",
-                                            borderRadius: "16px",
-                                            background: "linear-gradient(135deg, rgba(255, 107, 0, 0.22) 0%, rgba(244, 63, 94, 0.12) 100%)",
-                                            border: "1.5px solid rgba(251, 146, 60, 0.5)",
-                                            boxShadow: "0 4px 14px rgba(234, 88, 12, 0.14), inset 0 1px 2px rgba(255, 255, 255, 0.8)",
-                                            display: "flex",
-                                            alignItems: "center",
-                                            justifyContent: "center",
-                                            flexShrink: 0
-                                        },
-                                        children: s.jsx("i", { className: cardIcon, style: { color: iconColor, fontSize: "22px", filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.18))" } })
+                                        children: cardIcon === "fa-solid fa-sun" ? s.jsxs("svg", {
+                                            viewBox: "0 0 24 24",
+                                            width: "25",
+                                            height: "25",
+                                            fill: "none",
+                                            style: { filter: "drop-shadow(0 0 4px rgba(255, 255, 255, 0.6))", flexShrink: 0 },
+                                            children: [
+                                                s.jsxs("defs", { children: [
+                                                    s.jsxs("linearGradient", { id: "monthCardSunGrad", x1: "0%", y1: "0%", x2: "100%", y2: "100%", children: [
+                                                        s.jsx("stop", { offset: "0%", stopColor: "#FFFFFF" }),
+                                                        s.jsx("stop", { offset: "100%", stopColor: "#FEF08A" })
+                                                    ]})
+                                                ]}),
+                                                s.jsx("circle", { cx: "12", cy: "12", r: "5.2", fill: "url(#monthCardSunGrad)" }),
+                                                s.jsx("path", { d: "M12 1.8v2.4M12 19.8V22M1.8 12h2.4M19.8 12H22M4.8 4.8l1.7 1.7M17.5 17.5l1.7 1.7M4.8 19.2l1.7-1.7M17.5 6.5l1.7-1.7", stroke: "#FFFFFF", strokeWidth: "2.4", strokeLinecap: "round" })
+                                            ]
+                                        }) : s.jsxs("svg", {
+                                            viewBox: "0 0 24 24",
+                                            width: "25",
+                                            height: "25",
+                                            fill: "none",
+                                            style: { filter: "drop-shadow(0 0 5px rgba(255, 255, 255, 0.65))", flexShrink: 0 },
+                                            children: [
+                                                s.jsxs("defs", { children: [
+                                                    s.jsxs("linearGradient", { id: "monthCardMoonGrad", x1: "0%", y1: "0%", x2: "100%", y2: "100%", children: [
+                                                        s.jsx("stop", { offset: "0%", stopColor: "#FFFFFF" }),
+                                                        s.jsx("stop", { offset: "65%", stopColor: "#FFFDF2" }),
+                                                        s.jsx("stop", { offset: "100%", stopColor: "#FDE68A" })
+                                                    ]})
+                                                ]}),
+                                                s.jsx("path", {
+                                                    d: "M20.5 13.2A8.8 8.8 0 1 1 10.8 3.5a7 7 0 0 0 9.7 9.7z",
+                                                    fill: "url(#monthCardMoonGrad)"
+                                                })
+                                            ]
+                                        })
                                     }),
                                     s.jsxs("div", {
                                         style: { display: "flex", flexDirection: "column", flexGrow: 1, minWidth: 0 },
@@ -6030,7 +6377,7 @@ const DailyPanchangView = ({data: r, settings, onOpen12Months}) => {
                                                         s.jsx("span", {
                                                             className: "month-span-badge",
                                                             style: { fontSize: "0.74rem", fontWeight: 800, color: "#EA580C", background: "#FFF7ED", border: "1px solid rgba(251, 146, 60, 0.3)", padding: "1.5px 8px", borderRadius: "999px" },
-                                                            children: displaySpan
+                                                            children: activeMetrics.exactSpan || displaySpan
                                                         }),
                                                         r.tithi?.kshaya && s.jsxs("span", {
                                                             style: {
@@ -6183,41 +6530,65 @@ const DailyPanchangView = ({data: r, settings, onOpen12Months}) => {
                                         });
                                     })(),
 
-                                    // Chip 2: Moon Phase & Paksha Nature
+                                    // Chip 2: Soura Dina (Solar Day & Month)
                                     s.jsxs("div", {
                                         className: "month-sub-pill",
                                         style: {
                                             display: "flex",
                                             flexDirection: "column",
-                                            background: "#EFF6FF",
+                                            background: "#FFF7ED",
                                             padding: "4px 7px",
                                             borderRadius: "10px",
-                                            border: "1px solid rgba(59, 130, 246, 0.28)"
+                                            border: "1px solid rgba(251, 146, 60, 0.35)"
                                         },
                                         children: [
-                                            s.jsx("span", { className: "month-sub-pill-label", "data-i18n": "MOON PHASE", style: { fontSize: "7.5px", fontWeight: 800, color: "#1E40AF", textTransform: "uppercase", letterSpacing: "0.4px" }, children: "MOON PHASE" }),
-                                            s.jsx("span", { className: "month-sub-pill-val", "data-i18n": r.tithi?.paksha || "Shukla", style: { fontSize: "10px", fontWeight: 900, color: "#2563EB", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: r.tithi?.paksha || "Shukla" }),
-                                            s.jsx("span", { style: { fontSize: "7px", fontWeight: 700, color: "#1D4ED8", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: r.tithi?.paksha === "Shukla" ? "Waxing Phase" : "Waning Phase" })
+                                            s.jsx("span", { className: "month-sub-pill-label", "data-i18n": "SOURA DINA", style: { fontSize: "7.5px", fontWeight: 800, color: "#C2410C", textTransform: "uppercase", letterSpacing: "0.4px" }, children: curLang === 'or' ? "ସୌର ଦିନ (SOURA DINA)" : "SOURA DINA" }),
+                                            s.jsx("span", { className: "month-sub-pill-val", style: { fontSize: "10px", fontWeight: 900, color: "#EA580C", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: souraInfo ? (curLang === 'or' ? `${souraInfo.rashiEn} ${toLocalDigits(souraInfo.day, 'or')} ଦିନ` : souraInfo.enText) : (r.samvatDetails?.pravishte || "Solar Day") }),
+                                            s.jsx("span", { style: { fontSize: "7px", fontWeight: 700, color: "#9A3412", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: souraInfo ? (curLang === 'or' ? `${souraInfo.solarMonthName} ମାସ` : `${souraInfo.solarMonthName} Month`) : "Solar Month" })
                                         ]
                                     }),
 
-                                    // Chip 3: Season / Ritu
-                                    s.jsxs("div", {
-                                        className: "month-sub-pill",
-                                        style: {
-                                            display: "flex",
-                                            flexDirection: "column",
-                                            background: "#FFF1F2",
-                                            padding: "4px 7px",
-                                            borderRadius: "10px",
-                                            border: "1px solid rgba(244, 63, 94, 0.28)"
-                                        },
-                                        children: [
-                                            s.jsx("span", { className: "month-sub-pill-label", "data-i18n": "RITU (SEASON)", style: { fontSize: "7.5px", fontWeight: 800, color: "#9F1239", textTransform: "uppercase", letterSpacing: "0.4px" }, children: "RITU (SEASON)" }),
-                                            s.jsxs("span", { className: "month-sub-pill-val", "data-i18n": rituName, style: { fontSize: "10px", fontWeight: 900, color: "#BE123C", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: [`${rituEmoji} ${rituName}`] }),
-                                            s.jsx("span", { style: { fontSize: "7px", fontWeight: 700, color: "#9F1239", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: r.rituAyana?.drikRitu?.en || "Seasonal Cycle" })
-                                        ]
-                                    })
+                                    // Chip 3: Month Remaining Days & Masa Devata
+                                    (() => {
+                                        const daysLeft = Math.max(0, totDayCount - curDayCount);
+                                        const daysLeftStr = daysLeft === 0
+                                            ? (curLang === 'or' ? "ଶେଷ ଦିନ" : "Last Day")
+                                            : (curLang === 'or' ? `${toLocalDigits(daysLeft, 'or')} ଦିନ ବାକି` : `${daysLeft} Days Left`);
+                                        const devMap = {
+                                            "Chaitra": "Vishnu", "Vaishakha": "Madhusudana", "Jyeshtha": "Trivikrama", "Ashadha": "Vamana",
+                                            "Shravana": "Sridhara", "Bhadrapada": "Hrishikesha", "Ashwina": "Padmanabha", "Ashvina": "Padmanabha",
+                                            "Kartika": "Damodara", "Margashirsha": "Keshava", "Pausha": "Narayana", "Magha": "Madhava", "Phalguna": "Govinda"
+                                        };
+                                        const devOdMap = {
+                                            "Chaitra": "ବିଷ୍ଣୁ", "Vaishakha": "ମଧୁସୂଦନ", "Jyeshtha": "ତ୍ରିବିକ୍ରମ", "Ashadha": "ବାମନ",
+                                            "Shravana": "ଶ୍ରୀଧର", "Bhadrapada": "ହୃଷୀକେଶ", "Ashwina": "ପଦ୍ମନାଭ", "Ashvina": "ପଦ୍ମନାଭ",
+                                            "Kartika": "ଦାମୋଦର", "Margashirsha": "କେଶବ", "Pausha": "ନାରାୟଣ", "Magha": "ମାଧବ", "Phalguna": "ଗୋବିନ୍ଦ"
+                                        };
+                                        const baseM = (settings?.monthSystem === "amanta") ? cleanAmanta : cleanPurnimanta;
+                                        const devEn = isCurrentAdhik ? "Purushottama" : (devMap[baseM] || devMap[cleanAmanta] || "Damodara");
+                                        const devOd = isCurrentAdhik ? "ପୁରୁଷୋତ୍ତମ" : (devOdMap[baseM] || devOdMap[cleanAmanta] || "ଦାମୋଦର");
+                                        const devName = curLang === 'or' ? devOd : devEn;
+
+                                        return s.jsxs("div", {
+                                            className: "month-sub-pill",
+                                            style: {
+                                                display: "flex",
+                                                flexDirection: "column",
+                                                background: "#FAF5FF",
+                                                padding: "4px 7px",
+                                                borderRadius: "10px",
+                                                border: "1px solid rgba(168, 85, 247, 0.3)"
+                                            },
+                                            children: [
+                                                s.jsx("span", { className: "month-sub-pill-label", "data-i18n": "MONTH ENDS", style: { fontSize: "7.5px", fontWeight: 800, color: "#7E22CE", textTransform: "uppercase", letterSpacing: "0.4px" }, children: curLang === 'or' ? "ମାସ ଶେଷ" : "MONTH ENDS" }),
+                                                s.jsx("span", { className: "month-sub-pill-val", style: { fontSize: "10px", fontWeight: 900, color: "#6B21A8", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: daysLeftStr }),
+                                                s.jsxs("span", { style: { fontSize: "7px", fontWeight: 700, color: "#9333EA", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: [
+                                                    curLang === 'or' ? "ଦେବତା: " : "Deity: ",
+                                                    devName
+                                                ] })
+                                            ]
+                                        });
+                                    })()
                                 ]
                             })
                         ]
@@ -6601,6 +6972,63 @@ const DailyPanchangView = ({data: r, settings, onOpen12Months}) => {
                                 ] }) : null)
                             })
                         ]
+                    }),
+                    s.jsxs("div", {
+                        className: "flex-col-224 flex-col-vara",
+                        style: { background: "linear-gradient(rgba(255, 255, 255, 0.98), rgba(255, 245, 245, 0.92)) padding-box, linear-gradient(135deg, rgba(244, 63, 94, 0.75) 0%, rgba(234, 88, 12, 0.75) 100%) border-box", border: "1.5px solid transparent", borderRadius: "18px", padding: "10px 11px", minHeight: "155px", display: "flex", flexDirection: "column", justifyContent: "space-between", boxShadow: "0 6px 18px rgba(244, 63, 94, 0.08), inset 0 1px 2px rgba(255, 255, 255, 0.9)" },
+                        children: [
+                            s.jsxs("div", {
+                                style: { display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", marginBottom: "6px" },
+                                children: [
+                                    s.jsxs("div", { className: "panchang-box-v18", style: { background: "linear-gradient(90deg, #EA580C 0%, #E11D48 100%)", color: "#ffffff", boxShadow: "0 2px 6px rgba(234, 88, 12, 0.35)", border: "none", padding: "3px 10px", fontSize: "9.5px", fontWeight: 900, letterSpacing: "0.5px", textShadow: "0 1px 2px rgba(0, 0, 0, 0.4)", borderRadius: "9999px", gap: "5px", marginBottom: "0px", lineHeight: "1.2" }, children: [
+                                        s.jsx("i", { className: `text-label-153 ${curVara.icon}`, style: { color: "#ffffff", fontSize: "9.5px" } }),
+                                        s.jsx("span", { "data-i18n": "WEEKDAY", children: " WEEKDAY" })
+                                    ] }),
+                                    s.jsx("span", { className: "core-header-badge", style: { fontSize: "8px", fontWeight: 800, padding: "2px 7px", borderRadius: "999px", background: "rgba(244, 63, 94, 0.10)", color: "#BE123C", border: "1px solid rgba(244, 63, 94, 0.28)" }, "data-i18n": curVara.nature, children: curVara.nature })
+                                ]
+                            }),
+                            s.jsxs("div", {
+                                style: { display: "flex", flexDirection: "column", gap: "2px", flexGrow: 1, justifyContent: "center" },
+                                children: [
+                                    s.jsx("div", { className: "text-label-227-v1", "data-i18n": curVara.name, style: { fontSize: "clamp(1.05rem, 3.6vw, 1.25rem)", fontWeight: 900, lineHeight: 1.15, letterSpacing: "-0.3px", color: "#111827" }, children: curVara.name }),
+                                    s.jsxs("div", { style: { display: "flex", flexDirection: "column", gap: "3px", marginTop: "2px" }, children: [
+                                        s.jsxs("span", { className: "core-meta-pill", style: { fontSize: "8px", fontWeight: 800, color: "#9F1239", background: "rgba(244, 63, 94, 0.08)", padding: "1.5px 6px", borderRadius: "5px", display: "inline-flex", alignItems: "center", gap: "3px", width: "fit-content" }, children: [s.jsx("span", { "data-i18n": "Deity:", children: "Deity: " }), s.jsx("strong", { "data-i18n": curVara.deity, children: curVara.deity })] }),
+                                        s.jsxs("span", { className: "core-meta-pill", style: { fontSize: "8px", fontWeight: 800, color: "#9F1239", background: "rgba(244, 63, 94, 0.08)", padding: "1.5px 6px", borderRadius: "5px", display: "inline-flex", alignItems: "center", gap: "3px", width: "fit-content" }, children: [s.jsx("span", { "data-i18n": "Ruler:", children: "Ruler: " }), s.jsx("strong", { children: curVara.ruler })] })
+                                    ] })
+                                ]
+                            }),
+                            s.jsxs("div", {
+                                className: "flex-col-236",
+                                style: { borderColor: "rgba(251, 113, 133, 0.6)", borderTopWidth: "1px", borderTopStyle: "dashed", marginTop: "6px", paddingTop: "5px", display: "flex", flexDirection: "column", gap: "2px" },
+                                children: [
+                                    s.jsxs("div", { className: "text-label-229", style: { fontSize: "9.5px", fontWeight: 800, color: "#9F1239", lineHeight: 1.2, display: "flex", alignItems: "center", gap: "4px" }, children: [s.jsx("i", { className: "fa-regular fa-clock", style: { fontSize: "8.5px", opacity: 0.85 } }), s.jsx("span", { children: nxtSunriseEndStr })] }),
+                                    s.jsxs("div", { className: "text-label-230", style: { fontSize: "8.5px", fontWeight: 600, color: "#E11D48", lineHeight: 1.2 }, children: [s.jsx("span", { "data-i18n": "Next:", children: "Next: " }), nxtVara.name] })
+                                ]
+                            })
+                        ]
+                    }),
+                    s.jsxs("div", {
+                        className: "flex-col-224 flex-col-signs-vertical",
+                        style: { background: "linear-gradient(rgba(255, 255, 255, 0.98), rgba(255, 250, 245, 0.92)) padding-box, linear-gradient(135deg, rgba(245, 158, 11, 0.75) 0%, rgba(99, 102, 241, 0.75) 100%) border-box", border: "1.5px solid transparent", borderRadius: "18px", padding: "8px 10px", minHeight: "155px", display: "flex", flexDirection: "column", justifyContent: "space-between", boxShadow: "0 6px 18px rgba(245, 158, 11, 0.08), inset 0 1px 2px rgba(255, 255, 255, 0.9)" },
+                        children: [
+                            s.jsxs("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: "6px", width: "100%" }, children: [
+                                s.jsxs("div", { style: { display: "flex", flexDirection: "column", minWidth: 0 }, children: [
+                                    s.jsx("span", { style: { color: "#B45309", fontSize: "7.8px", fontWeight: 900, letterSpacing: "0.6px", textTransform: "uppercase", lineHeight: 1 }, "data-i18n": "Sun Sign", children: "Sun Sign" }),
+                                    s.jsx("span", { style: { fontSize: "1.05rem", fontWeight: 900, color: "#111827", lineHeight: 1.15, marginTop: "1px" }, "data-i18n": r.sunSign.indian, children: r.sunSign.indian }),
+                                    s.jsxs("div", { style: { display: "inline-flex", alignItems: "center", marginTop: "2px", padding: "1px 6px", borderRadius: "999px", fontSize: "8.5px", fontWeight: 800, background: "rgba(255, 247, 237, 0.9)", color: "#C2410C", border: "1px solid rgba(251, 146, 60, 0.35)", width: "fit-content", whiteSpace: "nowrap" }, children: [s.jsx("span", { "data-i18n": r.sunSign.western, children: r.sunSign.western }), " • ", `${r.sunSign.longitude}°`] })
+                                ] }),
+                                s.jsx("div", { style: { width: "30px", height: "30px", borderRadius: "9px", background: "linear-gradient(135deg, #F59E0B 0%, #EA580C 100%)", color: "#FFFFFF", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, boxShadow: "0 2px 6px rgba(234, 88, 12, 0.25)" }, children: s.jsx(window.PanchangIcon, { className: "text-label-70", style: { fontSize: "13px" }, children: "wb_sunny" }) })
+                            ] }),
+                            s.jsx("div", { style: { width: "100%", height: "1px", background: "rgba(0, 0, 0, 0.06)", margin: "4px 0" } }),
+                            s.jsxs("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: "6px", width: "100%" }, children: [
+                                s.jsxs("div", { style: { display: "flex", flexDirection: "column", minWidth: 0 }, children: [
+                                    s.jsx("span", { style: { color: "#4338CA", fontSize: "7.8px", fontWeight: 900, letterSpacing: "0.6px", textTransform: "uppercase", lineHeight: 1 }, "data-i18n": "Moon Sign", children: "Moon Sign" }),
+                                    s.jsx("span", { style: { fontSize: "1.05rem", fontWeight: 900, color: "#111827", lineHeight: 1.15, marginTop: "1px" }, "data-i18n": r.moonSign.indian, children: r.moonSign.indian }),
+                                    s.jsxs("div", { style: { display: "inline-flex", alignItems: "center", marginTop: "2px", padding: "1px 6px", borderRadius: "999px", fontSize: "8.5px", fontWeight: 800, background: "rgba(238, 242, 255, 0.9)", color: "#3730A3", border: "1px solid rgba(99, 102, 241, 0.3)", width: "fit-content", whiteSpace: "nowrap" }, children: [s.jsx("span", { "data-i18n": r.moonSign.western, children: r.moonSign.western }), " • ", `${r.moonSign.longitude}°`] })
+                                ] }),
+                                s.jsx("div", { style: { width: "30px", height: "30px", borderRadius: "9px", background: "linear-gradient(135deg, #6366F1 0%, #4338CA 100%)", color: "#FFFFFF", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, boxShadow: "0 2px 6px rgba(79, 70, 229, 0.25)" }, children: s.jsx(window.PanchangIcon, { className: "text-label-70", style: { fontSize: "13px" }, children: "dark_mode" }) })
+                            ] })
+                        ]
                     })
                 ]}),
 
@@ -6614,7 +7042,7 @@ const DailyPanchangView = ({data: r, settings, onOpen12Months}) => {
         s.jsx(CurrentRituCard, { data: r }),
 
         s.jsxs("div", {className: "grid-layout-244", children: [
-            s.jsxs("div",{className:"panchang-element-72 glass-panel",children:[s.jsx("div",{className:"flex-row-62-v1",children:s.jsx("h3",{className:"text-label-63-v1","data-i18n":"Lunar Month, Samvat and Brihaspati Samvatsara",children:"Lunar Month, Samvat and Brihaspati Samvatsara"})}),s.jsxs("div",{className:"grid-layout-73-v1",children:[s.jsxs("div",{className:"panchang-element-74",children:[s.jsxs("div",{className:"flex-row-75",children:[s.jsx("div",{className:"text-label-76","data-i18n":"Vikram Samvat",children:"Vikram Samvat"}),s.jsx("div",{className:"flex-row-77",children:s.jsxs("div",{className:"flex-row-19",children:[s.jsx(h,{}),s.jsxs("span",{className:"text-label-79",children:[r.samvatDetails.vikram.year," ",s.jsx("span",{"data-i18n":r.samvatDetails.vikram.name,children:r.samvatDetails.vikram.name})]})]})})]}),s.jsxs("div",{className:"flex-row-75",children:[s.jsx("div",{className:"text-label-76","data-i18n":"Shaka Samvat",children:"Shaka Samvat"}),s.jsx("div",{className:"flex-row-77",children:s.jsxs("div",{className:"flex-row-19",children:[s.jsx(h,{}),s.jsxs("span",{className:"text-label-79",children:[r.samvatDetails.shaka.year," ",s.jsx("span",{"data-i18n":r.samvatDetails.shaka.name,children:r.samvatDetails.shaka.name})]})]})})]}),s.jsxs("div",{className:"flex-row-75",children:[s.jsx("div",{className:"text-label-76","data-i18n":"Gujarati Samvat",children:"Gujarati Samvat"}),s.jsx("div",{className:"flex-row-77",children:s.jsxs("div",{className:"flex-row-19",children:[s.jsx(h,{}),s.jsxs("span",{className:"text-label-79",children:[r.samvatDetails.gujarati.year," ",s.jsx("span",{"data-i18n":r.samvatDetails.gujarati.name,children:r.samvatDetails.gujarati.name})]})]})})]}),s.jsxs("div",{className:"flex-row-246",children:[s.jsx("div",{className:"text-label-76","data-i18n":"Pravishte / Solar Day",children:"Pravishte / Solar Day"}),s.jsx("div",{className:"flex-row-77",children:s.jsxs("div",{className:"flex-row-19",children:[s.jsx(h,{}),s.jsxs("span",{className:"text-label-79",children:[souraInfo ? `${souraInfo.enText} (${souraInfo.solarMonthName} Gate)` : r.samvatDetails.pravishte]})]})})]})]}),s.jsxs("div",{children:[r.samvatDetails.samvatsara.list&&r.samvatDetails.samvatsara.list.map(((t,n)=>s.jsxs("div",{key:n,className:"flex-row-75",children:[s.jsx("div",{className:"text-label-76","data-i18n":0===n?"Samvatsara":"",children:0===n?"Samvatsara":""}),s.jsx("div",{className:"flex-row-77",children:s.jsxs("div",{className:"flex-row-19",children:[s.jsx(h,{}),s.jsxs("span",{className:"text-label-79",children:[s.jsx("span",{"data-i18n":t.name,children:t.name}),t.endTimeStr?" upto "+t.endTimeStr:""]})]})})]}))),s.jsxs("div",{className:"flex-row-75",children:[s.jsx("div",{className:"text-label-76","data-i18n":"Chandramasa (Purnimanta)",children:"Chandramasa (Purnimanta)"}),s.jsx("div",{className:"flex-row-77",children:s.jsxs("div",{className:"flex-row-19",children:[s.jsx(h,{}),s.jsx("span",{className:"text-label-79",children:r.samvatDetails.chandramasa.purnimanta})]})})]}),s.jsxs("div",{className:"flex-row-246",children:[s.jsx("div",{className:"text-label-76","data-i18n":"Chandramasa (Amanta)",children:"Chandramasa (Amanta)"}),s.jsx("div",{className:"flex-row-77",children:s.jsxs("div",{className:"flex-row-19",children:[s.jsx(h,{}),s.jsx("span",{className:"text-label-79",children:r.samvatDetails.chandramasa.amanta})]})})]})]})]})]}),s.jsxs("div",{className:"panchang-element-72 glass-panel",children:[s.jsxs("div",{children:[s.jsx("div",{className:"flex-row-62-v1",children:s.jsx("h3",{className:"text-label-63-v1","data-i18n":"Ritu and Ayana",children:"Ritu and Ayana"})}),s.jsxs("div",{className:"grid-layout-73-v1",children:[s.jsxs("div",{className:"panchang-element-74",children:[s.jsxs("div",{className:"flex-row-75",children:[s.jsx("div",{className:"text-label-76","data-i18n":"Drik Ayana",children:"Drik Ayana"}),s.jsx("div",{className:"flex-row-77",children:s.jsx("span",{className:"text-label-79","data-i18n":r.rituAyana.drikAyana,children:r.rituAyana.drikAyana})})]}),s.jsxs("div",{className:"flex-row-75",children:[s.jsx("div",{className:"text-label-76","data-i18n":"Vedic Ayana",children:"Vedic Ayana"}),s.jsx("div",{className:"flex-row-77",children:s.jsx("span",{className:"text-label-247","data-i18n":r.rituAyana.vedicAyana,children:r.rituAyana.vedicAyana})})]}),s.jsxs("div",{className:"flex-row-75",children:[s.jsx("div",{className:"text-label-76","data-i18n":"Drik Ritu",children:"Drik Ritu"}),s.jsx("div",{className:"flex-row-77",children:s.jsxs("div",{className:"flex-row-19",children:[s.jsx("span",{className:"text-label-70",children:r.rituAyana.drikRitu.emoji}),s.jsxs("div",{className:"flex-col-24",children:[s.jsx("span",{className:"text-label-248 "+r.rituAyana.drikRitu.color,"data-i18n":r.rituAyana.drikRitu.name,children:r.rituAyana.drikRitu.name}),s.jsxs("span",{className:"text-label-249",children:[s.jsx("span",{"data-i18n":r.rituAyana.drikRitu.en,children:r.rituAyana.drikRitu.en}), " (", s.jsx("span",{"data-i18n":"Solar",children:"Solar"}), ")"]})]})]})})]}),s.jsxs("div",{className:"flex-row-246",children:[s.jsx("div",{className:"text-label-76","data-i18n":"Vedic Ritu",children:"Vedic Ritu"}),s.jsx("div",{className:"flex-row-77",children:s.jsxs("div",{className:"flex-row-19",children:[s.jsx("span",{className:"text-label-250",children:r.rituAyana.vedicRitu.emoji}),s.jsxs("div",{className:"flex-col-24",children:[s.jsx("span",{className:"text-label-251 "+r.rituAyana.vedicRitu.color,"data-i18n":r.rituAyana.vedicRitu.name,children:r.rituAyana.vedicRitu.name}),s.jsxs("span",{className:"text-label-252",children:[s.jsx("span",{"data-i18n":r.rituAyana.vedicRitu.en,children:r.rituAyana.vedicRitu.en}), " (", s.jsx("span",{"data-i18n":"Lunar",children:"Lunar"}), ")"]})]})]})})]})]}),s.jsxs("div",{className:"panchang-element-81",children:[s.jsxs("div",{className:"flex-row-75",children:[s.jsx("div",{className:"text-label-76","data-i18n":"Dinamana",children:"Dinamana"}),s.jsx("div",{className:"flex-row-77",children:s.jsx("span",{className:"text-label-79",children:r.rituAyana.dinamana})})]}),s.jsxs("div",{className:"flex-row-75",children:[s.jsx("div",{className:"text-label-76","data-i18n":"Ratrimana",children:"Ratrimana"}),s.jsx("div",{className:"flex-row-77",children:s.jsx("span",{className:"text-label-79",children:r.rituAyana.ratrimana})})]}),s.jsxs("div",{className:"flex-row-246",children:[s.jsx("div",{className:"text-label-76","data-i18n":"Madhyahna",children:"Madhyahna"}),s.jsx("div",{className:"flex-row-77",children:s.jsx("span",{className:"text-label-79",children:r.rituAyana.madhyahna})})]})]})]})]})]}),s.jsxs("div",{className:"panchang-element-72 glass-panel",children:[s.jsxs("div",{children:[s.jsx("div",{className:"flex-row-62-v1",children:s.jsx("h3",{className:"text-label-63-v1","data-i18n":"Anandadi and Tamil Yoga",children:"Anandadi and Tamil Yoga"})}),s.jsxs("div",{className:"grid-layout-73-v1",children:[s.jsxs("div",{className:"panchang-element-74",children:[s.jsxs("div",{className:"flex-row-253",children:[s.jsx("div",{className:"text-label-76","data-i18n":"Anandadi Yoga",children:"Anandadi Yoga"}),s.jsx("div",{className:"flex-row-254",children: r.anandadiTamil.anandadiList.map((itm, idx) => s.jsxs("div",{key: "ay"+idx, className:"flex-row-19",children:[
+            s.jsxs("div",{className:"panchang-element-72 glass-panel",children:[s.jsx("div",{className:"flex-row-62-v1",children:s.jsx("h3",{className:"text-label-63-v1","data-i18n":"Lunar Month, Samvat and Brihaspati Samvatsara",children:"Lunar Month, Samvat and Brihaspati Samvatsara"})}),s.jsxs("div",{className:"grid-layout-73-v1",children:[s.jsxs("div",{className:"panchang-element-74",children:[s.jsxs("div",{className:"flex-row-75",children:[s.jsx("div",{className:"text-label-76","data-i18n":"Vikram Samvat",children:"Vikram Samvat"}),s.jsx("div",{className:"flex-row-77",children:s.jsxs("div",{className:"flex-row-19",children:[s.jsx(h,{}),s.jsxs("span",{className:"text-label-79",children:[r.samvatDetails.vikram.year," ",s.jsx("span",{"data-i18n":r.samvatDetails.vikram.name,children:r.samvatDetails.vikram.name})]})]})})]}),s.jsxs("div",{className:"flex-row-75",children:[s.jsx("div",{className:"text-label-76","data-i18n":"Shaka Samvat",children:"Shaka Samvat"}),s.jsx("div",{className:"flex-row-77",children:s.jsxs("div",{className:"flex-row-19",children:[s.jsx(h,{}),s.jsxs("span",{className:"text-label-79",children:[r.samvatDetails.shaka.year," ",s.jsx("span",{"data-i18n":r.samvatDetails.shaka.name,children:r.samvatDetails.shaka.name})]})]})})]}),s.jsxs("div",{className:"flex-row-75",children:[s.jsx("div",{className:"text-label-76","data-i18n":"Gujarati Samvat",children:"Gujarati Samvat"}),s.jsx("div",{className:"flex-row-77",children:s.jsxs("div",{className:"flex-row-19",children:[s.jsx(h,{}),s.jsxs("span",{className:"text-label-79",children:[r.samvatDetails.gujarati.year," ",s.jsx("span",{"data-i18n":r.samvatDetails.gujarati.name,children:r.samvatDetails.gujarati.name})]})]})})]}),s.jsxs("div",{className:"flex-row-246",children:[s.jsx("div",{className:"text-label-76","data-i18n":"Pravishte / Solar Day",children:"Pravishte / Solar Day"}),s.jsx("div",{className:"flex-row-77",children:s.jsxs("div",{className:"flex-row-19",children:[s.jsx(h,{}),s.jsxs("span",{className:"text-label-79",children:[souraInfo ? `${souraInfo.enText} (${souraInfo.solarMonthName} Gate)` : r.samvatDetails.pravishte]})]})})]})]}),s.jsxs("div",{children:[r.samvatDetails.samvatsara.list&&r.samvatDetails.samvatsara.list.map(((t,n)=>s.jsxs("div",{key:n,className:"flex-row-75",children:[s.jsx("div",{className:"text-label-76","data-i18n":0===n?"Samvatsara":"",children:0===n?"Samvatsara":""}),s.jsx("div",{className:"flex-row-77",children:s.jsxs("div",{className:"flex-row-19",children:[s.jsx(h,{}),s.jsxs("span",{className:"text-label-79",children:[s.jsx("span",{"data-i18n":t.name,children:t.name}),t.endTimeStr?" upto "+t.endTimeStr:""]})]})})]}))),s.jsxs("div",{className:"flex-row-75",children:[s.jsx("div",{className:"text-label-76","data-i18n":"Chandramasa (Purnimanta)",children:"Chandramasa (Purnimanta)"}),s.jsx("div",{className:"flex-row-77",children:s.jsxs("div",{className:"flex-row-19",children:[s.jsx(h,{}),s.jsx("span",{className:"text-label-79",children:r.samvatDetails.chandramasa.purnimanta})]})})]}),s.jsxs("div",{className:"flex-row-246",children:[s.jsx("div",{className:"text-label-76","data-i18n":"Chandramasa (Amanta)",children:"Chandramasa (Amanta)"}),s.jsx("div",{className:"flex-row-77",children:s.jsxs("div",{className:"flex-row-19",children:[s.jsx(h,{}),s.jsx("span",{className:"text-label-79",children:r.samvatDetails.chandramasa.amanta})]})})]})]})]})]}),s.jsxs("div",{className:"panchang-element-72 glass-panel",children:[s.jsxs("div",{children:[s.jsx("div",{className:"flex-row-62-v1",children:s.jsx("h3",{className:"text-label-63-v1","data-i18n":"Ritu and Ayana",children:"Ritu and Ayana"})}),s.jsxs("div",{className:"grid-layout-73-v1",children:[s.jsxs("div",{className:"panchang-element-74",children:[s.jsxs("div",{className:"flex-row-75",children:[s.jsx("div",{className:"text-label-76","data-i18n":"Drik Ayana",children:"Drik Ayana"}),s.jsx("div",{className:"flex-row-77",children:s.jsx("span",{className:"text-label-79","data-i18n":r.rituAyana.drikAyana,children:r.rituAyana.drikAyana})})]}),s.jsxs("div",{className:"flex-row-75",children:[s.jsx("div",{className:"text-label-76","data-i18n":"Vedic Ayana",children:"Vedic Ayana"}),s.jsx("div",{className:"flex-row-77",children:s.jsx("span",{className:"text-label-247","data-i18n":r.rituAyana.vedicAyana,children:r.rituAyana.vedicAyana})})]}),s.jsxs("div",{className:"flex-row-75",children:[s.jsx("div",{className:"text-label-76","data-i18n":"Drik Ritu",children:"Drik Ritu"}),s.jsx("div",{className:"flex-row-77",children:s.jsxs("div",{className:"flex-row-19",children:[s.jsx("span",{className:"text-label-70",children:r.rituAyana.drikRitu.emoji}),s.jsxs("div",{className:"flex-col-24",children:[s.jsx("span",{className:"text-label-248 "+r.rituAyana.drikRitu.color,"data-i18n":r.rituAyana.drikRitu.name,children:r.rituAyana.drikRitu.name}),s.jsxs("span",{className:"text-label-249",children:[s.jsx("span",{"data-i18n":r.rituAyana.drikRitu.en,children:r.rituAyana.drikRitu.en}), " (", s.jsx("span",{"data-i18n":"Solar",children:"Solar"}), ")"]})]})]})})]}),s.jsxs("div",{className:"flex-row-246",children:[s.jsx("div",{className:"text-label-76","data-i18n":"Vedic Ritu",children:"Vedic Ritu"}),s.jsx("div",{className:"flex-row-77",children:s.jsxs("div",{className:"flex-row-19",children:[s.jsx("span",{className:"text-label-250",children:r.rituAyana.vedicRitu.emoji}),s.jsxs("div",{className:"flex-col-24",children:[s.jsx("span",{className:"text-label-251 "+r.rituAyana.vedicRitu.color,"data-i18n":r.rituAyana.vedicRitu.name,children:r.rituAyana.vedicRitu.name}),s.jsxs("span",{className:"text-label-252",children:[s.jsx("span",{"data-i18n":r.rituAyana.vedicRitu.en,children:r.rituAyana.vedicRitu.en}), " (", s.jsx("span",{"data-i18n":"Lunar",children:"Lunar"}), ")"]})]})]})})]})]}),s.jsxs("div",{className:"panchang-element-81",children:[s.jsxs("div",{className:"flex-row-75",children:[s.jsx("div",{className:"text-label-76","data-i18n":"Dinamana",children:"Dinamana"}),s.jsx("div",{className:"flex-row-77",children:s.jsxs("div",{className:"flex-col-24",children:[s.jsx("span",{className:"text-label-79",children:r.rituAyana.dinamana}),s.jsx("span",{className:"text-label-249","data-i18n":"Daylight, sunrise to sunset",style:{fontSize:"0.65rem",textAlign:"left"},children:"Daylight, sunrise to sunset"})]})})]}),s.jsxs("div",{className:"flex-row-75",children:[s.jsx("div",{className:"text-label-76","data-i18n":"Ratrimana",children:"Ratrimana"}),s.jsx("div",{className:"flex-row-77",children:s.jsxs("div",{className:"flex-col-24",children:[s.jsx("span",{className:"text-label-79",children:r.rituAyana.ratrimana}),s.jsx("span",{className:"text-label-249","data-i18n":"Night, sunset to the next sunrise",style:{fontSize:"0.65rem",textAlign:"left"},children:"Night, sunset to the next sunrise"})]})})]}),s.jsxs("div",{className:"flex-row-246",children:[s.jsx("div",{className:"text-label-76","data-i18n":"Madhyahna",children:"Madhyahna"}),s.jsx("div",{className:"flex-row-77",children:s.jsx("span",{className:"text-label-79",children:r.rituAyana.madhyahna})})]})]})]})]})]}),s.jsxs("div",{className:"panchang-element-72 glass-panel",children:[s.jsxs("div",{children:[s.jsx("div",{className:"flex-row-62-v1",children:s.jsx("h3",{className:"text-label-63-v1","data-i18n":"Anandadi and Tamil Yoga",children:"Anandadi and Tamil Yoga"})}),s.jsxs("div",{className:"grid-layout-73-v1",children:[s.jsxs("div",{className:"panchang-element-74",children:[s.jsxs("div",{className:"flex-row-253",children:[s.jsx("div",{className:"text-label-76","data-i18n":"Anandadi Yoga",children:"Anandadi Yoga"}),s.jsx("div",{className:"flex-row-254",children: r.anandadiTamil.anandadiList.map((itm, idx) => s.jsxs("div",{key: "ay"+idx, className:"flex-row-19",children:[
     s.jsx("span",{className: itm.isGood ? "status-text-good-bold" : "status-text-bad-bold", children: itm.isGood ? "✓" : "✗"}),
     s.jsx("span",{className:"text-label-79","data-i18n":itm.name,children: itm.name}),
     itm.endTimeStr && s.jsx("span",{className:"anandadi-time",children: itm.endTimeStr.includes("upto") ? itm.endTimeStr : "upto " + itm.endTimeStr})
@@ -6642,35 +7070,35 @@ ChandrabalamPanel = ({ data: r }) => {
         s.jsx("div", {className: "panchang-element-1", style: { marginBottom: "8px" }, children:
             r.chandrabalam.map((h,b)=>s.jsxs("div",{className:"panchang-element-273",children:[
                 s.jsxs("p",{className:"text-label-274",children:[s.jsx("span",{"data-i18n":"Good Chandrabalam till",children:"Good Chandrabalam till"})," ",h.endTimeStr," ",s.jsx("span",{"data-i18n":"for:",children:"for:"})]}),
-                s.jsx("div",{style: {display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(105px, 1fr))", gap: "6px", marginBottom: "8px"}, children: h.items.map(o=>s.jsxs("div",{className:"panchang-box-v21",style: {padding: "5px 8px"}, children:[s.jsx("div",{className:"panchang-element-78",style:{width:"18px",height:"18px"},dangerouslySetInnerHTML:{__html:window.getZodiacIcon(o)}}),s.jsx("span",{className:"text-label-279","data-i18n":o,children:o})]},o))}),
+                s.jsx("div",{style: {display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(95px, 1fr))", gap: "5px", marginBottom: "6px"}, children: h.items.map(o=>s.jsxs("div",{className:"panchang-box-v21",style: {padding: "4px 7px"}, children:[s.jsx("div",{className:"panchang-element-78",style:{width:"16px",height:"16px"},dangerouslySetInnerHTML:{__html:window.getZodiacIcon(o)}}),s.jsx("span",{className:"text-label-279","data-i18n":o,children:o})]},o))}),
                 h.badItem && s.jsxs("div", {className: "ashtama-chandra-alert", children: [
-                    s.jsxs("div", {style: {display: "flex", alignItems: "center", gap: "6px"}, children: [
-                        s.jsx("i", {className: "fa-solid fa-triangle-exclamation", style: {color: "#DC2626", fontSize: "12px"}}),
-                        s.jsxs("span", {style: {fontSize: "0.85rem", fontWeight: 900, color: "#991B1B"}, children: [
+                    s.jsxs("div", {style: {display: "flex", alignItems: "center", gap: "5px"}, children: [
+                        s.jsx("i", {className: "fa-solid fa-triangle-exclamation", style: {color: "#DC2626", fontSize: "11px"}}),
+                        s.jsxs("span", {style: {fontSize: "0.76rem", fontWeight: 800, color: "#991B1B"}, children: [
                             s.jsx("span", {"data-i18n": "*Ashtama Chandra for", children: "*Ashtama Chandra for"}), " ",
                             s.jsx("span", {"data-i18n": h.badItem, children: h.badItem}), " ",
                             s.jsx("span", {"data-i18n": "Rashi borns", children: "Rashi borns"})
                         ]})
                     ]}),
-                    s.jsx("div", {style: {fontSize: "0.75rem", color: "#B91C1C", fontWeight: 600, paddingLeft: "18px"}, "data-i18n": rashiNakPadas[h.badItem], children: rashiNakPadas[h.badItem]})
+                    s.jsx("div", {style: {fontSize: "0.68rem", color: "#B91C1C", fontWeight: 600, paddingLeft: "16px", lineHeight: 1.35}, "data-i18n": rashiNakPadas[h.badItem], children: rashiNakPadas[h.badItem]})
                 ]})
             ]},b))
         }),
         
         cb && s.jsxs("div", {className: "balam-transit-card", children: [
-            s.jsx("div", {style: { background: "linear-gradient(90deg, #FF6B00 0%, #F43F5E 100%)", color: "#ffffff", fontSize: "11px", fontWeight: "800", letterSpacing: "0.6px", textTransform: "uppercase", padding: "6px 12px", textAlign: "center" },"data-i18n":"Moon Sign Transit Info", children: "Moon Sign Transit Info"}),
-            s.jsxs("div", {className: "balam-transit-body", children: [
+            s.jsx("div", {style: { background: "linear-gradient(90deg, #FF6B00 0%, #F43F5E 100%)", color: "#ffffff", fontSize: "9.5px", fontWeight: "800", letterSpacing: "0.6px", textTransform: "uppercase", padding: "4.5px 10px", textAlign: "center" },"data-i18n":"Moon Sign Transit Info", children: "Moon Sign Transit Info"}),
+            s.jsxs("div", {className: "balam-transit-body", style: { padding: "6px 8px" }, children: [
                 s.jsxs("div", {style: { display: "flex", alignItems: "center", gap: "5px", flexShrink: 1, minWidth: 0 }, children: [
-                    s.jsx("div", {style: { width: "22px", height: "22px", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }, dangerouslySetInnerHTML: {__html: window.getZodiacIcon(cb.currentMoonSign)}}),
-                    s.jsx("span", {style: { fontSize: "13px", fontWeight: "800", whiteSpace: "nowrap" },"data-i18n":cb.currentMoonSign, children: cb.currentMoonSign})
+                    s.jsx("div", {style: { width: "20px", height: "20px", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }, dangerouslySetInnerHTML: {__html: window.getZodiacIcon(cb.currentMoonSign)}}),
+                    s.jsx("span", {style: { fontSize: "11.5px", fontWeight: "800", whiteSpace: "nowrap" },"data-i18n":cb.currentMoonSign, children: cb.currentMoonSign})
                 ]}),
                 cb.transitTime && s.jsxs("div", {className: "balam-transit-badge", children: [
                     s.jsx("div", {style: { width: "5px", height: "5px", borderRadius: "50%", background: "#f59e0b", flexShrink: 0 }}),
-                    s.jsx("span", {style: { fontSize: "10px", fontWeight: "700", whiteSpace: "nowrap" }, children: cb.transitTime})
+                    s.jsx("span", {style: { fontSize: "9.5px", fontWeight: "700", whiteSpace: "nowrap" }, children: cb.transitTime})
                 ]}),
                 cb.nextMoonSign && s.jsxs("div", {style: { display: "flex", alignItems: "center", gap: "5px", flexShrink: 1, minWidth: 0 }, children: [
-                    s.jsx("div", {style: { width: "22px", height: "22px", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }, dangerouslySetInnerHTML: {__html: window.getZodiacIcon(cb.nextMoonSign)}}),
-                    s.jsx("span", {style: { fontSize: "13px", fontWeight: "800", whiteSpace: "nowrap" },"data-i18n":cb.nextMoonSign, children: cb.nextMoonSign})
+                    s.jsx("div", {style: { width: "20px", height: "20px", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }, dangerouslySetInnerHTML: {__html: window.getZodiacIcon(cb.nextMoonSign)}}),
+                    s.jsx("span", {style: { fontSize: "11.5px", fontWeight: "800", whiteSpace: "nowrap" },"data-i18n":cb.nextMoonSign, children: cb.nextMoonSign})
                 ]})
             ]})
         ]}),
@@ -6723,24 +7151,24 @@ TarabalamPanel = ({ data: r }) => {
         s.jsx("div", {className: "panchang-element-1", style: { marginBottom: "8px" }, children:
             r.tarabalam.map((h,b)=>s.jsxs("div",{className:"panchang-element-273",children:[
                 s.jsxs("p",{className:"text-label-274",children:[s.jsx("span",{"data-i18n":"Good Tarabalam till",children:"Good Tarabalam till"})," ",h.endTimeStr," ",s.jsx("span",{"data-i18n":"for:",children:"for:"})]}),
-                s.jsx("div",{className:"flex-row-305",children:h.items.map(o=>s.jsxs("div",{className:"panchang-box-v25",style: {padding: "4px 8px"}, children:[s.jsx("span",{style:{display:"inline-flex",alignItems:"center"},dangerouslySetInnerHTML:{__html:window.getNakshatraBadge(o,"18px")}}),s.jsx("span",{className:"text-label-308","data-i18n":o,children:o})]},o))})
+                s.jsx("div",{className:"flex-row-305",children:h.items.map(o=>s.jsxs("div",{className:"panchang-box-v25",style: {padding: "3.5px 7px"}, children:[s.jsx("span",{style:{display:"inline-flex",alignItems:"center"},dangerouslySetInnerHTML:{__html:window.getNakshatraBadge(o,"16px")}}),s.jsx("span",{className:"text-label-308","data-i18n":o,children:o})]},o))})
             ]},b))
         }),
 
         tb && s.jsxs("div", {className: "balam-transit-card", children: [
-            s.jsx("div", {style: { background: "linear-gradient(90deg, #FF6B00 0%, #F43F5E 100%)", color: "#ffffff", fontSize: "11px", fontWeight: "800", letterSpacing: "0.6px", textTransform: "uppercase", padding: "6px 12px", textAlign: "center" },"data-i18n":"Nakshatra Transit Info", children: "Nakshatra Transit Info"}),
-            s.jsxs("div", {className: "balam-transit-body", children: [
+            s.jsx("div", {style: { background: "linear-gradient(90deg, #FF6B00 0%, #F43F5E 100%)", color: "#ffffff", fontSize: "9.5px", fontWeight: "800", letterSpacing: "0.6px", textTransform: "uppercase", padding: "4.5px 10px", textAlign: "center" },"data-i18n":"Nakshatra Transit Info", children: "Nakshatra Transit Info"}),
+            s.jsxs("div", {className: "balam-transit-body", style: { padding: "6px 8px" }, children: [
                 s.jsxs("div", {style: { display: "flex", alignItems: "center", gap: "5px", flexShrink: 1, minWidth: 0 }, children: [
-                    s.jsx("span", {style: { display: "inline-flex", alignItems: "center", flexShrink: 0 }, dangerouslySetInnerHTML: { __html: window.getNakshatraBadge(tb.currentNakshatra, "22px") }}),
-                    s.jsx("span", {style: { fontSize: "12px", fontWeight: "800", textAlign: "center", lineHeight: "1.15" },"data-i18n":tb.currentNakshatra, children: tb.currentNakshatra})
+                    s.jsx("span", {style: { display: "inline-flex", alignItems: "center", flexShrink: 0 }, dangerouslySetInnerHTML: { __html: window.getNakshatraBadge(tb.currentNakshatra, "18px") }}),
+                    s.jsx("span", {style: { fontSize: "11px", fontWeight: "800", textAlign: "center", lineHeight: "1.15" },"data-i18n":tb.currentNakshatra, children: tb.currentNakshatra})
                 ]}),
                 tb.transitTime && s.jsxs("div", {className: "balam-transit-badge", children: [
                     s.jsx("div", {style: { width: "5px", height: "5px", borderRadius: "50%", background: "#f59e0b", flexShrink: 0 }}),
-                    s.jsx("span", {style: { fontSize: "10px", fontWeight: "700", whiteSpace: "nowrap" }, children: tb.transitTime})
+                    s.jsx("span", {style: { fontSize: "9.5px", fontWeight: "700", whiteSpace: "nowrap" }, children: tb.transitTime})
                 ]}),
                 tb.nextNakshatra && s.jsxs("div", {style: { display: "flex", alignItems: "center", gap: "5px", flexShrink: 1, minWidth: 0 }, children: [
-                    s.jsx("span", {style: { display: "inline-flex", alignItems: "center", flexShrink: 0 }, dangerouslySetInnerHTML: { __html: window.getNakshatraBadge(tb.nextNakshatra, "22px") }}),
-                    s.jsx("span", {style: { fontSize: "12px", fontWeight: "800", textAlign: "center", lineHeight: "1.15" },"data-i18n":tb.nextNakshatra, children: tb.nextNakshatra})
+                    s.jsx("span", {style: { display: "inline-flex", alignItems: "center", flexShrink: 0 }, dangerouslySetInnerHTML: { __html: window.getNakshatraBadge(tb.nextNakshatra, "18px") }}),
+                    s.jsx("span", {style: { fontSize: "11px", fontWeight: "800", textAlign: "center", lineHeight: "1.15" },"data-i18n":tb.nextNakshatra, children: tb.nextNakshatra})
                 ]})
             ]})
         ]}),
@@ -6780,46 +7208,193 @@ TarabalamPanel = ({ data: r }) => {
     ]});
 },
 
-PanchakaPanel = ({ data: r }) => s.jsxs("div", {className: "panchang-card-v11", style: {padding: "12px 14px 16px 14px"}, children: [
-    s.jsxs("div", {className: "flex-between-18", style: {marginBottom: "12px"}, children: [
-        s.jsxs("div", {className: "flex-row-19", children: [
-            s.jsx("div", {className: "panchang-card-v6", style: {width: "1.75rem", height: "1.75rem", background: "linear-gradient(135deg, #10B981 0%, #059669 100%)"}, children: 
-                s.jsx("i", {className: "fa-solid fa-shield-halved", style: {color: "#ffffff", fontSize: "12px"}})
-            }),
-            s.jsx("h2", {className: "text-label-22", "data-i18n": "Panchaka Rahita Muhurta", children: "Panchaka Rahita"})
-        ]}),
-        s.jsx("span", {className: "panchang-card-v1", "data-i18n": "MUHURTA FILTER", children: "Muhurta Filter"})
-    ]}),
-    s.jsx("div", {style: {display: "flex", flexDirection: "column", gap: "2px"}, children: r.panchaka.map((h, b) => {
-        const isGood = h.type === "Good";
-        return s.jsxs("div", {key: b, className: "panchaka-row-item", children: [
-            s.jsxs("span", {className: isGood ? "balam-status-good-pill" : "balam-status-bad-pill", children: [
-                isGood ? "✓" : "⚠️", " ",
-                s.jsx("span", {"data-i18n": h.name, children: h.name})
-            ]}),
-            s.jsx("span", {style: {fontSize: "0.82rem", fontWeight: 700, color: "#4B5563"}, children: h.timeRange})
-        ]});
-    })})
-]}),
+PanchakaPanel = ({ data: r }) => {
+    const [currentTime, setCurrentTime] = ki.useState(() => new Date(new Date().toLocaleString('en-US', { timeZone: window.currentTz || 'Asia/Kolkata' })));
+    const [filter, setFilter] = ki.useState("all");
+    ki.useEffect(() => {
+        const timer = setInterval(() => setCurrentTime(new Date(new Date().toLocaleString('en-US', { timeZone: window.currentTz || 'Asia/Kolkata' }))), 1000);
+        return () => clearInterval(timer);
+    }, []);
 
-UdayaLagnaPanel = ({ data: r }) => s.jsxs("div", {className: "panchang-card-v11", style: {padding: "12px 14px 16px 14px"}, children: [
-    s.jsxs("div", {className: "flex-between-18", style: {marginBottom: "12px"}, children: [
-        s.jsxs("div", {className: "flex-row-19", children: [
-            s.jsx("div", {className: "panchang-card-v6", style: {width: "1.75rem", height: "1.75rem", background: "linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%)"}, children: 
-                s.jsx("i", {className: "fa-solid fa-clock", style: {color: "#ffffff", fontSize: "12px"}})
-            }),
-            s.jsx("h2", {className: "text-label-22", "data-i18n": "Udaya Lagna Muhurta", children: "Udaya Lagna"})
+    const curLang = (window.getCurrentPanchangLang && window.getCurrentPanchangLang()) || 'en';
+    const isOr = curLang === 'or';
+    const list = r?.panchaka || [];
+    const filtered = list.filter(item => filter === "all" ? true : (filter === "good" ? item.type === "Good" : item.type !== "Good"));
+    const goodCount = list.filter(item => item.type === "Good").length;
+
+    const descMap = {
+        shubha: isOr ? "ସମସ୍ତ ୫ ଦୋଷରୁ ସମ୍ପୂର୍ଣ୍ଣ ମୁକ୍ତ। ବିବାହ, ଗୃହ ପ୍ରବେଶ, ବାଣିଜ୍ୟ ଓ ସର୍ବ ଶୁଭାରମ୍ଭ ପାଇଁ ଶ୍ରେଷ୍ଠ।" : "Free of flaws. Highly auspicious for marriage, Griha Pravesha, trade & all beginnings.",
+        mrityu: isOr ? "ଅତ୍ୟନ୍ତ ଅଶୁଭ, ମୃତ୍ୟୁତୁଲ୍ୟ କଷ୍ଟ ଓ ବିପଦର ଭୟ। ବିବାହ, ଅସ୍ତ୍ରୋପଚାର ଓ ନୂତନ ଶୁଭ କାର୍ଯ୍ୟ ବର୍ଜିତ।" : "Danger to life & hazards. Strictly avoid marriage, surgery & new ventures.",
+        agni: isOr ? "ଅଗ୍ନି ଭୟ ଓ ଦୁର୍ଘଟଣାର ଆଶଙ୍କା। ଗୃହ ପ୍ରବେଶ, ଗୃହ ନିର୍ମାଣ ଓ ନୂତନ କାର୍ଯ୍ୟାରମ୍ଭ ବର୍ଜିତ।" : "Risk of fire & mishaps. Avoid Griha Pravesha, construction & factory work.",
+        raja: isOr ? "ରାଜଦଣ୍ଡ ଓ ପ୍ରଶାସନିକ ବିବାଦ ଭୟ। ଚାକିରି ଯୋଗଦାନ, ସରକାରୀ ଓ ଆଇନଗତ କାର୍ଯ୍ୟ ବର୍ଜିତ।" : "Trouble from authorities. Avoid official dealings, new job & legal affairs.",
+        chora: isOr ? "ଚୋରି ଓ ପ୍ରତାରଣାର ଭୟ। ଯାତ୍ରା, ବ୍ୟାପାର ଆରମ୍ଭ ଓ ଆର୍ଥିକ ନେଣଦେଣ ନିଷେଧ।" : "Threat from theft & fraud. Avoid journeys, investments & commercial deals.",
+        roga: isOr ? "ରୋଗ ଓ ଶାରୀରିକ ପୀଡ଼ା। ନୂତନ ଔଷଧ ସେବନ, ଚିକିତ୍ସା ଓ ଗୁରୁତ୍ୱପୂର୍ଣ୍ଣ କାର୍ଯ୍ୟ ବର୍ଜିତ।" : "Illness & physical ailments. Avoid starting medical cures & key tasks."
+    };
+
+    const badgeMap = {
+        shubha: isOr ? "✓ ଶୁଭ (ପଞ୍ଚକ ରହିତ)" : "✓ Shubha (Panchaka Rahita)",
+        mrityu: isOr ? "⚠️ ମୃତ୍ୟୁ ପଞ୍ଚକ" : "⚠️ Mrityu Panchaka",
+        agni: isOr ? "⚠️ ଅଗ୍ନି ପଞ୍ଚକ" : "⚠️ Agni Panchaka",
+        raja: isOr ? "⚠️ ରାଜ ପଞ୍ଚକ" : "⚠️ Raja Panchaka",
+        chora: isOr ? "⚠️ ଚୋର ପଞ୍ଚକ" : "⚠️ Chora Panchaka",
+        roga: isOr ? "⚠️ ରୋଗ ପଞ୍ଚକ" : "⚠️ Roga Panchaka"
+    };
+
+    return s.jsxs("div", {className: "panchang-card-v11", style: {padding: "12px 14px 16px 14px"}, children: [
+        s.jsxs("div", {style: {display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "8px", marginBottom: "10px"}, children: [
+            s.jsxs("div", {style: {display: "flex", alignItems: "center", gap: "8px", minWidth: 0, flex: "1 1 auto"}, children: [
+                s.jsx("div", {className: "panchang-card-v6", style: {width: "1.75rem", height: "1.75rem", background: "linear-gradient(135deg, #10B981 0%, #059669 100%)", flexShrink: 0}, children: 
+                    s.jsx("i", {className: "fa-solid fa-shield-halved", style: {color: "#ffffff", fontSize: "12px"}})
+                }),
+                s.jsx("h2", {className: "text-label-22", "data-i18n": "Panchaka Rahita Muhurta", style: {fontSize: "clamp(0.92rem, 3.2vw, 1.05rem)", lineHeight: 1.2, margin: 0}, children: isOr ? "ପଞ୍ଚକ ରହିତ ମୁହୂର୍ତ୍ତ" : "Panchaka Rahita Muhurta"})
+            ]}),
+            s.jsxs("span", {className: "panchang-card-v1", style: {flexShrink: 0, whiteSpace: "nowrap"}, children: [goodCount, isOr ? " ଟି ଶୁଭ ମୁହୂର୍ତ୍ତ" : " Shubha Slots"]})
         ]}),
-        s.jsx("span", {className: "panchang-card-v1", "data-i18n": "RISING SIGNS", children: "Rising Signs"})
-    ]}),
-    s.jsx("div", {style: {display: "flex", flexDirection: "column", gap: "2px"}, children: r.lagnas.map((h, b) => s.jsxs("div", {key: b, className: "panchaka-row-item", children: [
-        s.jsxs("div", {className: "flex-row-44", style: {gap: "8px"}, children: [
-            s.jsx("div", {className: "panchang-element-78", style: {width: "20px", height: "20px"}, dangerouslySetInnerHTML: {__html: window.getZodiacIcon(h.sign)}}),
-            s.jsx("span", {style: {fontSize: "0.88rem", fontWeight: 800, color: "#1F2937"}, "data-i18n": h.sign, children: h.sign})
+        s.jsxs("div", {className: "muhurta-filter-bar", style: {marginBottom: "10px"}, children: [
+            s.jsxs("button", {type: "button", onClick: () => setFilter("all"), className: `muhurta-filter-btn ${filter === "all" ? "active" : ""}`, children: [s.jsx("i", {className: "fa-solid fa-layer-group"}), s.jsxs("span", {children: ["All (", list.length, ")"]})]}),
+            s.jsxs("button", {type: "button", onClick: () => setFilter("good"), className: `muhurta-filter-btn ${filter === "good" ? "active" : ""}`, children: [s.jsx("i", {className: "fa-solid fa-star", style: {color: filter === "good" ? "#fff" : "#10b981"}}), s.jsxs("span", {children: [isOr ? "ଶୁଭ (" : "Shubha (", goodCount, ")"]})]}),
+            s.jsxs("button", {type: "button", onClick: () => setFilter("bad"), className: `muhurta-filter-btn ${filter === "bad" ? "active" : ""}`, children: [s.jsx("i", {className: "fa-solid fa-triangle-exclamation", style: {color: filter === "bad" ? "#fff" : "#ef4444"}}), s.jsxs("span", {children: [isOr ? "ଦୋଷ (" : "Dosha (", list.length - goodCount, ")"]})]})
         ]}),
-        s.jsx("span", {style: {fontSize: "0.82rem", fontWeight: 700, color: "#4B5563"}, children: h.timeRange})
-    ]}))})
-]}),
+        s.jsx("div", {style: {display: "flex", flexDirection: "column", gap: "6px"}, children: filtered.map((item, idx) => {
+            const isGood = item.type === "Good";
+            const k = item.key || (isGood ? "shubha" : "roga");
+            const isActive = currentTime >= item.startTime && currentTime < item.endTime;
+            const lagnaZod = window.getZodiacIcon ? window.getZodiacIcon(item.lagna) : "";
+            const is12H = window.currentTimeFormat !== "24h";
+            const preTime = (item.preStart && item.preStart instanceof Date) ? item.preStart.toLocaleTimeString("en-US", {hour: "2-digit", minute: "2-digit", hour12: is12H, timeZone: (window.currentTz || "Asia/Kolkata")}) : null;
+            const statusColor = isGood ? "#10B981" : (k === "agni" ? "#EA580C" : (k === "raja" ? "#9333EA" : (k === "chora" ? "#64748B" : "#EF4444")));
+            const inlineText = {
+                shubha: isOr ? "ଶୁଭ (Good)" : "Shubha (Good)",
+                mrityu: isOr ? "ମୃତ୍ୟୁ (Bad)" : "Mrityu (Bad)",
+                agni: isOr ? "ଅଗ୍ନି (Bad)" : "Agni (Bad)",
+                raja: isOr ? "ରାଜ (Bad)" : "Raja (Bad)",
+                chora: isOr ? "ଚୋର (Bad)" : "Chora (Bad)",
+                roga: isOr ? "ରୋଗ (Bad)" : "Roga (Bad)"
+            }[k] || (isGood ? "Shubha (Good)" : "Dosha (Bad)");
+            const badgeText = {
+                shubha: isOr ? "✓ ଶୁଭ (ପଞ୍ଚକ ରହିତ)" : "✓ Shubha (Panchaka Rahita)",
+                mrityu: isOr ? "⚠️ ମୃତ୍ୟୁ ପଞ୍ଚକ" : "⚠️ Mrityu Panchaka",
+                agni: isOr ? "⚠️ ଅଗ୍ନି ପଞ୍ଚକ" : "⚠️ Agni Panchaka",
+                raja: isOr ? "⚠️ ରାଜ ପଞ୍ଚକ" : "⚠️ Raja Panchaka",
+                chora: isOr ? "⚠️ ଚୋର ପଞ୍ଚକ" : "⚠️ Chora Panchaka",
+                roga: isOr ? "⚠️ ରୋଗ ପଞ୍ଚକ" : "⚠️ Roga Panchaka"
+            }[k] || item.name;
+            return s.jsxs("div", {key: idx, className: `panchaka-card is-${k} ${isActive ? 'is-active' : ''}`, style: {padding: "8px 12px", gap: "3px", borderRadius: "10px"}, children: [
+                s.jsxs("div", {style: {display: "flex", alignItems: "center", justifyContent: "space-between", gap: "8px", marginBottom: "2px"}, children: [
+                    s.jsx("span", {className: "text-label-30 digit", style: {fontSize: "10px", fontWeight: 700, margin: 0}, children: item.timeRange}),
+                    s.jsxs("div", {style: {display: "flex", alignItems: "center", gap: "5px", flexShrink: 0}, children: [
+                        isActive && s.jsxs("span", {className: "ashta-pill-active", style: {fontSize: "7.5px", padding: "1px 5px"}, children: [s.jsx("span", {style: {width: "4px", height: "4px", borderRadius: "50%", background: "#DC2626", display: "inline-block"}}), isOr ? "ସକ୍ରିୟ" : "ACTIVE"]}),
+                        s.jsx("span", {className: isGood ? "balam-status-good-pill" : "balam-status-bad-pill", style: {fontSize: "9px", padding: "1.5px 7px"}, children: badgeText})
+                    ]})
+                ]}),
+                s.jsxs("div", {style: {display: "flex", alignItems: "center", gap: "8px", width: "100%", margin: "1px 0 2px 0"}, children: [
+                    lagnaZod && s.jsx("div", {style: {width: "24px", height: "24px", borderRadius: "6px", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, background: "rgba(0,0,0,0.04)"}, dangerouslySetInnerHTML: {__html: lagnaZod}}),
+                    s.jsxs("div", {style: {display: "flex", alignItems: "baseline", flexWrap: "wrap", gap: "5px"}, children: [
+                        s.jsxs("span", {style: {fontSize: "0.98rem", fontWeight: 900, lineHeight: 1.15, color: "#111827", margin: 0}, children: [item.lagna, " ", isOr ? "ଲଗ୍ନ" : "Lagna"]}),
+                        s.jsx("span", {style: {color: statusColor, fontSize: "11px", fontWeight: 800}, children: inlineText})
+                    ]})
+                ]}),
+                s.jsx("div", {className: "text-label-33", style: {fontSize: "10px", fontWeight: 450, lineHeight: "1.35", color: "#374151", margin: "2px 0 3px 0"}, children: descMap[k]}),
+                (item.sum !== undefined || preTime) && s.jsxs("div", {style: {display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "4px", fontSize: "7.5px", color: "#6B7280", borderTop: "1px dashed rgba(0,0,0,0.06)", paddingTop: "3px", marginTop: "1px"}, children: [
+                    item.sum !== undefined ? s.jsxs("span", {className: "digit", children: [isOr ? "ଗଣନା: [" : "Formula: [", "T", item.tithiIdx, " + V", item.varaIdx, " + N", item.nakIdx, " + L", item.lagnaIdx, "] = ", item.sum, " ÷ 9 → ", isOr ? "ଭାଗଶେଷ " : "Rem ", item.rem]}) : null,
+                    preTime ? s.jsxs("span", {style: {color: "#B45309", fontWeight: 700}, children: [isOr ? "ଲଗ୍ନ ଆରମ୍ଭ: " : "Lagna began: ", preTime, " (pre-sunrise)"]}) : null
+                ]})
+            ]});
+        })})
+    ]});
+},
+
+lagnaNatureMap = {
+    "Mesha": { en: "Aries", lord: "Mars", element: "Fire", nature: "Chara", desc: "Favorable for travel, dynamic initiatives, swift actions, and physical tasks." },
+    "Vrishabha": { en: "Taurus", lord: "Venus", element: "Earth", nature: "Sthira", desc: "Highly auspicious for Griha Pravesha, marriage, buying property, and permanent undertakings." },
+    "Mithuna": { en: "Gemini", lord: "Mercury", element: "Air", nature: "Dwiswabhava", desc: "Good for education, trade, negotiations, writing, communication, and intellectual pursuits." },
+    "Karka": { en: "Cancer", lord: "Moon", element: "Water", nature: "Chara", desc: "Favorable for creative work, purchasing vehicles, travel, and water-related activities." },
+    "Simha": { en: "Leo", lord: "Sun", element: "Fire", nature: "Sthira", desc: "Auspicious for leadership, administration, government affairs, and long-term ventures." },
+    "Kanya": { en: "Virgo", lord: "Mercury", element: "Earth", nature: "Dwiswabhava", desc: "Good for accounting, banking, analytical work, commercial trade, and learning." },
+    "Tula": { en: "Libra", lord: "Venus", element: "Air", nature: "Chara", desc: "Favorable for partnerships, trade agreements, buying luxury items, and creative starts." },
+    "Vrishchika": { en: "Scorpio", lord: "Mars", element: "Water", nature: "Sthira", desc: "Good for research, spiritual practices, long-term investments, and confidential matters." },
+    "Dhanu": { en: "Sagittarius", lord: "Jupiter", element: "Fire", nature: "Dwiswabhava", desc: "Excellent for religious ceremonies, higher learning, worship, and holy beginnings." },
+    "Makara": { en: "Capricorn", lord: "Saturn", element: "Earth", nature: "Chara", desc: "Good for organization, construction, agricultural tasks, and journeys." },
+    "Kumbha": { en: "Aquarius", lord: "Saturn", element: "Air", nature: "Sthira", desc: "Auspicious for enduring social works, foundation laying, research, and lasting projects." },
+    "Meena": { en: "Pisces", lord: "Jupiter", element: "Water", nature: "Dwiswabhava", desc: "Favorable for spiritual Sadhana, charity, artistic creations, and peaceful pursuits." }
+},
+
+UdayaLagnaPanel = ({ data: r }) => {
+    const [currentTime, setCurrentTime] = ki.useState(() => new Date(new Date().toLocaleString('en-US', { timeZone: window.currentTz || 'Asia/Kolkata' })));
+    const [filter, setFilter] = ki.useState("all");
+
+    ki.useEffect(() => {
+        const timer = setInterval(() => setCurrentTime(new Date(new Date().toLocaleString('en-US', { timeZone: window.currentTz || 'Asia/Kolkata' }))), 1000);
+        return () => clearInterval(timer);
+    }, []);
+
+    const curLang = (window.getCurrentPanchangLang && window.getCurrentPanchangLang()) || 'en';
+    const locUdaya = (typeof localizedParagraphs !== 'undefined' && localizedParagraphs[curLang]?.udayaLagna) || null;
+    const list = r?.lagnas || [];
+
+    const sthiraCount = list.filter(item => lagnaNatureMap[item.sign]?.nature === "Sthira").length;
+    const charaCount = list.filter(item => lagnaNatureMap[item.sign]?.nature === "Chara").length;
+    const dwiCount = list.filter(item => lagnaNatureMap[item.sign]?.nature === "Dwiswabhava").length;
+
+    const filtered = list.filter(item => {
+        if (filter === "all") return true;
+        const nat = lagnaNatureMap[item.sign]?.nature?.toLowerCase();
+        return nat === filter;
+    });
+
+    return s.jsxs("div", {className: "panchang-card-v11", style: {padding: "12px 14px 16px 14px"}, children: [
+        s.jsxs("div", {className: "flex-between-18", style: {marginBottom: "10px"}, children: [
+            s.jsxs("div", {className: "flex-row-19", children: [
+                s.jsx("div", {className: "panchang-card-v6", style: {width: "1.75rem", height: "1.75rem", background: "linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%)"}, children: 
+                    s.jsx("i", {className: "fa-solid fa-clock", style: {color: "#ffffff", fontSize: "12px"}})
+                }),
+                s.jsx("h2", {className: "text-label-22", "data-i18n": "Udaya Lagna", children: "Udaya Lagna"})
+            ]}),
+            s.jsxs("span", {className: "panchang-card-v1", children: [list.length, " ", s.jsx("span", {"data-i18n": "Rising Signs", children: "Rising Signs"})]})
+        ]}),
+        s.jsxs("div", {className: "muhurta-filter-bar", style: {marginBottom: "10px"}, children: [
+            s.jsxs("button", {type: "button", onClick: () => setFilter("all"), className: `muhurta-filter-btn ${filter === "all" ? "active" : ""}`, children: [s.jsx("i", {className: "fa-solid fa-layer-group"}), s.jsxs("span", {children: ["All (", list.length, ")"]})]}),
+            s.jsxs("button", {type: "button", onClick: () => setFilter("sthira"), className: `muhurta-filter-btn ${filter === "sthira" ? "active" : ""}`, children: [s.jsx("i", {className: "fa-solid fa-cube", style: {color: filter === "sthira" ? "#fff" : "#f59e0b"}}), s.jsxs("span", {"data-i18n": "Sthira (Fixed)", children: ["Sthira (", sthiraCount, ")"]})]}),
+            s.jsxs("button", {type: "button", onClick: () => setFilter("chara"), className: `muhurta-filter-btn ${filter === "chara" ? "active" : ""}`, children: [s.jsx("i", {className: "fa-solid fa-arrow-right-arrow-left", style: {color: filter === "chara" ? "#fff" : "#3b82f6"}}), s.jsxs("span", {"data-i18n": "Chara (Movable)", children: ["Chara (", charaCount, ")"]})]}),
+            s.jsxs("button", {type: "button", onClick: () => setFilter("dwiswabhava"), className: `muhurta-filter-btn ${filter === "dwiswabhava" ? "active" : ""}`, children: [s.jsx("i", {className: "fa-solid fa-yin-yang", style: {color: filter === "dwiswabhava" ? "#fff" : "#8b5cf6"}}), s.jsxs("span", {"data-i18n": "Dwiswabhava (Dual)", children: ["Dwiswabhava (", dwiCount, ")"]})]})
+        ]}),
+        s.jsx("div", {style: {display: "flex", flexDirection: "column", gap: "6px"}, children: filtered.map((item, idx) => {
+            const info = lagnaNatureMap[item.sign] || { en: item.sign, lord: "Mars", element: "Fire", nature: "Chara", desc: "Auspicious period for undertakings." };
+            const nat = info.nature.toLowerCase();
+            const isActive = currentTime >= item.startTime && currentTime < item.endTime;
+            const lagnaZod = window.getZodiacIcon ? window.getZodiacIcon(item.sign) : "";
+            const badgeColor = nat === "sthira" ? "#B45309" : (nat === "chara" ? "#1D4ED8" : "#7E22CE");
+            const badgeBg = nat === "sthira" ? "rgba(245, 158, 11, 0.15)" : (nat === "chara" ? "rgba(59, 130, 246, 0.15)" : "rgba(147, 51, 234, 0.15)");
+            const badgeBorder = nat === "sthira" ? "rgba(245, 158, 11, 0.35)" : (nat === "chara" ? "rgba(59, 130, 246, 0.3)" : "rgba(147, 51, 234, 0.3)");
+            const desc = locUdaya?.[item.sign]?.desc || info.desc;
+            return s.jsxs("div", {key: idx, className: `udaya-lagna-card is-${nat} ${isActive ? 'is-active' : ''}`, children: [
+                s.jsxs("div", {style: {display: "flex", alignItems: "center", justifyContent: "space-between", gap: "8px"}, children: [
+                    s.jsx("span", {className: "text-label-30 digit", style: {fontSize: "10px", fontWeight: 700, margin: 0}, children: item.timeRange}),
+                    s.jsxs("div", {style: {display: "flex", alignItems: "center", gap: "5px", flexShrink: 0}, children: [
+                        isActive && s.jsxs("span", {className: "ashta-pill-active", style: {fontSize: "7.5px", padding: "1px 5px"}, children: [s.jsx("span", {style: {width: "4px", height: "4px", borderRadius: "50%", background: "#DC2626", display: "inline-block"}}), s.jsx("span", {"data-i18n": "ACTIVE", children: "ACTIVE"})]}),
+                        s.jsxs("span", {style: {fontSize: "9px", fontWeight: 800, padding: "1.5px 7px", borderRadius: "6px", color: badgeColor, background: badgeBg, border: `1px solid ${badgeBorder}`}, children: [
+                            info.nature === "Sthira" ? "★ " : (info.nature === "Chara" ? "➔ " : "◆ "),
+                            s.jsx("span", {"data-i18n": info.nature, children: info.nature})
+                        ]})
+                    ]})
+                ]}),
+                s.jsxs("div", {style: {display: "flex", alignItems: "center", gap: "8px", width: "100%", margin: "1px 0"}, children: [
+                    lagnaZod && s.jsx("div", {style: {width: "24px", height: "24px", borderRadius: "6px", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, background: "rgba(0,0,0,0.04)"}, dangerouslySetInnerHTML: {__html: lagnaZod}}),
+                    s.jsxs("div", {style: {display: "flex", alignItems: "baseline", flexWrap: "wrap", gap: "6px"}, children: [
+                        s.jsxs("span", {style: {fontSize: "0.98rem", fontWeight: 900, lineHeight: 1.15, color: "#111827", margin: 0}, children: [s.jsx("span", {"data-i18n": item.sign, children: item.sign}), " ", s.jsx("span", {"data-i18n": "Lagna", children: "Lagna"})]}),
+                        s.jsxs("span", {style: {fontSize: "11px", fontWeight: 800, color: badgeColor}, children: [
+                            s.jsx("span", {"data-i18n": "Lord:", children: "Lord: "}),
+                            s.jsx("strong", {"data-i18n": info.lord, children: info.lord}),
+                            " • ",
+                            s.jsx("span", {"data-i18n": info.element, children: info.element})
+                        ]})
+                    ]})
+                ]}),
+                s.jsx("div", {className: "text-label-33", style: {fontSize: "10px", fontWeight: 450, lineHeight: "1.35", color: "#374151", margin: "2px 0 1px 0"}, "data-i18n": `udaya_desc_${item.sign}`, children: desc})
+            ]});
+        })})
+    ]});
+},
 
 BalamDoshaTab = ({ data: b }) => {
     const [subTab, setSubTab] = ki.useState("Chandrabalam");
@@ -6864,47 +7439,30 @@ const PanchakaLagnaTab = ({ data: b }) => {
 };
 const ShubhScoreFlashCard = ({ score }) => {
   const [flipped, setFlipped] = ki.useState(false);
-  const [isAnimating, setIsAnimating] = ki.useState(true);
-  const animTimerRef = ki.useRef(null);
   const scoreVal = score || 75;
   const curLang = (window.getCurrentPanchangLang && window.getCurrentPanchangLang()) || 'en';
   const scoreI18n = (typeof TOP_SECTION_I18N !== 'undefined' && TOP_SECTION_I18N[curLang]) || (typeof TOP_SECTION_I18N !== 'undefined' && TOP_SECTION_I18N.en) || {};
   const statusLabel = scoreVal >= 80 ? (scoreI18n.scoreExcellent || "EXCELLENT") : scoreVal >= 60 ? (scoreI18n.scoreAuspicious || "AUSPICIOUS") : scoreVal >= 40 ? (scoreI18n.scoreModerate || "MODERATE") : (scoreI18n.scoreInauspicious || "INAUSPICIOUS");
 
-  const triggerAnimation = () => {
-    setIsAnimating(true);
-    if (animTimerRef.current) clearTimeout(animTimerRef.current);
-    animTimerRef.current = setTimeout(() => {
-      setIsAnimating(false);
-    }, 21600);
-  };
-
   ki.useEffect(() => {
-    /* Auto-flip sequence: 2s after load, flips twice and settles on AIRAVATA */
+    /* Auto-flip sequence: 2s after load, flips twice and settles smoothly on AIRAVATA */
     const t1 = setTimeout(() => { setFlipped(true); }, 2000);
     const t2 = setTimeout(() => { setFlipped(false); }, 3800);
-    const t3 = setTimeout(() => {
-      setFlipped(true);
-      triggerAnimation();
-    }, 5300);
-
-    triggerAnimation();
+    const t3 = setTimeout(() => { setFlipped(true); }, 5300);
 
     return () => {
       clearTimeout(t1);
       clearTimeout(t2);
       clearTimeout(t3);
-      if (animTimerRef.current) clearTimeout(animTimerRef.current);
     };
   }, []);
 
   const handleCardClick = () => {
     setFlipped(prev => !prev);
-    triggerAnimation();
   };
 
   return s.jsx("div", {
-    className: `shubh-flash-card-wrapper ${flipped ? 'flipped' : ''} ${isAnimating ? 'is-animating' : 'is-paused'}`,
+    className: `shubh-flash-card-wrapper ${flipped ? 'flipped' : ''}`,
     onClick: handleCardClick,
     title: "Tap to flip card",
     children: s.jsxs("div", {
@@ -6998,7 +7556,7 @@ const ShubhScoreFlashCard = ({ score }) => {
             s.jsx("div", {
               className: "shubh-circle-wrapper",
               dangerouslySetInnerHTML: {
-                __html: `<svg class="ua5-root" viewBox="0 0 24 24" width="100%" height="100%" fill="none" role="img" aria-labelledby="ua-t ua-d" xmlns="http://www.w3.org/2000/svg"><title id="ua-t">Uttara Ashadha — caparisoned temple elephant beneath a Surya sunburst</title><desc id="ua-d">Gold-crowned elephant with nettipattam forehead plate, ruby, kaporam-capped tusks and sunburst halo. Symbol of the nakshatra Uttara Ashadha.</desc><style>.ua5-eye{transform-box:fill-box;transform-origin:center;animation:ua5Blink 6s ease-in-out infinite}@keyframes ua5Blink{0%,46%,54%,100%{transform:scaleY(1)}50%{transform:scaleY(.08)}}.ua5-spark{transform-box:fill-box;transform-origin:center;animation:ua5Tw 2.8s ease-in-out infinite}.ua5-spark.s2{animation-delay:1.1s}.ua5-spark.s3{animation-delay:1.9s}.ua5-spark.s4{animation-delay:.6s}@keyframes ua5Tw{0%,100%{opacity:.95;transform:scale(1)}50%{opacity:.18;transform:scale(.66)}}.ua5-rays{transform-box:view-box;transform-origin:12px 11.2px;animation:ua5Spin 90s linear infinite}.ua5-ring{transform-box:view-box;transform-origin:12px 12px;animation:ua5SpinR 70s linear infinite}@keyframes ua5Spin{to{transform:rotate(360deg)}}@keyframes ua5SpinR{to{transform:rotate(-360deg)}}.ua5-ear{transform-box:fill-box;transform-origin:94% 52%}.ua5-tusk{transform-box:fill-box;transform-origin:90% 6%}.ua5-root:hover .ua5-ear{animation:ua5Flap 1.15s ease-in-out infinite}.ua5-root:hover .ua5-tusk{animation:ua5Flare 1.7s ease-in-out infinite}@keyframes ua5Flap{0%,100%{transform:rotate(0)}50%{transform:rotate(-6.5deg)}}@keyframes ua5Flare{0%,100%{transform:rotate(0)}50%{transform:rotate(3deg)}}.ua5-trunk{transform-box:fill-box;transform-origin:8% 4%;animation:none}.ua5-gleam{animation:ua5Gleam 5.4s ease-in-out infinite}@keyframes ua5Gleam{0%{transform:translate(-2.2px,2.2px);opacity:0}18%{opacity:.34}55%{opacity:.34}74%{transform:translate(2.2px,-2.2px);opacity:0}100%{transform:translate(-2.2px,2.2px);opacity:0}}.ua5-body{transform-box:view-box;transform-origin:12px 17px}.ua5-root:hover .ua5-body{animation:ua5Bob 1.8s ease-in-out infinite}@keyframes ua5Bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-.28px)}}@media (prefers-reduced-motion:reduce){.ua5-eye,.ua5-spark,.ua5-rays,.ua5-ring,.ua5-trunk,.ua5-gleam,.ua5-root:hover .ua5-ear,.ua5-root:hover .ua5-tusk,.ua5-root:hover .ua5-body{animation:none}}</style><defs><radialGradient id="ua-glow" cx="50%" cy="46%" r="55%"><stop offset="0%" stop-color="#F59E0B" stop-opacity=".22"/><stop offset="55%" stop-color="#F59E0B" stop-opacity=".08"/><stop offset="100%" stop-color="#F59E0B" stop-opacity="0"/></radialGradient><radialGradient id="ua-head" cx="38%" cy="26%" r="92%"><stop offset="0%" stop-color="#FBBF24"/><stop offset="55%" stop-color="#D97706"/><stop offset="100%" stop-color="#B45309"/></radialGradient><radialGradient id="ua-ruby" cx="35%" cy="35%" r="75%"><stop offset="0%" stop-color="#F87171"/><stop offset="60%" stop-color="#DC2626"/><stop offset="100%" stop-color="#991B1B"/></radialGradient><linearGradient id="ua-gold" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#FDE047"/><stop offset="100%" stop-color="#F59E0B"/></linearGradient><linearGradient id="ua-ivory" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FFFEF8"/><stop offset="60%" stop-color="#FFFBEB"/><stop offset="100%" stop-color="#FDE68A"/></linearGradient><linearGradient id="ua-trunkG" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#B45309"/><stop offset="100%" stop-color="#92400E"/></linearGradient><clipPath id="ua-hc"><path d="M6.9 11 C6.9 7.1 9.1 5 12 5 C14.9 5 17.1 7.1 17.1 11 C17.1 13.5 16.5 15.3 15 16.15 C13.8 16.75 10.2 16.75 9 16.15 C7.5 15.3 6.9 13.5 6.9 11 Z"/></clipPath><clipPath id="ua-tc"><path d="M10.35 13.85 C9.2 15.8 6.9 17.5 5.3 19.05 C6.85 18.5 8.7 17.5 10.7 15.05 C11.2 14.75 11.1 14.2 10.35 13.85 Z"/></clipPath><g id="ua-ear"><path d="M7.9 8.2 C5.6 6.2 2.6 6.4 1.7 8.8 C0.8 11.2 2 14.1 4.8 15.3 C6.4 15.95 7.5 15.1 7.9 13.7 Z" fill="#D97706" opacity=".55"/><path d="M7.5 8.9 C5.85 7.7 3.8 7.9 3 9.7 C2.25 11.5 3.1 13.5 5 14.4 C6.2 14.9 7.1 14.35 7.35 13.3 C7.5 11.9 7.5 10.4 7.5 8.9 Z" fill="#B45309" opacity=".45"/><path d="M6.6 9.6 C5.6 9.9 5 10.7 4.95 11.7 M6.9 11.4 C6.2 11.8 5.8 12.5 5.75 13.3" stroke="#7C2D12" stroke-width=".34" stroke-linecap="round" opacity=".5" fill="none"/><path d="M7.7 8.6 C6.1 7 3.9 6.9 2.5 8.2" stroke="#FBBF24" stroke-width=".28" stroke-linecap="round" opacity=".5" fill="none"/><circle cx="3.15" cy="7.35" r=".3" fill="url(#ua-gold)" stroke="#92400E" stroke-width=".12"/></g><path id="ua-tusk" d="M10.35 13.85 C9.2 15.8 6.9 17.5 5.3 19.05 C6.85 18.5 8.7 17.5 10.7 15.05 C11.2 14.75 11.1 14.2 10.35 13.85 Z" fill="url(#ua-ivory)"/><g id="ua-brow"><path d="M8.35 9.55 C8.9 9.05 9.9 9.05 10.45 9.55" stroke="#7C2D12" stroke-width=".5" stroke-linecap="round" opacity=".75" fill="none"/></g><g id="ua-eye"><ellipse cx="9.35" cy="11.15" rx="1.02" ry="1.18" fill="#1E1B4B"/><circle cx="9.72" cy="10.7" r=".34" fill="#FFFFFF" opacity=".95"/><circle cx="9.12" cy="11.72" r=".16" fill="#FDE68A" opacity=".7"/></g><g id="ua-lid"><path d="M8.5 12.25 C8.95 12.5 9.75 12.5 10.2 12.25" stroke="#7C2D12" stroke-width=".28" stroke-linecap="round" opacity=".5" fill="none"/></g><path id="ua-sp" d="M0 -0.95 C0.12 -0.42 0.42 -0.12 0.95 0 C0.42 0.12 0.12 0.42 0 0.95 C-0.12 0.42 -0.42 0.12 -0.95 0 C-0.42 -0.12 -0.12 -0.42 0 -0.95 Z" fill="#F59E0B"/></defs><circle cx="12" cy="12" r="10.6" fill="url(#ua-glow)"/><g class="ua5-rays" stroke="#F59E0B" stroke-width=".32" stroke-linecap="round" opacity=".16"><line x1="12" y1="0.8" x2="12" y2="2" transform="rotate(0 12 11.2)"/><line x1="12" y1="0.8" x2="12" y2="2" transform="rotate(30 12 11.2)"/><line x1="12" y1="0.8" x2="12" y2="2" transform="rotate(60 12 11.2)"/><line x1="12" y1="0.8" x2="12" y2="2" transform="rotate(90 12 11.2)"/><line x1="12" y1="0.8" x2="12" y2="2" transform="rotate(120 12 11.2)"/><line x1="12" y1="0.8" x2="12" y2="2" transform="rotate(150 12 11.2)"/><line x1="12" y1="0.8" x2="12" y2="2" transform="rotate(180 12 11.2)"/><line x1="12" y1="0.8" x2="12" y2="2" transform="rotate(210 12 11.2)"/><line x1="12" y1="0.8" x2="12" y2="2" transform="rotate(240 12 11.2)"/><line x1="12" y1="0.8" x2="12" y2="2" transform="rotate(270 12 11.2)"/><line x1="12" y1="0.8" x2="12" y2="2" transform="rotate(300 12 11.2)"/><line x1="12" y1="0.8" x2="12" y2="2" transform="rotate(330 12 11.2)"/></g><circle class="ua5-ring" cx="12" cy="12" r="10.15" stroke="#F59E0B" stroke-width=".3" stroke-dasharray=".4 1.05" opacity=".2"/><g class="ua5-body"><g class="ua5-ear"><use href="#ua-ear"/></g><g transform="translate(24 0) scale(-1 1)"><g class="ua5-ear"><use href="#ua-ear"/></g></g><path d="M6.9 11 C6.9 7.1 9.1 5 12 5 C14.9 5 17.1 7.1 17.1 11 C17.1 13.5 16.5 15.3 15 16.15 C13.8 16.75 10.2 16.75 9 16.15 C7.5 15.3 6.9 13.5 6.9 11 Z" fill="url(#ua-head)"/><g clip-path="url(#ua-hc)"><ellipse cx="12" cy="16.7" rx="4.6" ry="1.6" fill="#B45309" opacity=".28"/><circle cx="8.6" cy="13" r=".68" fill="#FDE68A" opacity=".38"/><circle cx="15.4" cy="13" r=".68" fill="#FDE68A" opacity=".38"/><path d="M8.3 6.7 C9.3 5.7 10.55 5.2 12 5.2" stroke="#FDE68A" stroke-width=".5" stroke-linecap="round" opacity=".45" fill="none"/></g><path d="M8.9 6.15 L15.1 6.15 C15.5 6.15 15.72 6.42 15.6 6.78 L14.72 8.62 C14.6 8.86 14.35 8.98 14.1 8.98 L9.9 8.98 C9.65 8.98 9.4 8.86 9.28 8.62 L8.4 6.78 C8.28 6.42 8.5 6.15 8.9 6.15 Z" fill="url(#ua-gold)" stroke="#92400E" stroke-width=".2" stroke-linejoin="round"/><g fill="#FDE047" stroke="#B45309" stroke-width=".1"><circle cx="12" cy="6.6" r=".26"/><circle cx="12" cy="8.24" r=".26"/><circle cx="10.35" cy="6.85" r=".23"/><circle cx="13.65" cy="6.85" r=".23"/><circle cx="10.35" cy="7.75" r=".23"/><circle cx="13.65" cy="7.75" r=".23"/><circle cx="9.55" cy="7.3" r=".21"/><circle cx="14.45" cy="7.3" r=".21"/></g><circle cx="12" cy="7.42" r=".35" fill="url(#ua-ruby)" stroke="#9A3412" stroke-width=".12"/><circle cx="11.87" cy="7.29" r=".09" fill="#FECACA"/><path d="M9.35 5.1 C9.35 3.35 10.5 2.45 12 2.45 C13.5 2.45 14.65 3.35 14.65 5.1 Z" fill="url(#ua-gold)"/><path d="M9.9 3.15 C10.5 2.62 11.2 2.47 12 2.47 C12.8 2.47 13.5 2.62 14.1 3.15" stroke="#FEF3C7" stroke-width=".3" stroke-linecap="round" opacity=".7" fill="none"/><rect x="8.6" y="4.95" width="6.8" height="1.25" rx=".6" fill="url(#ua-gold)"/><circle cx="10" cy="5.57" r=".2" fill="#92400E" opacity=".7"/><circle cx="14" cy="5.57" r=".2" fill="#92400E" opacity=".7"/><path d="M9.35 5.3 L14.65 5.3" stroke="#FDE047" stroke-width=".16" opacity=".6"/><g stroke="#F59E0B" stroke-width=".28" stroke-linecap="round" opacity=".95"><line x1="12" y1="1.12" x2="12" y2="0.84" transform="rotate(0 12 1.8)"/><line x1="12" y1="1.12" x2="12" y2="0.84" transform="rotate(45 12 1.8)"/><line x1="12" y1="1.12" x2="12" y2="0.84" transform="rotate(90 12 1.8)"/><line x1="12" y1="1.12" x2="12" y2="0.84" transform="rotate(135 12 1.8)"/><line x1="12" y1="1.12" x2="12" y2="0.84" transform="rotate(180 12 1.8)"/><line x1="12" y1="1.12" x2="12" y2="0.84" transform="rotate(225 12 1.8)"/><line x1="12" y1="1.12" x2="12" y2="0.84" transform="rotate(270 12 1.8)"/><line x1="12" y1="1.12" x2="12" y2="0.84" transform="rotate(315 12 1.8)"/></g><circle cx="12" cy="1.8" r=".52" fill="#FDE047" stroke="#F59E0B" stroke-width=".3"/><circle cx="12" cy="10.05" r=".27" fill="url(#ua-gold)" stroke="#B45309" stroke-width=".12"/><g class="ua5-tusk"><use href="#ua-tusk"/><g clip-path="url(#ua-tc)"><g transform="translate(9.7 15.3) rotate(-45)"><rect x="-0.35" y="-1.3" width="2.75" height="2.6" rx="0.4" fill="url(#ua-gold)"/><rect x="-0.35" y="-1.25" width="0.16" height="2.5" rx="0.08" fill="#B45309" opacity="0.9"/><path d="M-0.15 -0.5 C0.5 -0.6 1.15 -0.5 1.75 -0.2" stroke="#FDE047" stroke-width="0.2" stroke-linecap="round" opacity="0.7" fill="none"/></g><path d="M9.3 16 C8.3 16.9 7.4 17.65 6.5 18.4" stroke="#D97706" stroke-width="0.18" stroke-linecap="round" opacity="0.55" fill="none"/><path d="M9.95 15.5 C9.1 16.25 8.25 16.95 7.4 17.7" stroke="#D97706" stroke-width="0.16" stroke-linecap="round" opacity="0.4" fill="none"/><path d="M10.1 14.5 C9.1 15.4 8.15 16.2 7.3 17" stroke="#FFFDF5" stroke-width="0.3" stroke-linecap="round" opacity="0.85" fill="none"/><circle cx="6.35" cy="18.25" r="0.14" fill="#FFFFFF" opacity="0.85"/><g class="ua5-gleam"><rect x="-0.42" y="-2.4" width="0.84" height="6.6" fill="#FFFFFF" opacity="0.35" transform="translate(8.5 16.4) rotate(-45)"/></g></g></g><use href="#ua-brow"/><g class="ua5-eye"><use href="#ua-eye"/></g><use href="#ua-lid"/><g transform="translate(24 0) scale(-1 1)"><g class="ua5-tusk"><use href="#ua-tusk"/><g clip-path="url(#ua-tc)"><g transform="translate(9.7 15.3) rotate(-45)"><rect x="-0.35" y="-1.3" width="2.75" height="2.6" rx="0.4" fill="url(#ua-gold)"/><rect x="-0.35" y="-1.25" width="0.16" height="2.5" rx="0.08" fill="#B45309" opacity="0.9"/><path d="M-0.15 -0.5 C0.5 -0.6 1.15 -0.5 1.75 -0.2" stroke="#FDE047" stroke-width="0.2" stroke-linecap="round" opacity="0.7" fill="none"/></g><path d="M9.3 16 C8.3 16.9 7.4 17.65 6.5 18.4" stroke="#D97706" stroke-width="0.18" stroke-linecap="round" opacity="0.55" fill="none"/><path d="M9.95 15.5 C9.1 16.25 8.25 16.95 7.4 17.7" stroke="#D97706" stroke-width="0.16" stroke-linecap="round" opacity="0.4" fill="none"/><path d="M10.1 14.5 C9.1 15.4 8.15 16.2 7.3 17" stroke="#FFFDF5" stroke-width="0.3" stroke-linecap="round" opacity="0.85" fill="none"/><circle cx="6.35" cy="18.25" r="0.14" fill="#FFFFFF" opacity="0.85"/><g class="ua5-gleam"><rect x="-0.42" y="-2.4" width="0.84" height="6.6" fill="#FFFFFF" opacity="0.35" transform="translate(8.5 16.4) rotate(-45)"/></g></g></g><use href="#ua-brow"/><g class="ua5-eye"><use href="#ua-eye"/></g><use href="#ua-lid"/></g><g class="ua5-trunk"><path d="M10.65 12.1 C10.45 14.3 10.65 16.25 11.45 17.9 C12.1 19.25 13.25 20.2 14.5 20.05 C15.55 19.9 16.05 18.95 15.6 18.25 C15.25 17.7 14.5 17.68 14.15 18.12 C14.05 16.9 13.85 14.4 13.55 12.1 C12.6 12.42 11.6 12.42 10.65 12.1 Z" fill="url(#ua-trunkG)"/><path d="M10.95 13.7 C11.65 13.95 12.55 13.95 13.25 13.7 M11.05 15.2 C11.7 15.43 12.5 15.43 13.15 15.2 M11.35 16.7 C11.95 16.9 12.6 16.9 13.2 16.7" stroke="#FDE68A" stroke-width=".4" stroke-linecap="round" opacity=".5" fill="none"/><path d="M10.72 12.7 C10.6 14.6 10.85 16.5 11.55 17.95" stroke="#D97706" stroke-width=".32" stroke-linecap="round" opacity=".55" fill="none"/><ellipse cx="14.32" cy="18.28" rx=".3" ry=".26" fill="#7C2D12" opacity=".9" transform="rotate(-25 14.32 18.28)"/></g></g><ellipse cx="12" cy="21.55" rx="5.4" ry=".8" fill="#B45309" opacity=".12"/><g class="ua5-spark"><use href="#ua-sp" transform="translate(3.3 3.2)"/></g><g class="ua5-spark s2"><use href="#ua-sp" transform="translate(20.7 3.2) scale(0.9)"/></g><g class="ua5-spark s3"><use href="#ua-sp" transform="translate(20.45 17.35) scale(0.55)"/></g><g class="ua5-spark s4"><use href="#ua-sp" transform="translate(3.55 17.35) scale(0.55)"/></g></svg>`
+                __html: `<svg class="ua5-root" viewBox="0 0 24 24" width="100%" height="100%" fill="none" role="img" aria-labelledby="ua-t ua-d" xmlns="http://www.w3.org/2000/svg"><title id="ua-t">Uttara Ashadha — caparisoned temple elephant beneath a Surya sunburst</title><desc id="ua-d">Gold-crowned elephant with nettipattam forehead plate, ruby, kaporam-capped tusks and sunburst halo. Symbol of the nakshatra Uttara Ashadha.</desc><style>.ua5-eye{transform-box:fill-box;transform-origin:center;animation:ua5Blink 5s ease-in-out infinite;will-change:transform}@keyframes ua5Blink{0%,46%,54%,100%{transform:scaleY(1)}50%{transform:scaleY(.08)}}@media (prefers-reduced-motion:reduce){.ua5-eye{animation:none}}</style><defs><radialGradient id="ua-glow" cx="50%" cy="46%" r="55%"><stop offset="0%" stop-color="#F59E0B" stop-opacity=".22"/><stop offset="55%" stop-color="#F59E0B" stop-opacity=".08"/><stop offset="100%" stop-color="#F59E0B" stop-opacity="0"/></radialGradient><radialGradient id="ua-head" cx="38%" cy="26%" r="92%"><stop offset="0%" stop-color="#FBBF24"/><stop offset="55%" stop-color="#D97706"/><stop offset="100%" stop-color="#B45309"/></radialGradient><radialGradient id="ua-ruby" cx="35%" cy="35%" r="75%"><stop offset="0%" stop-color="#F87171"/><stop offset="60%" stop-color="#DC2626"/><stop offset="100%" stop-color="#991B1B"/></radialGradient><linearGradient id="ua-gold" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#FDE047"/><stop offset="100%" stop-color="#F59E0B"/></linearGradient><linearGradient id="ua-ivory" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FFFEF8"/><stop offset="60%" stop-color="#FFFBEB"/><stop offset="100%" stop-color="#FDE68A"/></linearGradient><linearGradient id="ua-trunkG" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#B45309"/><stop offset="100%" stop-color="#92400E"/></linearGradient><clipPath id="ua-hc"><path d="M6.9 11 C6.9 7.1 9.1 5 12 5 C14.9 5 17.1 7.1 17.1 11 C17.1 13.5 16.5 15.3 15 16.15 C13.8 16.75 10.2 16.75 9 16.15 C7.5 15.3 6.9 13.5 6.9 11 Z"/></clipPath><clipPath id="ua-tc"><path d="M10.35 13.85 C9.2 15.8 6.9 17.5 5.3 19.05 C6.85 18.5 8.7 17.5 10.7 15.05 C11.2 14.75 11.1 14.2 10.35 13.85 Z"/></clipPath><g id="ua-ear"><path d="M7.9 8.2 C5.6 6.2 2.6 6.4 1.7 8.8 C0.8 11.2 2 14.1 4.8 15.3 C6.4 15.95 7.5 15.1 7.9 13.7 Z" fill="#D97706" opacity=".55"/><path d="M7.5 8.9 C5.85 7.7 3.8 7.9 3 9.7 C2.25 11.5 3.1 13.5 5 14.4 C6.2 14.9 7.1 14.35 7.35 13.3 C7.5 11.9 7.5 10.4 7.5 8.9 Z" fill="#B45309" opacity=".45"/><path d="M6.6 9.6 C5.6 9.9 5 10.7 4.95 11.7 M6.9 11.4 C6.2 11.8 5.8 12.5 5.75 13.3" stroke="#7C2D12" stroke-width=".34" stroke-linecap="round" opacity=".5" fill="none"/><path d="M7.7 8.6 C6.1 7 3.9 6.9 2.5 8.2" stroke="#FBBF24" stroke-width=".28" stroke-linecap="round" opacity=".5" fill="none"/><circle cx="3.15" cy="7.35" r=".3" fill="url(#ua-gold)" stroke="#92400E" stroke-width=".12"/></g><path id="ua-tusk" d="M10.35 13.85 C9.2 15.8 6.9 17.5 5.3 19.05 C6.85 18.5 8.7 17.5 10.7 15.05 C11.2 14.75 11.1 14.2 10.35 13.85 Z" fill="url(#ua-ivory)"/><g id="ua-brow"><path d="M8.35 9.55 C8.9 9.05 9.9 9.05 10.45 9.55" stroke="#7C2D12" stroke-width=".5" stroke-linecap="round" opacity=".75" fill="none"/></g><g id="ua-eye"><ellipse cx="9.35" cy="11.15" rx="1.02" ry="1.18" fill="#1E1B4B"/><circle cx="9.72" cy="10.7" r=".34" fill="#FFFFFF" opacity=".95"/><circle cx="9.12" cy="11.72" r=".16" fill="#FDE68A" opacity=".7"/></g><g id="ua-lid"><path d="M8.5 12.25 C8.95 12.5 9.75 12.5 10.2 12.25" stroke="#7C2D12" stroke-width=".28" stroke-linecap="round" opacity=".5" fill="none"/></g><path id="ua-sp" d="M0 -0.95 C0.12 -0.42 0.42 -0.12 0.95 0 C0.42 0.12 0.12 0.42 0 0.95 C-0.12 0.42 -0.42 0.12 -0.95 0 C-0.42 -0.12 -0.12 -0.42 0 -0.95 Z" fill="#F59E0B"/></defs><circle cx="12" cy="12" r="10.6" fill="url(#ua-glow)"/><g class="ua5-rays" stroke="#F59E0B" stroke-width=".32" stroke-linecap="round" opacity=".16"><line x1="12" y1="0.8" x2="12" y2="2" transform="rotate(0 12 11.2)"/><line x1="12" y1="0.8" x2="12" y2="2" transform="rotate(30 12 11.2)"/><line x1="12" y1="0.8" x2="12" y2="2" transform="rotate(60 12 11.2)"/><line x1="12" y1="0.8" x2="12" y2="2" transform="rotate(90 12 11.2)"/><line x1="12" y1="0.8" x2="12" y2="2" transform="rotate(120 12 11.2)"/><line x1="12" y1="0.8" x2="12" y2="2" transform="rotate(150 12 11.2)"/><line x1="12" y1="0.8" x2="12" y2="2" transform="rotate(180 12 11.2)"/><line x1="12" y1="0.8" x2="12" y2="2" transform="rotate(210 12 11.2)"/><line x1="12" y1="0.8" x2="12" y2="2" transform="rotate(240 12 11.2)"/><line x1="12" y1="0.8" x2="12" y2="2" transform="rotate(270 12 11.2)"/><line x1="12" y1="0.8" x2="12" y2="2" transform="rotate(300 12 11.2)"/><line x1="12" y1="0.8" x2="12" y2="2" transform="rotate(330 12 11.2)"/></g><circle class="ua5-ring" cx="12" cy="12" r="10.15" stroke="#F59E0B" stroke-width=".3" stroke-dasharray=".4 1.05" opacity=".2"/><g class="ua5-body"><g class="ua5-ear"><use href="#ua-ear"/></g><g transform="translate(24 0) scale(-1 1)"><g class="ua5-ear"><use href="#ua-ear"/></g></g><path d="M6.9 11 C6.9 7.1 9.1 5 12 5 C14.9 5 17.1 7.1 17.1 11 C17.1 13.5 16.5 15.3 15 16.15 C13.8 16.75 10.2 16.75 9 16.15 C7.5 15.3 6.9 13.5 6.9 11 Z" fill="url(#ua-head)"/><g clip-path="url(#ua-hc)"><ellipse cx="12" cy="16.7" rx="4.6" ry="1.6" fill="#B45309" opacity=".28"/><circle cx="8.6" cy="13" r=".68" fill="#FDE68A" opacity=".38"/><circle cx="15.4" cy="13" r=".68" fill="#FDE68A" opacity=".38"/><path d="M8.3 6.7 C9.3 5.7 10.55 5.2 12 5.2" stroke="#FDE68A" stroke-width=".5" stroke-linecap="round" opacity=".45" fill="none"/></g><path d="M8.9 6.15 L15.1 6.15 C15.5 6.15 15.72 6.42 15.6 6.78 L14.72 8.62 C14.6 8.86 14.35 8.98 14.1 8.98 L9.9 8.98 C9.65 8.98 9.4 8.86 9.28 8.62 L8.4 6.78 C8.28 6.42 8.5 6.15 8.9 6.15 Z" fill="url(#ua-gold)" stroke="#92400E" stroke-width=".2" stroke-linejoin="round"/><g fill="#FDE047" stroke="#B45309" stroke-width=".1"><circle cx="12" cy="6.6" r=".26"/><circle cx="12" cy="8.24" r=".26"/><circle cx="10.35" cy="6.85" r=".23"/><circle cx="13.65" cy="6.85" r=".23"/><circle cx="10.35" cy="7.75" r=".23"/><circle cx="13.65" cy="7.75" r=".23"/><circle cx="9.55" cy="7.3" r=".21"/><circle cx="14.45" cy="7.3" r=".21"/></g><circle cx="12" cy="7.42" r=".35" fill="url(#ua-ruby)" stroke="#9A3412" stroke-width=".12"/><circle cx="11.87" cy="7.29" r=".09" fill="#FECACA"/><path d="M9.35 5.1 C9.35 3.35 10.5 2.45 12 2.45 C13.5 2.45 14.65 3.35 14.65 5.1 Z" fill="url(#ua-gold)"/><path d="M9.9 3.15 C10.5 2.62 11.2 2.47 12 2.47 C12.8 2.47 13.5 2.62 14.1 3.15" stroke="#FEF3C7" stroke-width=".3" stroke-linecap="round" opacity=".7" fill="none"/><rect x="8.6" y="4.95" width="6.8" height="1.25" rx=".6" fill="url(#ua-gold)"/><circle cx="10" cy="5.57" r=".2" fill="#92400E" opacity=".7"/><circle cx="14" cy="5.57" r=".2" fill="#92400E" opacity=".7"/><path d="M9.35 5.3 L14.65 5.3" stroke="#FDE047" stroke-width=".16" opacity=".6"/><g stroke="#F59E0B" stroke-width=".28" stroke-linecap="round" opacity=".95"><line x1="12" y1="1.12" x2="12" y2="0.84" transform="rotate(0 12 1.8)"/><line x1="12" y1="1.12" x2="12" y2="0.84" transform="rotate(45 12 1.8)"/><line x1="12" y1="1.12" x2="12" y2="0.84" transform="rotate(90 12 1.8)"/><line x1="12" y1="1.12" x2="12" y2="0.84" transform="rotate(135 12 1.8)"/><line x1="12" y1="1.12" x2="12" y2="0.84" transform="rotate(180 12 1.8)"/><line x1="12" y1="1.12" x2="12" y2="0.84" transform="rotate(225 12 1.8)"/><line x1="12" y1="1.12" x2="12" y2="0.84" transform="rotate(270 12 1.8)"/><line x1="12" y1="1.12" x2="12" y2="0.84" transform="rotate(315 12 1.8)"/></g><circle cx="12" cy="1.8" r=".52" fill="#FDE047" stroke="#F59E0B" stroke-width=".3"/><circle cx="12" cy="10.05" r=".27" fill="url(#ua-gold)" stroke="#B45309" stroke-width=".12"/><g class="ua5-tusk"><use href="#ua-tusk"/><g clip-path="url(#ua-tc)"><g transform="translate(9.7 15.3) rotate(-45)"><rect x="-0.35" y="-1.3" width="2.75" height="2.6" rx="0.4" fill="url(#ua-gold)"/><rect x="-0.35" y="-1.25" width="0.16" height="2.5" rx="0.08" fill="#B45309" opacity="0.9"/><path d="M-0.15 -0.5 C0.5 -0.6 1.15 -0.5 1.75 -0.2" stroke="#FDE047" stroke-width="0.2" stroke-linecap="round" opacity="0.7" fill="none"/></g><path d="M9.3 16 C8.3 16.9 7.4 17.65 6.5 18.4" stroke="#D97706" stroke-width="0.18" stroke-linecap="round" opacity="0.55" fill="none"/><path d="M9.95 15.5 C9.1 16.25 8.25 16.95 7.4 17.7" stroke="#D97706" stroke-width="0.16" stroke-linecap="round" opacity="0.4" fill="none"/><path d="M10.1 14.5 C9.1 15.4 8.15 16.2 7.3 17" stroke="#FFFDF5" stroke-width="0.3" stroke-linecap="round" opacity="0.85" fill="none"/><circle cx="6.35" cy="18.25" r="0.14" fill="#FFFFFF" opacity="0.85"/><g class="ua5-gleam"><rect x="-0.42" y="-2.4" width="0.84" height="6.6" fill="#FFFFFF" opacity="0.35" transform="translate(8.5 16.4) rotate(-45)"/></g></g></g><use href="#ua-brow"/><g class="ua5-eye"><use href="#ua-eye"/></g><use href="#ua-lid"/><g transform="translate(24 0) scale(-1 1)"><g class="ua5-tusk"><use href="#ua-tusk"/><g clip-path="url(#ua-tc)"><g transform="translate(9.7 15.3) rotate(-45)"><rect x="-0.35" y="-1.3" width="2.75" height="2.6" rx="0.4" fill="url(#ua-gold)"/><rect x="-0.35" y="-1.25" width="0.16" height="2.5" rx="0.08" fill="#B45309" opacity="0.9"/><path d="M-0.15 -0.5 C0.5 -0.6 1.15 -0.5 1.75 -0.2" stroke="#FDE047" stroke-width="0.2" stroke-linecap="round" opacity="0.7" fill="none"/></g><path d="M9.3 16 C8.3 16.9 7.4 17.65 6.5 18.4" stroke="#D97706" stroke-width="0.18" stroke-linecap="round" opacity="0.55" fill="none"/><path d="M9.95 15.5 C9.1 16.25 8.25 16.95 7.4 17.7" stroke="#D97706" stroke-width="0.16" stroke-linecap="round" opacity="0.4" fill="none"/><path d="M10.1 14.5 C9.1 15.4 8.15 16.2 7.3 17" stroke="#FFFDF5" stroke-width="0.3" stroke-linecap="round" opacity="0.85" fill="none"/><circle cx="6.35" cy="18.25" r="0.14" fill="#FFFFFF" opacity="0.85"/><g class="ua5-gleam"><rect x="-0.42" y="-2.4" width="0.84" height="6.6" fill="#FFFFFF" opacity="0.35" transform="translate(8.5 16.4) rotate(-45)"/></g></g></g><use href="#ua-brow"/><g class="ua5-eye"><use href="#ua-eye"/></g><use href="#ua-lid"/></g><g class="ua5-trunk"><path d="M10.65 12.1 C10.45 14.3 10.65 16.25 11.45 17.9 C12.1 19.25 13.25 20.2 14.5 20.05 C15.55 19.9 16.05 18.95 15.6 18.25 C15.25 17.7 14.5 17.68 14.15 18.12 C14.05 16.9 13.85 14.4 13.55 12.1 C12.6 12.42 11.6 12.42 10.65 12.1 Z" fill="url(#ua-trunkG)"/><path d="M10.95 13.7 C11.65 13.95 12.55 13.95 13.25 13.7 M11.05 15.2 C11.7 15.43 12.5 15.43 13.15 15.2 M11.35 16.7 C11.95 16.9 12.6 16.9 13.2 16.7" stroke="#FDE68A" stroke-width=".4" stroke-linecap="round" opacity=".5" fill="none"/><path d="M10.72 12.7 C10.6 14.6 10.85 16.5 11.55 17.95" stroke="#D97706" stroke-width=".32" stroke-linecap="round" opacity=".55" fill="none"/><ellipse cx="14.32" cy="18.28" rx=".3" ry=".26" fill="#7C2D12" opacity=".9" transform="rotate(-25 14.32 18.28)"/></g></g><ellipse cx="12" cy="21.55" rx="5.4" ry=".8" fill="#B45309" opacity=".12"/><g class="ua5-spark"><use href="#ua-sp" transform="translate(3.3 3.2)"/></g><g class="ua5-spark s2"><use href="#ua-sp" transform="translate(20.7 3.2) scale(0.9)"/></g><g class="ua5-spark s3"><use href="#ua-sp" transform="translate(20.45 17.35) scale(0.55)"/></g><g class="ua5-spark s4"><use href="#ua-sp" transform="translate(3.55 17.35) scale(0.55)"/></g></svg>`
               }
             }),
             s.jsx("span", {
@@ -7248,12 +7806,37 @@ const LocationModal = ({ isOpen, onClose, onSave }) => {
              }
         }
     }
+
+    const ujjainMeridian = { name: "Ujjain, Madhya Pradesh", label: "Ujjain (Mahakaleshwar)", state: "Madhya Pradesh", icon: "🔱", lat: 23.1793, lon: 75.7849, badge: "PRIME MERIDIAN", desc: "Avanti · The Zero Meridian of Ancient Hindu Time", color: "#D97706" };
+
+    const charDhams = [
+        { name: "Puri, Odisha", label: "Puri Dham", state: "Odisha", icon: "🛕", lat: 19.8135, lon: 85.8312, badge: "EAST DHAM", color: "#EA580C" },
+        { name: "Badrinath, Uttarakhand", label: "Badrinath", state: "Uttarakhand", icon: "🏔️", lat: 30.7433, lon: 79.4938, badge: "NORTH DHAM", color: "#2563EB" },
+        { name: "Dwarka, Gujarat", label: "Dwarka Dham", state: "Gujarat", icon: "🌊", lat: 22.2403, lon: 68.9686, badge: "WEST DHAM", color: "#0D9488" },
+        { name: "Rameswaram, Tamil Nadu", label: "Rameswaram", state: "Tamil Nadu", icon: "🏝️", lat: 9.2876, lon: 79.3129, badge: "SOUTH DHAM", color: "#7C3AED" },
+        { name: "Kedarnath, Uttarakhand", label: "Kedarnath", state: "Uttarakhand", icon: "⛰️", lat: 30.7352, lon: 79.0669, badge: "JYOTIRLINGA", color: "#0284C7" }
+    ];
+
+    const sacredTirthas = [
+        { name: "Varanasi, Uttar Pradesh", label: "Kashi (Varanasi)", state: "Uttar Pradesh", icon: "🕉️", lat: 25.3176, lon: 82.9739, badge: "MOKSHAPURI", color: "#E11D48" },
+        { name: "Ayodhya, Uttar Pradesh", label: "Ayodhya Dham", state: "Uttar Pradesh", icon: "🏹", lat: 26.7922, lon: 82.1998, badge: "RAM LALLA", color: "#F59E0B" },
+        { name: "Somnath, Gujarat", label: "Somnath", state: "Gujarat", icon: "🔱", lat: 20.8880, lon: 70.4012, badge: "1ST LINGA", color: "#D97706" },
+        { name: "Mathura, Uttar Pradesh", label: "Mathura Vrindavan", state: "Uttar Pradesh", icon: "🦚", lat: 27.4924, lon: 77.6737, badge: "BRAJ BHUMI", color: "#059669" },
+        { name: "Rishikesh, Uttarakhand", label: "Rishikesh & Haridwar", state: "Uttarakhand", icon: "🧘", lat: 30.0869, lon: 78.2676, badge: "GANGA DWAR", color: "#0284C7" },
+        { name: "Tirupati, Andhra Pradesh", label: "Tirupati Balaji", state: "Andhra Pradesh", icon: "🪙", lat: 13.6288, lon: 79.4192, badge: "DIVYA DESAM", color: "#CA8A04" },
+        { name: "Kamakhya, Assam", label: "Maa Kamakhya", state: "Assam", icon: "🌺", lat: 26.1664, lon: 91.7055, badge: "SHAKTI PEETH", color: "#DC2626" },
+        { name: "Katra, Jammu and Kashmir", label: "Vaishno Devi", state: "Jammu & Kashmir", icon: "🚩", lat: 33.0299, lon: 74.9482, badge: "BHAVAN", color: "#EA580C" },
+        { name: "Madurai, Tamil Nadu", label: "Madurai Meenakshi", state: "Tamil Nadu", icon: "🛕", lat: 9.9195, lon: 78.1193, badge: "SHAKTI KSHTR", color: "#9333EA" },
+        { name: "Guruvayur, Kerala", label: "Guruvayurappan", state: "Kerala", icon: "🪈", lat: 10.5946, lon: 76.0407, badge: "BHULOKA VKNT", color: "#16A34A" },
+        { name: "Shirdi, Maharashtra", label: "Shirdi Sai Baba", state: "Maharashtra", icon: "🌸", lat: 19.7667, lon: 74.4762, badge: "SAMADHI", color: "#D97706" }
+    ];
+
     return s.jsxs("div", {
         className: "flex-row-322",
         children: [
             s.jsx("div", { className: "panchang-element-323", onClick: onClose }),
             s.jsxs("div", {
-                className: "panchang-card-v12",
+                className: "panchang-card-v12 location-modal-card",
                 children: [
                     s.jsxs("div", {
                         className: "flex-between-325",
@@ -7274,28 +7857,31 @@ const LocationModal = ({ isOpen, onClose, onSave }) => {
                     }),
                     s.jsxs("div", {
                         className: "flex-col-330 custom-scrollbar",
+                        style: { padding: "12px 10px", gap: "10px" },
                         children: [
                             s.jsx("button", {
                                 onClick: handleAutoDetect,
                                 disabled: isDetecting,
                                 className: "panchang-card-v14",
+                                style: { padding: "10px 12px", borderRadius: "14px", gap: "10px" },
                                 children: [
                                     s.jsx("div", {
                                         className: "panchang-card-v15",
-                                        children: s.jsx(window.PanchangIcon, { children: isDetecting ? "sync" : "my_location", className: isDetecting ? "animate-spin" : "" })
+                                        style: { width: "32px", height: "32px", borderRadius: "10px" },
+                                        children: s.jsx("i", { className: isDetecting ? "fa-solid fa-rotate animate-spin" : "fa-solid fa-crosshairs", style: { fontSize: "15px", color: "#EA580C" } })
                                     }),
                                     s.jsxs("div", {
                                         className: "text-label-333",
                                         children: [
-                                            s.jsx("div", { className: "text-label-164", children: "Auto Detect GPS" }),
-                                            s.jsx("div", { className: "text-label-255-v1", children: isDetecting ? "Detecting location..." : "Get location automatically" })
+                                            s.jsx("div", { className: "text-label-164", style: { fontSize: "0.92rem", fontWeight: 800 }, children: "Auto Detect GPS" }),
+                                            s.jsx("div", { className: "text-label-255-v1", style: { fontSize: "0.72rem" }, children: isDetecting ? "Detecting location..." : "Get location automatically" })
                                         ]
                                     })
                                 ]
                             }),
                             isLoading ? s.jsx("div", {
                                 className: "flex-col-334",
-                                children: s.jsx(window.PanchangIcon, { className: "text-label-335", children: "sync" })
+                                children: s.jsx("i", { className: "text-label-335 fa-solid fa-rotate animate-spin", style: { color: "#EA580C", fontSize: "2rem" } })
                             }) : error ? s.jsxs("div", {
                                 className: "panchang-box-v27",
                                 children: [
@@ -7316,6 +7902,114 @@ const LocationModal = ({ isOpen, onClose, onSave }) => {
                             }) : s.jsxs("div", {
                                 className: "panchang-element-339",
                                 children: [
+                                    s.jsxs("div", {
+                                        className: "sacred-places-container",
+                                        style: {
+                                            display: "flex",
+                                            flexDirection: "column",
+                                            gap: "8px",
+                                            marginBottom: "12px",
+                                            padding: "10px 8px 8px 8px",
+                                            borderRadius: "18px",
+                                            overflow: "hidden",
+                                            background: "rgba(255, 107, 0, 0.05)",
+                                            border: "1.5px solid rgba(255, 107, 0, 0.3)"
+                                        },
+                                        children: [
+                                            s.jsxs("div", {
+                                                style: { display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 2px" },
+                                                children: [
+                                                    s.jsxs("div", {
+                                                        style: { display: "flex", alignItems: "center", gap: "6px" },
+                                                        children: [
+                                                            s.jsx("span", { style: { fontSize: "14px" }, children: "🌟" }),
+                                                            s.jsx("span", {
+                                                                style: { fontSize: "9.5px", fontWeight: 800, color: "#C2410C", textTransform: "uppercase", letterSpacing: "0.5px" },
+                                                                children: "Sacred Places & Char Dham"
+                                                            })
+                                                        ]
+                                                    }),
+                                                    s.jsx("span", {
+                                                        style: { fontSize: "8px", fontWeight: 800, color: "#EA580C", background: "rgba(255, 107, 0, 0.12)", padding: "2px 7px", borderRadius: "999px" },
+                                                        children: "1-TAP SELECT"
+                                                    })
+                                                ]
+                                            }),
+                                            s.jsxs("div", {
+                                                className: "sacred-places-scroll custom-scrollbar",
+                                                style: {
+                                                    display: "grid",
+                                                    gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+                                                    gap: "6px",
+                                                    maxHeight: "190px",
+                                                    overflowY: "auto",
+                                                    padding: "1px"
+                                                },
+                                                children: [
+                                                    // 1. Ujjain Prime Meridian (Full-Width Featured Top Card)
+                                                    s.jsxs("button", {
+                                                        type: "button",
+                                                        onClick: () => onSave({ latitude: ujjainMeridian.lat, longitude: ujjainMeridian.lon, name: ujjainMeridian.name }),
+                                                        style: { display: "flex", flexDirection: "column", justifyContent: "space-between", padding: "7px 9px", borderRadius: "12px", background: "linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%)", border: "1.5px solid rgba(245, 158, 11, 0.5)", boxShadow: "0 2px 6px rgba(245, 158, 11, 0.12)", cursor: "pointer", textAlign: "left", gap: "3px", minWidth: 0, gridColumn: "span 2", transition: "all 0.2s ease" },
+                                                        className: "sacred-place-chip is-featured",
+                                                        children: [
+                                                            s.jsxs("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", minWidth: 0 }, children: [
+                                                                s.jsxs("div", { style: { display: "flex", alignItems: "center", gap: "6px", minWidth: 0 }, children: [
+                                                                    s.jsx("span", { style: { fontSize: "15px", flexShrink: 0, lineHeight: 1 }, children: ujjainMeridian.icon }),
+                                                                    s.jsx("span", { style: { fontSize: "0.82rem", fontWeight: 900, color: "#92400E", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: ujjainMeridian.label })
+                                                                ] }),
+                                                                s.jsx("span", { style: { fontSize: "6.8px", fontWeight: 900, background: "#F59E0B", color: "#FFFFFF", padding: "1.5px 5px", borderRadius: "4px", flexShrink: 0, letterSpacing: "0.2px" }, children: ujjainMeridian.badge })
+                                                            ] }),
+                                                            s.jsxs("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", minWidth: 0 }, children: [
+                                                                s.jsx("span", { style: { fontSize: "0.62rem", color: "#B45309", fontWeight: 700, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: ujjainMeridian.desc }),
+                                                                s.jsx("span", { style: { fontSize: "6.5px", color: "#D97706", fontWeight: 800 }, children: "TAP TO SET" })
+                                                            ] })
+                                                        ]
+                                                    }),
+
+                                                    // 2. Char Dham Header
+                                                    s.jsx("div", { style: { gridColumn: "span 2", fontSize: "8px", fontWeight: 900, color: "#EA580C", letterSpacing: "0.6px", textTransform: "uppercase", marginTop: "3px", marginBottom: "1px" }, children: "🛕 MAHA CHAR DHAM & KEDARNATH" }),
+
+                                                    // Char Dham Cards
+                                                    charDhams.map((t, idx) => s.jsxs("button", {
+                                                        key: "cd_" + idx, type: "button", onClick: () => onSave({ latitude: t.lat, longitude: t.lon, name: t.name }),
+                                                        style: { display: "flex", flexDirection: "column", justifyContent: "space-between", padding: "6px 7px", borderRadius: "12px", background: "#FFFFFF", border: "1px solid rgba(0, 0, 0, 0.08)", boxShadow: "0 1px 3px rgba(0, 0, 0, 0.02)", cursor: "pointer", textAlign: "left", gap: "4px", minWidth: 0, transition: "all 0.2s ease" },
+                                                        className: "sacred-place-chip",
+                                                        children: [
+                                                            s.jsxs("div", { style: { display: "flex", alignItems: "center", gap: "5px", width: "100%", minWidth: 0 }, children: [
+                                                                s.jsx("span", { style: { fontSize: "13px", flexShrink: 0, lineHeight: 1 }, children: t.icon }),
+                                                                s.jsx("span", { style: { fontSize: "0.72rem", fontWeight: 800, color: "#111827", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: t.label })
+                                                            ] }),
+                                                            s.jsxs("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", minWidth: 0 }, children: [
+                                                                s.jsx("span", { style: { fontSize: "0.58rem", color: "#6B7280", fontWeight: 600, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: t.state }),
+                                                                s.jsx("span", { style: { fontSize: "6.5px", fontWeight: 900, background: `${t.color}18`, color: t.color, padding: "1px 4.5px", borderRadius: "4px", flexShrink: 0, letterSpacing: "0.2px" }, children: t.badge })
+                                                            ] })
+                                                        ]
+                                                    })),
+
+                                                    // 3. Sacred Tirthas Header
+                                                    s.jsx("div", { style: { gridColumn: "span 2", fontSize: "8px", fontWeight: 900, color: "#7C3AED", letterSpacing: "0.6px", textTransform: "uppercase", marginTop: "4px", marginBottom: "1px" }, children: "🕉️ SACRED TIRTHAS & JYOTIRLINGAS" }),
+
+                                                    // Sacred Tirthas Cards
+                                                    sacredTirthas.map((t, idx) => s.jsxs("button", {
+                                                        key: "st_" + idx, type: "button", onClick: () => onSave({ latitude: t.lat, longitude: t.lon, name: t.name }),
+                                                        style: { display: "flex", flexDirection: "column", justifyContent: "space-between", padding: "6px 7px", borderRadius: "12px", background: "#FFFFFF", border: "1px solid rgba(0, 0, 0, 0.08)", boxShadow: "0 1px 3px rgba(0, 0, 0, 0.02)", cursor: "pointer", textAlign: "left", gap: "4px", minWidth: 0, transition: "all 0.2s ease" },
+                                                        className: "sacred-place-chip",
+                                                        children: [
+                                                            s.jsxs("div", { style: { display: "flex", alignItems: "center", gap: "5px", width: "100%", minWidth: 0 }, children: [
+                                                                s.jsx("span", { style: { fontSize: "13px", flexShrink: 0, lineHeight: 1 }, children: t.icon }),
+                                                                s.jsx("span", { style: { fontSize: "0.72rem", fontWeight: 800, color: "#111827", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: t.label })
+                                                            ] }),
+                                                            s.jsxs("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", minWidth: 0 }, children: [
+                                                                s.jsx("span", { style: { fontSize: "0.58rem", color: "#6B7280", fontWeight: 600, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: t.state }),
+                                                                s.jsx("span", { style: { fontSize: "6.5px", fontWeight: 900, background: `${t.color}18`, color: t.color, padding: "1px 4.5px", borderRadius: "4px", flexShrink: 0, letterSpacing: "0.2px" }, children: t.badge })
+                                                            ] })
+                                                        ]
+                                                    }))
+                                                ]
+                                            })
+                                        ]
+                                    }),
                                     s.jsx("div", {
                                         className: "flex-row-340",
                                         children: [
@@ -7330,7 +8024,7 @@ const LocationModal = ({ isOpen, onClose, onSave }) => {
                                             s.jsxs("div", {
                                                 className: "panchang-element-220",
                                                 children: [
-                                                    s.jsx(window.PanchangIcon, { className: "text-label-345", children: "search" }),
+                                                    s.jsx("i", { className: "text-label-345 fa-solid fa-magnifying-glass", style: { fontSize: "13px", color: "#9CA3AF" } }),
                                                     s.jsx("input", {
                                                         type: "text",
                                                         value: searchTerm,
@@ -9673,7 +10367,7 @@ const KannadaPanchangView = ({ data: b, settings }) => {
                         }))
                     ]
                 })
-            ]
+                          ]
         }),
 
         // 3. Kannada Muhurthas, Timings, Dik Shoola & Parihara (Bug-free Props Rendering)
@@ -9807,7 +10501,7 @@ const KannadaPanchangView = ({ data: b, settings }) => {
                     ]
                 })
             ]
-                    }),
+        }),
 
         // 5. Daily Puja Sankalpa Generator
         s.jsxs("div", {
@@ -12572,8 +13266,9 @@ const BengaliPanjikaView = ({ data: b, settings }) => {
     });
 };
 
-const SettingsModal = ({ isOpen, onClose, settings, onSaveSettings, data }) => {
+const SettingsModal = ({ isOpen, onClose, settings, currentLang, onSelectLanguage, onSaveSettings, data }) => {
     const [view, setView] = ki.useState("main");
+    const [tempLang, setTempLang] = ki.useState(currentLang || "en");
     const [tempRegion, setTempRegion] = ki.useState(settings?.region || "all");
     const [tempNewYear, setTempNewYear] = ki.useState(settings?.newYear || "gudi_padwa");
     const [tempMonthSystem, setTempMonthSystem] = ki.useState(settings?.monthSystem || "purnimanta");
@@ -12584,6 +13279,7 @@ const SettingsModal = ({ isOpen, onClose, settings, onSaveSettings, data }) => {
     ki.useEffect(() => {
         if (isOpen) {
             setView("main");
+            setTempLang(currentLang || "en");
             setTempRegion(settings?.region || "all");
             setTempNewYear(settings?.newYear || "gudi_padwa");
             setTempMonthSystem(settings?.monthSystem || "purnimanta");
@@ -12591,7 +13287,22 @@ const SettingsModal = ({ isOpen, onClose, settings, onSaveSettings, data }) => {
             setTempAyanamsha(settings?.ayanamsha || "lahiri");
             setShowGuide(false);
         }
-    }, [isOpen, settings]);
+    }, [isOpen, settings, currentLang]);
+
+    const languageOptions = [
+        { id: "en", name: "English", native: "English", region: "Universal" },
+        { id: "hi", name: "Hindi", native: "हिन्दी", region: "North / Central" },
+        { id: "or", name: "Odia", native: "ଓଡ଼ିଆ", region: "Odisha" },
+        { id: "bn", name: "Bengali", native: "বাংলা", region: "Bengal / Assam" },
+        { id: "mr", name: "Marathi", native: "मराठी", region: "Maharashtra" },
+        { id: "gu", name: "Gujarati", native: "ગુજરાતી", region: "Gujarat" },
+        { id: "pa", name: "Punjabi", native: "ਪੰਜਾਬੀ", region: "Punjab" },
+        { id: "ta", name: "Tamil", native: "தமிழ்", region: "Tamil Nadu" },
+        { id: "te", name: "Telugu", native: "తెలుగు", region: "Andhra / Telangana" },
+        { id: "kn", name: "Kannada", native: "ಕನ್ನಡ", region: "Karnataka" },
+        { id: "ml", name: "Malayalam", native: "മലയാളം", region: "Kerala" },
+        { id: "as", name: "Assamese", native: "অসমীয়া", region: "Assam" }
+    ];
 
     if (!isOpen) return null;
 
@@ -12705,6 +13416,11 @@ const SettingsModal = ({ isOpen, onClose, settings, onSaveSettings, data }) => {
         return found ? found.name : "Gudi Padwa";
     };
 
+    const getLanguageLabel = (id) => {
+        const found = languageOptions.find(o => o.id === id);
+        return found ? found.native : "English";
+    };
+
     const getMonthSystemLabel = (id) => {
         const found = monthSystemOptions.find(o => o.id === id);
         return found ? found.title.split(" (")[0] : "Purnimanta";
@@ -12719,6 +13435,9 @@ const SettingsModal = ({ isOpen, onClose, settings, onSaveSettings, data }) => {
             ayanamsha: tempAyanamsha,
             ...updated
         };
+        if (updated && updated.lang && onSelectLanguage) {
+            onSelectLanguage(updated.lang);
+        }
         onSaveSettings(next);
         setView("main");
     };
@@ -12816,8 +13535,53 @@ const SettingsModal = ({ isOpen, onClose, settings, onSaveSettings, data }) => {
                     // VIEW 1: MAIN SETTINGS MENU
                     view === "main" && s.jsxs("div", {
                         className: "flex-col-330 custom-scrollbar",
-                        style: { padding: "16px 14px", gap: "10px" },
+                        style: { padding: "14px 12px", gap: "9px" },
                         children: [
+                            // Row 0: Language / ଭାଷା
+                            s.jsxs("button", {
+                                type: "button",
+                                onClick: (e) => { e.preventDefault(); e.stopPropagation(); setView("language"); },
+                                style: {
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "space-between",
+                                    width: "100%",
+                                    textAlign: "left",
+                                    padding: "12px 14px",
+                                    background: "#FFFFFF",
+                                    borderRadius: "16px",
+                                    border: "1.5px solid rgba(0, 0, 0, 0.05)",
+                                    boxShadow: "0 2px 8px rgba(0, 0, 0, 0.02)",
+                                    cursor: "pointer",
+                                    transition: "all 0.2s ease"
+                                },
+                                children: [
+                                    s.jsxs("div", {
+                                        style: { display: "flex", alignItems: "center", gap: "10px" },
+                                        children: [
+                                            s.jsx("div", {
+                                                style: { width: "32px", height: "32px", borderRadius: "10px", background: "linear-gradient(135deg, #0284C7 0%, #0369A1 100%)", display: "flex", alignItems: "center", justifyContent: "center", color: "#FFFFFF", fontSize: "14px", flexShrink: 0, boxShadow: "0 2px 6px rgba(2, 132, 199, 0.3)" },
+                                                children: s.jsx("i", { className: "fa-solid fa-language" })
+                                            }),
+                                            s.jsxs("div", {
+                                                style: { display: "flex", flexDirection: "column" },
+                                                children: [
+                                                    s.jsx("span", { style: { fontSize: "0.92rem", fontWeight: 800, color: "#111827" }, children: "Language / ଭାଷା" }),
+                                                    s.jsx("span", { style: { fontSize: "0.66rem", color: "#9CA3AF" }, children: "English, हिन्दी, ଓଡ଼ିଆ & 12 Indian Languages" })
+                                                ]
+                                            })
+                                        ]
+                                    }),
+                                    s.jsxs("div", {
+                                        style: { display: "flex", alignItems: "center", gap: "6px" },
+                                        children: [
+                                            s.jsx("span", { style: { fontSize: "0.82rem", fontWeight: 800, color: "#EA580C" }, children: getLanguageLabel(tempLang) }),
+                                            s.jsx("i", { className: "fa-solid fa-chevron-right", style: { fontSize: "11px", color: "#9CA3AF" } })
+                                        ]
+                                    })
+                                ]
+                            }),
+
                             // Row 1: Region / Preferred Muhurt
                             s.jsxs("button", {
                                 type: "button",
@@ -12828,7 +13592,7 @@ const SettingsModal = ({ isOpen, onClose, settings, onSaveSettings, data }) => {
                                     justifyContent: "space-between",
                                     width: "100%",
                                     textAlign: "left",
-                                    padding: "14px 16px",
+                                    padding: "12px 14px",
                                     background: "#FFFFFF",
                                     borderRadius: "16px",
                                     border: "1.5px solid rgba(0, 0, 0, 0.05)",
@@ -12838,14 +13602,17 @@ const SettingsModal = ({ isOpen, onClose, settings, onSaveSettings, data }) => {
                                 },
                                 children: [
                                     s.jsxs("div", {
-                                        style: { display: "flex", alignItems: "center", gap: "12px" },
+                                        style: { display: "flex", alignItems: "center", gap: "10px" },
                                         children: [
-                                            s.jsx("span", { style: { fontSize: "22px" }, children: "🌍" }),
+                                            s.jsx("div", {
+                                                style: { width: "32px", height: "32px", borderRadius: "10px", background: "linear-gradient(135deg, #FF6B00 0%, #EA580C 100%)", display: "flex", alignItems: "center", justifyContent: "center", color: "#FFFFFF", fontSize: "14px", flexShrink: 0, boxShadow: "0 2px 6px rgba(234, 88, 12, 0.3)" },
+                                                children: s.jsx("i", { className: "fa-solid fa-earth-asia" })
+                                            }),
                                             s.jsxs("div", {
                                                 style: { display: "flex", flexDirection: "column" },
                                                 children: [
-                                                    s.jsx("span", { style: { fontSize: "0.95rem", fontWeight: 800, color: "#111827" }, children: "Region & Muhurt" }),
-                                                    s.jsx("span", { style: { fontSize: "0.68rem", color: "#9CA3AF" }, children: "Choghadiya · Gowri · Barabela · Hora" })
+                                                    s.jsx("span", { style: { fontSize: "0.92rem", fontWeight: 800, color: "#111827" }, children: "Region & Muhurt" }),
+                                                    s.jsx("span", { style: { fontSize: "0.66rem", color: "#9CA3AF" }, children: "Choghadiya · Gowri · Barabela · Hora" })
                                                 ]
                                             })
                                         ]
@@ -12853,8 +13620,8 @@ const SettingsModal = ({ isOpen, onClose, settings, onSaveSettings, data }) => {
                                     s.jsxs("div", {
                                         style: { display: "flex", alignItems: "center", gap: "6px" },
                                         children: [
-                                            s.jsx("span", { style: { fontSize: "0.85rem", fontWeight: 700, color: "#EA580C" }, children: getRegionLabel(tempRegion) }),
-                                            s.jsx("i", { className: "fa-solid fa-chevron-right", style: { fontSize: "12px", color: "#9CA3AF" } })
+                                            s.jsx("span", { style: { fontSize: "0.82rem", fontWeight: 800, color: "#EA580C" }, children: getRegionLabel(tempRegion) }),
+                                            s.jsx("i", { className: "fa-solid fa-chevron-right", style: { fontSize: "11px", color: "#9CA3AF" } })
                                         ]
                                     })
                                 ]
@@ -12870,7 +13637,7 @@ const SettingsModal = ({ isOpen, onClose, settings, onSaveSettings, data }) => {
                                     justifyContent: "space-between",
                                     width: "100%",
                                     textAlign: "left",
-                                    padding: "14px 16px",
+                                    padding: "12px 14px",
                                     background: "#FFFFFF",
                                     borderRadius: "16px",
                                     border: "1.5px solid rgba(0, 0, 0, 0.05)",
@@ -12880,14 +13647,17 @@ const SettingsModal = ({ isOpen, onClose, settings, onSaveSettings, data }) => {
                                 },
                                 children: [
                                     s.jsxs("div", {
-                                        style: { display: "flex", alignItems: "center", gap: "12px" },
+                                        style: { display: "flex", alignItems: "center", gap: "10px" },
                                         children: [
-                                            s.jsx("span", { style: { fontSize: "22px" }, children: "🎉" }),
+                                            s.jsx("div", {
+                                                style: { width: "32px", height: "32px", borderRadius: "10px", background: "linear-gradient(135deg, #F59E0B 0%, #D97706 100%)", display: "flex", alignItems: "center", justifyContent: "center", color: "#FFFFFF", fontSize: "14px", flexShrink: 0, boxShadow: "0 2px 6px rgba(245, 158, 11, 0.3)" },
+                                                children: s.jsx("i", { className: "fa-solid fa-crown" })
+                                            }),
                                             s.jsxs("div", {
                                                 style: { display: "flex", flexDirection: "column" },
                                                 children: [
-                                                    s.jsx("span", { style: { fontSize: "0.95rem", fontWeight: 800, color: "#111827" }, children: "New Year (Nav Samvatsara)" }),
-                                                    s.jsx("span", { style: { fontSize: "0.68rem", color: "#9CA3AF" }, children: "Diwali · Gudi Padwa · Mesha Sankranti" })
+                                                    s.jsx("span", { style: { fontSize: "0.92rem", fontWeight: 800, color: "#111827" }, children: "New Year (Nav Samvatsara)" }),
+                                                    s.jsx("span", { style: { fontSize: "0.66rem", color: "#9CA3AF" }, children: "Diwali · Gudi Padwa · Mesha Sankranti" })
                                                 ]
                                             })
                                         ]
@@ -12895,8 +13665,8 @@ const SettingsModal = ({ isOpen, onClose, settings, onSaveSettings, data }) => {
                                     s.jsxs("div", {
                                         style: { display: "flex", alignItems: "center", gap: "6px" },
                                         children: [
-                                            s.jsx("span", { style: { fontSize: "0.85rem", fontWeight: 700, color: "#EA580C" }, children: getNewYearLabel(tempNewYear) }),
-                                            s.jsx("i", { className: "fa-solid fa-chevron-right", style: { fontSize: "12px", color: "#9CA3AF" } })
+                                            s.jsx("span", { style: { fontSize: "0.82rem", fontWeight: 800, color: "#EA580C" }, children: getNewYearLabel(tempNewYear) }),
+                                            s.jsx("i", { className: "fa-solid fa-chevron-right", style: { fontSize: "11px", color: "#9CA3AF" } })
                                         ]
                                     })
                                 ]
@@ -12912,7 +13682,7 @@ const SettingsModal = ({ isOpen, onClose, settings, onSaveSettings, data }) => {
                                     justifyContent: "space-between",
                                     width: "100%",
                                     textAlign: "left",
-                                    padding: "14px 16px",
+                                    padding: "12px 14px",
                                     background: "#FFFFFF",
                                     borderRadius: "16px",
                                     border: "1.5px solid rgba(0, 0, 0, 0.05)",
@@ -12922,14 +13692,17 @@ const SettingsModal = ({ isOpen, onClose, settings, onSaveSettings, data }) => {
                                 },
                                 children: [
                                     s.jsxs("div", {
-                                        style: { display: "flex", alignItems: "center", gap: "12px" },
+                                        style: { display: "flex", alignItems: "center", gap: "10px" },
                                         children: [
-                                            s.jsx("span", { style: { fontSize: "22px" }, children: "🌙" }),
+                                            s.jsx("div", {
+                                                style: { width: "32px", height: "32px", borderRadius: "10px", background: "linear-gradient(135deg, #8B5CF6 0%, #6D28D9 100%)", display: "flex", alignItems: "center", justifyContent: "center", color: "#FFFFFF", fontSize: "14px", flexShrink: 0, boxShadow: "0 2px 6px rgba(139, 92, 246, 0.3)" },
+                                                children: s.jsx("i", { className: "fa-solid fa-moon" })
+                                            }),
                                             s.jsxs("div", {
                                                 style: { display: "flex", flexDirection: "column" },
                                                 children: [
-                                                    s.jsx("span", { style: { fontSize: "0.95rem", fontWeight: 800, color: "#111827" }, children: "Month System" }),
-                                                    s.jsx("span", { style: { fontSize: "0.68rem", color: "#9CA3AF" }, children: "Purnimanta · Amanta · Solar Calendar" })
+                                                    s.jsx("span", { style: { fontSize: "0.92rem", fontWeight: 800, color: "#111827" }, children: "Month System" }),
+                                                    s.jsx("span", { style: { fontSize: "0.66rem", color: "#9CA3AF" }, children: "Purnimanta · Amanta · Solar Calendar" })
                                                 ]
                                             })
                                         ]
@@ -12937,8 +13710,8 @@ const SettingsModal = ({ isOpen, onClose, settings, onSaveSettings, data }) => {
                                     s.jsxs("div", {
                                         style: { display: "flex", alignItems: "center", gap: "6px" },
                                         children: [
-                                            s.jsx("span", { style: { fontSize: "0.85rem", fontWeight: 700, color: "#EA580C" }, children: getMonthSystemLabel(tempMonthSystem) }),
-                                            s.jsx("i", { className: "fa-solid fa-chevron-right", style: { fontSize: "12px", color: "#9CA3AF" } })
+                                            s.jsx("span", { style: { fontSize: "0.82rem", fontWeight: 800, color: "#EA580C" }, children: getMonthSystemLabel(tempMonthSystem) }),
+                                            s.jsx("i", { className: "fa-solid fa-chevron-right", style: { fontSize: "11px", color: "#9CA3AF" } })
                                         ]
                                     })
                                 ]
@@ -12954,7 +13727,7 @@ const SettingsModal = ({ isOpen, onClose, settings, onSaveSettings, data }) => {
                                     justifyContent: "space-between",
                                     width: "100%",
                                     textAlign: "left",
-                                    padding: "14px 16px",
+                                    padding: "12px 14px",
                                     background: "#FFFFFF",
                                     borderRadius: "16px",
                                     border: "1.5px solid rgba(0, 0, 0, 0.05)",
@@ -12964,14 +13737,17 @@ const SettingsModal = ({ isOpen, onClose, settings, onSaveSettings, data }) => {
                                 },
                                 children: [
                                     s.jsxs("div", {
-                                        style: { display: "flex", alignItems: "center", gap: "12px" },
+                                        style: { display: "flex", alignItems: "center", gap: "10px" },
                                         children: [
-                                            s.jsx("span", { style: { fontSize: "22px" }, children: "⏰" }),
+                                            s.jsx("div", {
+                                                style: { width: "32px", height: "32px", borderRadius: "10px", background: "linear-gradient(135deg, #10B981 0%, #059669 100%)", display: "flex", alignItems: "center", justifyContent: "center", color: "#FFFFFF", fontSize: "14px", flexShrink: 0, boxShadow: "0 2px 6px rgba(16, 185, 129, 0.3)" },
+                                                children: s.jsx("i", { className: "fa-regular fa-clock" })
+                                            }),
                                             s.jsxs("div", {
                                                 style: { display: "flex", flexDirection: "column" },
                                                 children: [
-                                                    s.jsx("span", { style: { fontSize: "0.95rem", fontWeight: 800, color: "#111827" }, children: "Time Format" }),
-                                                    s.jsx("span", { style: { fontSize: "0.68rem", color: "#9CA3AF" }, children: "12-Hour (AM/PM) vs 24-Hour" })
+                                                    s.jsx("span", { style: { fontSize: "0.92rem", fontWeight: 800, color: "#111827" }, children: "Time Format" }),
+                                                    s.jsx("span", { style: { fontSize: "0.66rem", color: "#9CA3AF" }, children: "12-Hour (AM/PM) vs 24-Hour" })
                                                 ]
                                             })
                                         ]
@@ -12979,8 +13755,8 @@ const SettingsModal = ({ isOpen, onClose, settings, onSaveSettings, data }) => {
                                     s.jsxs("div", {
                                         style: { display: "flex", alignItems: "center", gap: "6px" },
                                         children: [
-                                            s.jsx("span", { style: { fontSize: "0.85rem", fontWeight: 700, color: "#EA580C" }, children: tempTimeFormat === "24h" ? "24-Hour" : "12-Hour (AM/PM)" }),
-                                            s.jsx("i", { className: "fa-solid fa-chevron-right", style: { fontSize: "12px", color: "#9CA3AF" } })
+                                            s.jsx("span", { style: { fontSize: "0.82rem", fontWeight: 800, color: "#EA580C" }, children: tempTimeFormat === "24h" ? "24-Hour" : "12-Hour (AM/PM)" }),
+                                            s.jsx("i", { className: "fa-solid fa-chevron-right", style: { fontSize: "11px", color: "#9CA3AF" } })
                                         ]
                                     })
                                 ]
@@ -12996,7 +13772,7 @@ const SettingsModal = ({ isOpen, onClose, settings, onSaveSettings, data }) => {
                                     justifyContent: "space-between",
                                     width: "100%",
                                     textAlign: "left",
-                                    padding: "14px 16px",
+                                    padding: "12px 14px",
                                     background: "#FFFFFF",
                                     borderRadius: "16px",
                                     border: "1.5px solid rgba(0, 0, 0, 0.05)",
@@ -13006,14 +13782,17 @@ const SettingsModal = ({ isOpen, onClose, settings, onSaveSettings, data }) => {
                                 },
                                 children: [
                                     s.jsxs("div", {
-                                        style: { display: "flex", alignItems: "center", gap: "12px" },
+                                        style: { display: "flex", alignItems: "center", gap: "10px" },
                                         children: [
-                                            s.jsx("span", { style: { fontSize: "22px" }, children: "🪐" }),
+                                            s.jsx("div", {
+                                                style: { width: "32px", height: "32px", borderRadius: "10px", background: "linear-gradient(135deg, #EC4899 0%, #BE123C 100%)", display: "flex", alignItems: "center", justifyContent: "center", color: "#FFFFFF", fontSize: "14px", flexShrink: 0, boxShadow: "0 2px 6px rgba(236, 72, 153, 0.3)" },
+                                                children: s.jsx("i", { className: "fa-solid fa-compass" })
+                                            }),
                                             s.jsxs("div", {
                                                 style: { display: "flex", flexDirection: "column" },
                                                 children: [
-                                                    s.jsx("span", { style: { fontSize: "0.95rem", fontWeight: 800, color: "#111827" }, children: "Ayanamsha System" }),
-                                                    s.jsx("span", { style: { fontSize: "0.68rem", color: "#9CA3AF" }, children: "Lahiri · KP · Raman System" })
+                                                    s.jsx("span", { style: { fontSize: "0.92rem", fontWeight: 800, color: "#111827" }, children: "Ayanamsha System" }),
+                                                    s.jsx("span", { style: { fontSize: "0.66rem", color: "#9CA3AF" }, children: "Lahiri · KP · Raman System" })
                                                 ]
                                             })
                                         ]
@@ -13021,8 +13800,8 @@ const SettingsModal = ({ isOpen, onClose, settings, onSaveSettings, data }) => {
                                     s.jsxs("div", {
                                         style: { display: "flex", alignItems: "center", gap: "6px" },
                                         children: [
-                                            s.jsx("span", { style: { fontSize: "0.85rem", fontWeight: 700, color: "#EA580C" }, children: tempAyanamsha === "kp" ? "KP System" : (tempAyanamsha === "raman" ? "B.V. Raman" : "Lahiri (Standard)") }),
-                                            s.jsx("i", { className: "fa-solid fa-chevron-right", style: { fontSize: "12px", color: "#9CA3AF" } })
+                                            s.jsx("span", { style: { fontSize: "0.82rem", fontWeight: 800, color: "#EA580C" }, children: tempAyanamsha === "kp" ? "KP System" : (tempAyanamsha === "raman" ? "B.V. Raman" : "Lahiri (Standard)") }),
+                                            s.jsx("i", { className: "fa-solid fa-chevron-right", style: { fontSize: "11px", color: "#9CA3AF" } })
                                         ]
                                     })
                                 ]
@@ -13030,6 +13809,7 @@ const SettingsModal = ({ isOpen, onClose, settings, onSaveSettings, data }) => {
 
                             // Interactive Pan-India Guide Toggle Card
                             s.jsxs("div", {
+                                className: "tradition-guide-card",
                                 style: {
                                     marginTop: "8px",
                                     padding: "12px 14px",
@@ -13065,6 +13845,88 @@ const SettingsModal = ({ isOpen, onClose, settings, onSaveSettings, data }) => {
                                         ]
                                     })
                                 ]
+                            })
+                        ]
+                    }),
+
+                    // VIEW 0: SELECT LANGUAGE (12 INDIAN LANGUAGES)
+                    view === "language" && s.jsxs("div", {
+                        className: "flex-col-330 custom-scrollbar",
+                        style: { padding: "14px 12px", gap: "8px" },
+                        children: [
+                            s.jsx("h3", {
+                                style: { fontSize: "1.05rem", fontWeight: 900, color: "#111827", margin: "0", textAlign: "center" },
+                                children: "Select Language / ଭାଷା ବାଛନ୍ତୁ"
+                            }),
+                            s.jsx("p", {
+                                style: { fontSize: "0.72rem", color: "#6B7280", margin: "0 0 4px 0", textAlign: "center", lineHeight: 1.35 },
+                                children: "Choose your preferred language for dates, tithis, and all panchang terms."
+                            }),
+                            s.jsx("div", {
+                                style: { display: "grid", gridTemplateColumns: "repeat(2, minmax(0, 1fr))", gap: "7px" },
+                                children: languageOptions.map((opt) => {
+                                    const isSel = tempLang === opt.id;
+                                    return s.jsxs("button", {
+                                        key: opt.id,
+                                        type: "button",
+                                        onClick: (e) => { e.preventDefault(); e.stopPropagation(); setTempLang(opt.id); },
+                                        style: {
+                                            display: "flex",
+                                            alignItems: "center",
+                                            justifyContent: "space-between",
+                                            padding: "8px 10px",
+                                            borderRadius: "12px",
+                                            border: isSel ? "2px solid #F59E0B" : "1.5px solid #E5E7EB",
+                                            background: isSel ? "rgba(254, 243, 199, 0.45)" : "#FFFFFF",
+                                            cursor: "pointer",
+                                            transition: "all 0.2s ease",
+                                            textAlign: "left"
+                                        },
+                                        children: [
+                                            s.jsxs("div", {
+                                                style: { display: "flex", flexDirection: "column", minWidth: 0 },
+                                                children: [
+                                                    s.jsx("span", {
+                                                        style: { fontSize: "0.9rem", fontWeight: 900, color: isSel ? "#B45309" : "#111827", lineHeight: 1.2 },
+                                                        children: opt.native
+                                                    }),
+                                                    s.jsx("span", {
+                                                        style: { fontSize: "0.65rem", fontWeight: 600, color: "#6B7280" },
+                                                        children: `${opt.name}`
+                                                    })
+                                                ]
+                                            }),
+                                            s.jsx("div", {
+                                                style: {
+                                                    width: "15px",
+                                                    height: "15px",
+                                                    borderRadius: "50%",
+                                                    border: isSel ? "5px solid #F59E0B" : "2px solid #D1D5DB",
+                                                    background: "#FFFFFF",
+                                                    flexShrink: 0
+                                                }
+                                            })
+                                        ]
+                                    });
+                                })
+                            }),
+                            s.jsx("button", {
+                                type: "button",
+                                onClick: (e) => { e.preventDefault(); handleSave({ lang: tempLang }); },
+                                style: {
+                                    marginTop: "8px",
+                                    padding: "10px",
+                                    borderRadius: "12px",
+                                    background: "linear-gradient(90deg, #FF6B00 0%, #F43F5E 100%)",
+                                    border: "none",
+                                    color: "#FFFFFF",
+                                    fontSize: "0.88rem",
+                                    fontWeight: 900,
+                                    letterSpacing: "0.5px",
+                                    cursor: "pointer",
+                                    boxShadow: "0 4px 12px rgba(244, 63, 94, 0.3)"
+                                },
+                                children: "Save Language"
                             })
                         ]
                     }),
@@ -15032,6 +15894,7 @@ const AssamesePanjikaView = ({ data: b, settings }) => {
 const MonthsGuideModal = ({ isOpen, onClose, settings, data }) => {
     if (!isOpen) return null;
 
+    const [showDoMasiGuide, setShowDoMasiGuide] = ki.useState(false);
     const curLang = (window.getCurrentPanchangLang && window.getCurrentPanchangLang()) || 'en';
     const locGuide = (typeof localizedParagraphs !== 'undefined' && localizedParagraphs[curLang]?.monthsGuide) || null;
     const odiaNums = ["୦","୧","୨","୩","୪","୫","୬","୭","୮","୯"];
@@ -15070,7 +15933,7 @@ const MonthsGuideModal = ({ isOpen, onClose, settings, data }) => {
             if (!Astro) return {};
             const evalDate = data?.date ? new Date(data.date) : new Date();
             const tz = window.currentTz || "Asia/Kolkata";
-            const obsL = new Astro.Observer(data?.location?.latitude || 28.6139, data?.location?.longitude || 77.2090, 0);
+            const obsL = new Astro.Observer(data?.location?.latitude ?? 28.6139, data?.location?.longitude ?? 77.2090, 0);
 
             const getCivilDay = (t, isStart) => {
                 const sr = Astro.SearchRiseSet(Astro.Body.Sun, obsL, isStart ? +1 : -1, t, 2);
@@ -15079,30 +15942,27 @@ const MonthsGuideModal = ({ isOpen, onClose, settings, data }) => {
                 return new Date(parseInt(p[2], 10), parseInt(p[0], 10) - 1, parseInt(p[1], 10));
             };
 
-            const formatSpan = (startD, endD) => {
+            const is12H = window.currentTimeFormat !== "24h";
+            const formatSpan = (startD, endD, exactStart, exactEnd) => {
                 const sDay = startD.toLocaleDateString("en-US", { day: "numeric", timeZone: tz });
                 const eDay = endD.toLocaleDateString("en-US", { day: "numeric", timeZone: tz });
-                const sMF = startD.toLocaleDateString("en-US", { month: "long", timeZone: tz });
-                const eMF = endD.toLocaleDateString("en-US", { month: "long", timeZone: tz });
                 const sMS = startD.toLocaleDateString("en-US", { month: "short", timeZone: tz });
                 const eMS = endD.toLocaleDateString("en-US", { month: "short", timeZone: tz });
+                const sTime = exactStart ? exactStart.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: is12H, timeZone: tz }) : "";
+                const eTime = exactEnd ? exactEnd.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: is12H, timeZone: tz }) : "";
+
                 if (curLang === 'or') {
-                    const odiaMFull = ["ଜାନୁଆରୀ","ଫେବୃଆରୀ","ମାର୍ଚ୍ଚ","ଏପ୍ରିଲ୍","ମଇ","ଜୁନ୍","ଜୁଲାଇ","ଅଗଷ୍ଟ","ସେପ୍ଟେମ୍ବର","ଅକ୍ଟୋବର","ନଭେମ୍ବର","ଡିସେମ୍ବର"];
                     const odiaMShort = ["ଜାନୁ","ଫେବୃ","ମାର୍ଚ୍ଚ","ଏପ୍ରି","ମଇ","ଜୁନ୍","ଜୁଲା","ଅଗଷ୍ଟ","ସେପ୍ଟେ","ଅକ୍ଟୋ","ନଭେ","ଡିସେ"];
-                    const mSpanOd = (startD.getMonth() === endD.getMonth()) ? odiaMFull[startD.getMonth()] : `${odiaMFull[startD.getMonth()]} - ${odiaMFull[endD.getMonth()]}`;
-                    return `${mSpanOd} (${toLocalDigits(sDay, 'or')} ${odiaMShort[startD.getMonth()]} - ${toLocalDigits(eDay, 'or')} ${odiaMShort[endD.getMonth()]})`;
+                    const sDOd = toLocalDigits(sDay, 'or');
+                    const eDOd = toLocalDigits(eDay, 'or');
+                    const sTOd = toLocalDigits(sTime, 'or');
+                    const eTOd = toLocalDigits(eTime, 'or');
+                    return `${sDOd} ${odiaMShort[startD.getMonth()]}, ${sTOd} – ${eDOd} ${odiaMShort[endD.getMonth()]}, ${eTOd}`;
                 }
-                const mSpan = (startD.getMonth() === endD.getMonth()) ? sMF : `${sMF} - ${eMF}`;
-                return `${mSpan} (${sDay} ${sMS} - ${eDay} ${eMS})`;
+                return `${sDay} ${sMS}, ${sTime} – ${eDay} ${eMS}, ${eTime}`;
             };
 
-            const getSidSun = (t) => {
-                const elon = Astro.Ecliptic(Astro.GeoVector(Astro.Body.Sun, t, true)).elon;
-                let ay = 23.85045 + (50.27972 / 3600.0) * (t.tt / 365.25);
-                if (window.selectedAyanamsha === "kp") ay -= 0.0986;
-                else if (window.selectedAyanamsha === "raman") ay -= 1.4444;
-                return ((elon - ay) % 360 + 360) % 360;
-            };
+            const getSidSun = (t) => window.getSiderealSunLon ? window.getSiderealSunLon(t) : 0;
 
             const isAmanta = settings?.monthSystem === "amanta";
             const targetPhase = isAmanta ? 0 : 180;
@@ -15111,7 +15971,13 @@ const MonthsGuideModal = ({ isOpen, onClose, settings, data }) => {
             const daysSinceChaitra = ((sLon - 330 + 360) % 360) * (365.25 / 360);
             let searchT = t_now.AddDays(-daysSinceChaitra - 20);
 
-            // Locate Chaitra start phase boundary strictly for the active year
+            const toCivilSunrise = (t) => {
+                const sr = Astro.SearchRiseSet(Astro.Body.Sun, obsL, +1, t, 2);
+                const dt = sr ? sr.date : t.date;
+                const p = dt.toLocaleDateString("en-US", { timeZone: tz, year: "numeric", month: "2-digit", day: "2-digit" }).split("/");
+                return new Date(parseInt(p[2], 10), parseInt(p[0], 10) - 1, parseInt(p[1], 10));
+            };
+
             let firstPhase = Astro.SearchMoonPhase(targetPhase, searchT, 35);
             if (!firstPhase) return [];
 
@@ -15119,32 +15985,87 @@ const MonthsGuideModal = ({ isOpen, onClose, settings, data }) => {
             const lunations = [];
             let mCount = 0;
 
-            // Collect all lunations of the active year in strict chronological order
             while (mCount < 14) {
                 let nextPhase = Astro.SearchMoonPhase(targetPhase, curPhase.AddDays(15), 35);
                 if (!nextPhase) break;
 
-                const midT = Astro.MakeTime(new Date((curPhase.date.getTime() + nextPhase.date.getTime()) / 2));
-                const sMid = getSidSun(midT);
-                const rashiIdx = Math.floor(sMid / 30);
-                const mNum = ((rashiIdx + 1) % 12) + 1;
+                let rashiNM;
+                if (isAmanta) {
+                    // Universal Amanta Rule: Month is strictly determined by Sun's sidereal Rashi at starting New Moon
+                    rashiNM = Math.floor(getSidSun(curPhase) / 30);
+                } else {
+                    // Universal Purnimanta Rule: Month is strictly determined by Sun's sidereal Rashi at intermediate New Moon
+                    const intermediateNM = Astro.SearchMoonPhase(0, curPhase.AddDays(7), 25);
+                    rashiNM = intermediateNM ? Math.floor(getSidSun(intermediateNM) / 30) : Math.floor(getSidSun(curPhase) / 30);
+                }
+                const mNum = ((rashiNM + 1) % 12) + 1;
 
-                const cStart = getCivilDay(curPhase, true);
-
-                lunations.push({ mNum, start: cStart, nextPhase });
+                const cStart = toCivilSunrise(curPhase);
+                lunations.push({ mNum, start: cStart, curPhase, nextPhase });
 
                 curPhase = nextPhase;
                 mCount++;
                 if (mCount >= 12 && lunations.filter(l => l.mNum === 12).length > 0) break;
             }
 
-            // Detect Adhika Maas: count occurrences of each month index
             const counts = {};
             lunations.forEach(l => { counts[l.mNum] = (counts[l.mNum] || 0) + 1; });
 
-            const curCivil = getCivilDay(Astro.MakeTime(evalDate), true);
+            const curCivil = toCivilSunrise(Astro.MakeTime(evalDate));
             const seen = {};
             const list = [];
+            
+            const is12HLocal = window.currentTimeFormat !== "24h";
+            
+            const formatVedicBoundary = (dateObj, isStart) => {
+                if (!dateObj) return "";
+                const timeStr = dateObj.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: is12HLocal, timeZone: tz });
+                let isBeforeSunrise = false;
+                try {
+                    // Classical Ujjain Meridian (23.1765° N, 75.7685° E) - The Universal Zero-Point for Indian Month Reckoning
+                    const obsUjjain = new window.Astronomy.Observer(23.1765, 75.7685, 0);
+                    const dParts = new Intl.DateTimeFormat('en-US', { timeZone: tz, hour: 'numeric', minute: 'numeric', hour12: false }).formatToParts(dateObj);
+                    const hr = parseInt(dParts.find(p => p.type === 'hour').value, 10);
+                    const min = parseInt(dParts.find(p => p.type === 'minute').value, 10);
+                    if (hr >= 8) {
+                        isBeforeSunrise = false;
+                    } else if (hr < 4) {
+                        isBeforeSunrise = true;
+                    } else {
+                        const elapsedMins = hr * 60 + min;
+                        const approxMidnight = new Date(dateObj.getTime() - elapsedMins * 60000 - 3600000);
+                        const srEvent = window.Astronomy.SearchAltitude(window.Astronomy.Body.Sun, obsUjjain, +1, window.Astronomy.MakeTime(approxMidnight), 1, -0.833333);
+                        if (srEvent) {
+                            isBeforeSunrise = dateObj.getTime() < srEvent.date.getTime();
+                        } else {
+                            isBeforeSunrise = hr < 6;
+                        }
+                    }
+                } catch(e) {
+                    const hr = parseInt(dateObj.toLocaleTimeString("en-US", { hour: "numeric", hour12: false, timeZone: tz }));
+                    isBeforeSunrise = hr < 6;
+                }
+
+                let displayDate = new Date(dateObj.toLocaleString("en-US", { timeZone: tz }));
+                if (isBeforeSunrise) {
+                    displayDate.setDate(displayDate.getDate() - 1);
+                }
+                if (isStart) {
+                    displayDate.setDate(displayDate.getDate() + 1);
+                }
+
+                const day = displayDate.getDate();
+                const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                const month = monthNames[displayDate.getMonth()];
+
+                if (curLang === 'or') {
+                    const odiaMShort = ["ଜାନୁ","ଫେବୃ","ମାର୍ଚ୍ଚ","ଏପ୍ରି","ମଇ","ଜୁନ୍","ଜୁଲା","ଅଗଷ୍ଟ","ସେପ୍ଟେ","ଅକ୍ଟୋ","ନଭେ","ଡିସେ"];
+                    const dNumOd = toLocalDigits(day, 'or');
+                    const timeOd = toLocalDigits(timeStr, 'or');
+                    return `${dNumOd} ${odiaMShort[displayDate.getMonth()]}, ${timeOd}`;
+                }
+                return `${day} ${month}, ${timeStr}`;
+            };
 
             lunations.forEach((l, idx) => {
                 const isDouble = counts[l.mNum] > 1;
@@ -15154,10 +16075,49 @@ const MonthsGuideModal = ({ isOpen, onClose, settings, data }) => {
                 const isAdhika = isDouble && occ === 1;
                 const isNija = isDouble && occ === 2;
 
-                const nextMonthStartCivil = getCivilDay(l.nextPhase, true);
-                const trueEndCivil = new Date(nextMonthStartCivil.getTime() - 86400000);
-                const spanStr = formatSpan(l.start, trueEndCivil);
-                const isCurrent = curCivil >= l.start && curCivil <= trueEndCivil;
+                const nextMonthStart = toCivilSunrise(l.nextPhase);
+                const trueEndCivil = new Date(nextMonthStart.getTime() - 86400000);
+                
+                // Standard Panjika boundary matched perfectly
+                const spanStr = (settings?.monthSystem === "solar") 
+                    ? formatSpan(l.start, trueEndCivil, l.curPhase?.date, l.nextPhase?.date) 
+                    : `${formatVedicBoundary(l.curPhase?.date, true)} – ${formatVedicBoundary(l.nextPhase?.date, false)}`;
+                
+                const isCurrent = curCivil.getTime() >= l.start.getTime() && curCivil.getTime() <= trueEndCivil.getTime();
+
+                // Compute exact Paksha breakdown for Adhika / Nija months (Purnimanta & Amanta)
+                let pakshaBreakdown = null;
+                if (isDouble) {
+                    try {
+                        const pStart = l.curPhase;
+                        const pEnd = l.nextPhase;
+                        if (isAmanta) {
+                            // Amanta starts on New Moon (0 deg) and ends on New Moon (0 deg), with Full Moon (180 deg) in between
+                            const intermediateFM = Astro.SearchMoonPhase(180, pStart.AddDays(7), 25);
+                            if (intermediateFM) {
+                                const p1Str = `${formatVedicBoundary(pStart.date, true)} – ${formatVedicBoundary(intermediateFM.date, false)}`;
+                                const p2Str = `${formatVedicBoundary(intermediateFM.date, true)} – ${formatVedicBoundary(pEnd.date, false)}`;
+                                pakshaBreakdown = {
+                                    isAmanta: true,
+                                    paksha1: { name: curLang === 'or' ? "ଶୁକ୍ଳ ପକ୍ଷ (ସୁଦ୍)" : "Shukla Paksha (Sud)", span: p1Str, isAdhika: isAdhika },
+                                    paksha2: { name: curLang === 'or' ? "କୃଷ୍ଣ ପକ୍ଷ (ବଦ୍)" : "Krishna Paksha (Vad)", span: p2Str, isAdhika: isAdhika }
+                                };
+                            }
+                        } else {
+                            // Purnimanta starts on Full Moon (180 deg) and ends on Full Moon (180 deg), with New Moon (0 deg) in between
+                            const intermediateNM = Astro.SearchMoonPhase(0, pStart.AddDays(7), 25);
+                            if (intermediateNM) {
+                                const p1Str = `${formatVedicBoundary(pStart.date, true)} – ${formatVedicBoundary(intermediateNM.date, false)}`;
+                                const p2Str = `${formatVedicBoundary(intermediateNM.date, true)} – ${formatVedicBoundary(pEnd.date, false)}`;
+                                pakshaBreakdown = {
+                                    isAmanta: false,
+                                    paksha1: { name: curLang === 'or' ? "କୃଷ୍ଣ ପକ୍ଷ" : "Krishna Paksha", span: p1Str, isAdhika: !isAdhika },
+                                    paksha2: { name: curLang === 'or' ? "ଶୁକ୍ଳ ପକ୍ଷ" : "Shukla Paksha", span: p2Str, isAdhika: isAdhika }
+                                };
+                            }
+                        }
+                    } catch(e) {}
+                }
 
                 list.push({
                     baseNum: l.mNum,
@@ -15166,6 +16126,7 @@ const MonthsGuideModal = ({ isOpen, onClose, settings, data }) => {
                     isAdhika,
                     isNija,
                     isCurrent,
+                    pakshaBreakdown,
                     start: l.start,
                     end: trueEndCivil
                 });
@@ -15401,6 +16362,112 @@ const MonthsGuideModal = ({ isOpen, onClose, settings, data }) => {
                                 ]
                             }),
 
+                            // Interactive Do-Masi / Adhika Maas Special Knowledge Card
+                            s.jsxs("div", {
+                                className: "months-guide-card",
+                                style: {
+                                    borderRadius: "16px",
+                                    background: "linear-gradient(145deg, #FFFDF8 0%, #FEF3C7 100%)",
+                                    border: "1.5px solid rgba(245, 158, 11, 0.5)",
+                                    padding: "10px 12px",
+                                    boxShadow: "0 4px 12px rgba(245, 158, 11, 0.1)",
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    gap: "8px"
+                                },
+                                children: [
+                                    s.jsxs("div", {
+                                        onClick: () => setShowDoMasiGuide(!showDoMasiGuide),
+                                        style: {
+                                            display: "flex",
+                                            alignItems: "center",
+                                            justifyContent: "space-between",
+                                            cursor: "pointer",
+                                            userSelect: "none"
+                                        },
+                                        children: [
+                                            s.jsxs("div", {
+                                                style: { display: "flex", alignItems: "center", gap: "8px" },
+                                                children: [
+                                                    s.jsx("span", { style: { fontSize: "18px" }, children: "🪔" }),
+                                                    s.jsxs("div", {
+                                                        style: { display: "flex", flexDirection: "column" },
+                                                        children: [
+                                                            s.jsx("span", {
+                                                                style: { fontSize: "0.88rem", fontWeight: 900, color: "#92400E" },
+                                                                children: curLang === 'or' ? "ଦୋ-ମାସୀ / ମଳମାସ (Adhika Maas) ବିଶେଷ ସୂଚନା" : "Do-Masi / Adhika Maas (Intercalary Month) Guide"
+                                                            }),
+                                                            s.jsx("span", {
+                                                                style: { fontSize: "0.68rem", fontWeight: 700, color: "#B45309" },
+                                                                children: curLang === 'or' ? "କାହିଁକି ହୁଏ, ୪-ପକ୍ଷ ନିୟମ ଓ କ'ଣ କରିବେ (ଟ୍ୟାପ୍ କରନ୍ତୁ)" : "Why it occurs, 4-Paksha rule & ritual guidelines (Tap to view)"
+                                                            })
+                                                        ]
+                                                    })
+                                                ]
+                                            }),
+                                            s.jsx("i", {
+                                                className: showDoMasiGuide ? "fa-solid fa-chevron-up" : "fa-solid fa-chevron-down",
+                                                style: { color: "#B45309", fontSize: "12px" }
+                                            })
+                                        ]
+                                    }),
+                                    showDoMasiGuide && s.jsxs("div", {
+                                        style: {
+                                            display: "flex",
+                                            flexDirection: "column",
+                                            gap: "8px",
+                                            paddingTop: "8px",
+                                            borderTop: "1px dashed rgba(245, 158, 11, 0.4)",
+                                            fontSize: "0.74rem",
+                                            color: "#78350F",
+                                            lineHeight: 1.45
+                                        },
+                                        children: [
+                                            // Point 1: Why it occurs
+                                            s.jsxs("div", {
+                                                style: { background: "rgba(255, 255, 255, 0.75)", padding: "7px 9px", borderRadius: "10px", border: "1px solid rgba(245, 158, 11, 0.25)" },
+                                                children: [
+                                                    s.jsx("strong", { style: { color: "#B45309", display: "block", marginBottom: "2px" }, children: curLang === 'or' ? "☀️ କାହିଁକି ହୁଏ 'ଦୋ-ମାସୀ'?" : "☀️ Why does an Adhika Maas occur?" }),
+                                                    curLang === 'or'
+                                                        ? "ସୌର ବର୍ଷ (୩୬୫ ଦିନ) ଏବଂ ଚାନ୍ଦ୍ର ବର୍ଷ (୩୫୪ ଦିନ) ମଧ୍ୟରେ ବାର୍ଷିକ ପ୍ରାୟ ୧୧ ଦିନର ପାର୍ଥକ୍ୟ ଥାଏ। ଋତୁଚକ୍ର ସହ ସନ୍ତୁଳନ ରଖିବା ପାଇଁ ପ୍ରତି ୩୨ ରୁ ୩୩ ମାସରେ (ପ୍ରାୟ ୩ ବର୍ଷରେ ଥରେ) ଗୋଟିଏ ଅତିରିକ୍ତ ମାସ ଯୋଡ଼ାଯାଏ, ଯାହାକୁ 'ଦୋ-ମାସୀ' ବା 'ମଳମାସ/ପୁରୁଷୋତ୍ତମ ମାସ' କୁହାଯାଏ। ଏହି ମାସରେ ସୂର୍ଯ୍ୟଙ୍କ ରାଶି ସଂକ୍ରାନ୍ତି ନଥାଏ।"
+                                                        : "A solar year (365 days) is ~11 days longer than a 12-lunar-month year (354 days). Every ~32-33 months, an extra lunar month is added to harmonize lunar months with solar seasons. During this intercalary month, the Sun does not transit into a new zodiac sign (no Sankranti)."
+                                                ]
+                                            }),
+                                            // Point 2: 4-Paksha Sandwich Rule
+                                            s.jsxs("div", {
+                                                style: { background: "rgba(255, 255, 255, 0.75)", padding: "7px 9px", borderRadius: "10px", border: "1px solid rgba(245, 158, 11, 0.25)" },
+                                                children: [
+                                                    s.jsx("strong", { style: { color: "#B45309", display: "block", marginBottom: "2px" }, children: curLang === 'or' ? "⏳ ପୂର୍ଣ୍ଣିମାନ୍ତ ୪-ପକ୍ଷ ନିୟମ (Sandwich Rule):" : "⏳ Purnimanta 4-Paksha Sandwich Rule:" }),
+                                                    curLang === 'or'
+                                                        ? "ପୂର୍ଣ୍ଣିମାନ୍ତ ପଞ୍ଜିକାରେ ଏହି ମାସଟି ୪ଟି ପକ୍ଷରେ ବିଭକ୍ତ: ୧. ଶୁଦ୍ଧ କୃଷ୍ଣ ପକ୍ଷ ➔ ୨. ଅଧିକ ଶୁକ୍ଳ ପକ୍ଷ ➔ ୩. ଅଧିକ କୃଷ୍ଣ ପକ୍ଷ ➔ ୪. ଶୁଦ୍ଧ ଶୁକ୍ଳ ପକ୍ଷ। ମଝିରେ ଥିବା ୩୦ ଦିନକୁ ମଳମାସ ବା ଦୋ-ମାସୀ କୁହାଯାଏ।"
+                                                        : "Under Purnimanta tradition, the month splits into 4 Pakshas: 1. Shuddha Krishna ➔ 2. Adhika Shukla ➔ 3. Adhika Krishna ➔ 4. Shuddha Shukla. The central 30-day period (Shukla + Krishna) forms the sacred Purushottama Month."
+                                                ]
+                                            }),
+                                            // Point 3: Do's and Don'ts
+                                            s.jsxs("div", {
+                                                style: { display: "grid", gridTemplateColumns: "repeat(2, minmax(0, 1fr))", gap: "6px" },
+                                                children: [
+                                                    s.jsxs("div", {
+                                                        style: { background: "#F0FDF4", padding: "6px 8px", borderRadius: "10px", border: "1px solid #BBF7D0" },
+                                                        children: [
+                                                            s.jsx("strong", { style: { color: "#166534", fontSize: "0.72rem", display: "block", marginBottom: "2px" }, children: curLang === 'or' ? "✅ କ'ଣ କରିବେ (ଶ୍ରେଷ୍ଠ):" : "✅ Recommended:" }),
+                                                            s.jsx("span", { style: { fontSize: "0.68rem", color: "#15803D" }, children: curLang === 'or' ? "ବିଷ୍ଣୁ ସହସ୍ରନାମ, ଭାଗବତ ପାଠ, ଦୀପଦାନ, ଅନ୍ନଦାନ, ଜପ ଓ ତୀର୍ଥ ସ୍ନାନ ଅତ୍ୟନ୍ତ ଫଳଦାୟୀ।" : "Vishnu Sahasranama, Bhagavata reading, Japa, charity, holy bath, and lamp donations." })
+                                                        ]
+                                                    }),
+                                                    s.jsxs("div", {
+                                                        style: { background: "#FEF2F2", padding: "6px 8px", borderRadius: "10px", border: "1px solid #FCA5A5" },
+                                                        children: [
+                                                            s.jsx("strong", { style: { color: "#991B1B", fontSize: "0.72rem", display: "block", marginBottom: "2px" }, children: curLang === 'or' ? "🚫 କ'ଣ ବର୍ଜିତ (ନିଷେଧ):" : "🚫 Prohibited:" }),
+                                                            s.jsx("span", { style: { fontSize: "0.68rem", color: "#B91C1C" }, children: curLang === 'or' ? "ବିବାହ, ବ୍ରତୋପନୟନ, ଗୃହପ୍ରବେଶ, ଭୂମିପୂଜା ଆଦି ଶୁଭ କାମ୍ୟ କର୍ମ ବର୍ଜିତ।" : "Weddings, thread ceremonies, Griha Pravesh, and starting major new ventures." })
+                                                        ]
+                                                    })
+                                                ]
+                                            })
+                                        ]
+                                    })
+                                ]
+                            }),
+
                             // Month Cards (Dynamically displays 12 or 13 months with Adhika/Nija distinction)
                             (dynamicSpansMap && dynamicSpansMap.length > 0 ? dynamicSpansMap : monthsData.map((m, idx) => ({ baseNum: m.num, seqIndex: idx + 1, span: m.span, isAdhika: false, isNija: false, isCurrent: norm(m.en) === normActive }))).map((item) => {
                                 const m = monthsData[item.baseNum - 1] || monthsData[0];
@@ -15420,9 +16487,11 @@ const MonthsGuideModal = ({ isOpen, onClose, settings, data }) => {
                                 const displayNum = curLang === 'or' ? String(item.seqIndex).replace(/[0-9]/g, d => odiaNums[d]) : item.seqIndex;
                                 const displaySpan = item.span || mLoc?.span || m.span;
                                 const displaySeason = mLoc?.season || m.season;
-                                const displayFestivals = mLoc?.festivals || m.festivals;
+                                const displayFestivals = item.isAdhika
+                                    ? (curLang === 'or' ? "ପଦ୍ମିନୀ ଏକାଦଶୀ, ପରମା ଏକାଦଶୀ, ପୁରୁଷୋତ୍ତମ ମାସ ବ୍ରତ ଓ ଦାନ" : "Padmini Ekadashi, Parama Ekadashi, Purushottam Maas Vrat & Charity")
+                                    : (mLoc?.festivals || m.festivals);
                                 const displayDesc = item.isAdhika 
-                                    ? (curLang === 'or' ? "ବୈଦିକ ଅଧିକ ମାସ (ମଳମାସ / ପୁରୁଷୋତ୍ତମ ମାସ)। ଶ୍ରୀହରି ବିଷ୍ଣୁ ଓ ପୁରୁଷୋତ୍ତମଙ୍କ ନାମ-ସଂକୀର୍ତ୍ତନ, ଦାନଧର୍ମ ଓ ପୂଜାର୍ଚ୍ଚନା ପାଇଁ ପରମ ପବିତ୍ର।" : "Vedic intercalary month (Malamasa / Purushottam Maas) dedicated to Lord Vishnu and Purushottam worship.") 
+                                    ? (curLang === 'or' ? "ବୈଦିକ ଅଧିକ ମାସ (ମଳମାସ / ପୁରୁଷୋତ୍ତମ ମାସ)। ସୂର୍ଯ୍ୟଙ୍କ ରାଶି ସଂକ୍ରାନ୍ତି ନ ଥିବାରୁ ଏହି ମାସରେ କୌଣସି ବାର୍ଷିକ ଶୁଭ ପର୍ବ ପାଳନ ହୁଏ ନାହିଁ; କେବଳ ଶ୍ରୀହରିଙ୍କ ଜପ, ତପ, ବିଷ୍ଣୁ ସହସ୍ରନାମ ଓ ଦାନଧର୍ମ ଅତ୍ୟନ୍ତ ଫଳଦାୟୀ।" : "Vedic intercalary month (Malamasa / Purushottam Maas). Solar transit (Sankranti) is absent; sacred exclusively for Vishnu worship, Japa, and charity.") 
                                     : (mLoc?.desc || m.desc);
 
                                 return s.jsxs("div", {
@@ -15471,7 +16540,7 @@ const MonthsGuideModal = ({ isOpen, onClose, settings, data }) => {
                                                     ]
                                                 }),
                                                 s.jsxs("div", {
-                                                    style: { display: "flex", alignItems: "center", gap: "6px" },
+                                                    style: { display: "flex", alignItems: "center", gap: "5px", flexShrink: 0 },
                                                     children: [
                                                         isCurrent && s.jsx("span", {
                                                             style: {
@@ -15481,7 +16550,8 @@ const MonthsGuideModal = ({ isOpen, onClose, settings, data }) => {
                                                                 borderRadius: "999px",
                                                                 fontSize: "8.5px",
                                                                 fontWeight: 800,
-                                                                letterSpacing: "0.4px"
+                                                                letterSpacing: "0.4px",
+                                                                whiteSpace: "nowrap"
                                                             },
                                                             children: locGuide?.currentMonthBadge || "★ Current Month"
                                                         }),
@@ -15494,26 +16564,34 @@ const MonthsGuideModal = ({ isOpen, onClose, settings, data }) => {
                                                                 borderRadius: "999px",
                                                                 fontSize: "8px",
                                                                 fontWeight: 700,
-                                                                letterSpacing: "0.3px"
+                                                                letterSpacing: "0.3px",
+                                                                whiteSpace: "nowrap"
                                                             },
                                                             children: `Amanta: ${cleanAmanta}`
-                                                        }),
-                                                        s.jsx("span", {
-                                                            className: "months-guide-span-badge",
-                                                            style: {
-                                                                fontSize: "0.76rem",
-                                                                fontWeight: 800,
-                                                                color: "#EA580C",
-                                                                background: "#FFF7ED",
-                                                                padding: "2px 8px",
-                                                                borderRadius: "6px",
-                                                                border: "1px solid rgba(234, 88, 12, 0.2)"
-                                                            },
-                                                            children: displaySpan
                                                         })
                                                     ]
                                                 })
                                             ]
+                                        }),
+
+                                        // Date Range Span Pill
+                                        s.jsx("div", {
+                                            style: { display: "flex", alignItems: "center", width: "100%", marginTop: "1px" },
+                                            children: s.jsx("span", {
+                                                className: "months-guide-span-badge",
+                                                style: {
+                                                    fontSize: "0.76rem",
+                                                    fontWeight: 800,
+                                                    color: "#EA580C",
+                                                    background: "#FFF7ED",
+                                                    padding: "2px 8px",
+                                                    borderRadius: "6px",
+                                                    border: "1px solid rgba(234, 88, 12, 0.2)",
+                                                    display: "inline-flex",
+                                                    alignItems: "center"
+                                                },
+                                                children: displaySpan
+                                            })
                                         }),
 
                                         // Season / Ritu
@@ -15548,6 +16626,52 @@ const MonthsGuideModal = ({ isOpen, onClose, settings, data }) => {
                                             className: "months-guide-desc",
                                             style: { fontSize: "0.72rem", color: "#6B7280", margin: 0, lineHeight: 1.4 },
                                             children: displayDesc
+                                        }),
+
+                                        // Paksha Breakdown Box for Adhika / Nija months (Purnimanta Sandwich & Amanta Sequential)
+                                        item.pakshaBreakdown && s.jsxs("div", {
+                                            style: {
+                                                marginTop: "4px",
+                                                padding: "6px 8px",
+                                                borderRadius: "10px",
+                                                background: item.pakshaBreakdown.isAmanta ? "rgba(16, 185, 129, 0.08)" : "rgba(245, 158, 11, 0.08)",
+                                                border: item.pakshaBreakdown.isAmanta ? "1px dashed rgba(16, 185, 129, 0.4)" : "1px dashed rgba(245, 158, 11, 0.4)",
+                                                display: "flex",
+                                                flexDirection: "column",
+                                                gap: "3px"
+                                            },
+                                            children: [
+                                                s.jsxs("span", {
+                                                    style: { fontSize: "8.5px", fontWeight: 900, color: item.pakshaBreakdown.isAmanta ? "#065F46" : "#B45309", letterSpacing: "0.5px" },
+                                                    children: [
+                                                        item.pakshaBreakdown.isAmanta
+                                                            ? (curLang === 'or' ? "ଅମାନ୍ତ ପକ୍ଷ ବିଭାଜନ (ଶୁକ୍ଳ ➔ କୃଷ୍ଣ):" : "Amanta Paksha Breakdown (Shukla ➔ Krishna):")
+                                                            : (curLang === 'or' ? "୪-ପକ୍ଷ ବିଭାଜନ (Purnimanta Sandwich Rule):" : "4-Paksha Breakdown (Purnimanta Sandwich Rule):")
+                                                    ]
+                                                }),
+                                                s.jsxs("span", {
+                                                    style: { fontSize: "8px", color: item.pakshaBreakdown.isAmanta ? "#047857" : "#92400E", lineHeight: 1.35, fontWeight: 700 },
+                                                    children: [
+                                                        "• ", item.pakshaBreakdown.paksha1.name, ": ",
+                                                        item.pakshaBreakdown.paksha1.span,
+                                                        item.pakshaBreakdown.paksha1.isAdhika ? (curLang === 'or' ? " (ଅଧିକ)" : " (Adhika)") : (curLang === 'or' ? " (ଶୁଦ୍ଧ)" : " (Shuddha)")
+                                                    ]
+                                                }),
+                                                s.jsxs("span", {
+                                                    style: { fontSize: "8px", color: item.pakshaBreakdown.isAmanta ? "#047857" : "#92400E", lineHeight: 1.35, fontWeight: 700 },
+                                                    children: [
+                                                        "• ", item.pakshaBreakdown.paksha2.name, ": ",
+                                                        item.pakshaBreakdown.paksha2.span,
+                                                        item.pakshaBreakdown.paksha2.isAdhika ? (curLang === 'or' ? " (ଅଧିକ)" : " (Adhika)") : (curLang === 'or' ? " (ଶୁଦ୍ଧ)" : " (Shuddha)")
+                                                    ]
+                                                }),
+                                                item.pakshaBreakdown.isAmanta && s.jsx("span", {
+                                                    style: { fontSize: "7.2px", color: "#6B7280", fontStyle: "italic", marginTop: "1px" },
+                                                    children: curLang === 'or'
+                                                        ? "ସୂଚନା: ଅମାନ୍ତରେ ସ୍ୟାଣ୍ଡୱିଚ୍ ନିୟମ ନଥାଏ — ପୂରା ୩୦ ଦିନ ଅଧିକ ମାସ ପ୍ରଥମେ, ତା'ପରେ ନିଜ ମାସ ଚାଲେ।"
+                                                        : "Note: In Amanta, there is no sandwich split — the entire 30-day Adhika month runs first, followed by Nija."
+                                                })
+                                            ]
                                         })
                                     ]
                                 });
@@ -16416,12 +17540,13 @@ const formatLocalTimeDisplay = (str, lang) => {
                 "Daily Panchang": "ଦୈନିକ ପଞ୍ଚାଙ୍ଗ", "Muhurta & Timings": "ମୁହୂର୍ତ୍ତ ଓ ସମୟ", "Balam & Dosha": "ବଳମ୍ ଓ ଦୋଷ", "Rashi & Nakshatra": "ରାଶି ଓ ନକ୍ଷତ୍ର", "Regional Panjika": "ଆଞ୍ଚଳିକ ପାଞ୍ଜି",
                 "DAY CYCLE": "ଦିନ ଚକ୍ର", "NIGHT CYCLE": "ରାତ୍ରି ଚକ୍ର", "NOON": "ମଧ୍ୟାହ୍ନ", "Noon": "ମଧ୍ୟାହ୍ନ", "MIDNIGHT": "ମଧ୍ୟରାତ୍ରି", "Midnight": "ମଧ୍ୟରାତ୍ରି",
                 "Passed": "ଅତିବାହିତ", "until": "ପର୍ଯ୍ୟନ୍ତ", "Hours": "ଘଣ୍ଟା", "minutes": "ମିନିଟ୍", "seconds": "ସେକେଣ୍ଡ", "Night": "ରାତ୍ରି",
+                "DAY LENGTH": "ଦିନମାନ", "NIGHT LENGTH": "ରାତ୍ରିମାନ", "OF": "ର", "PASSED": "ଅତିବାହିତ", "left until": "ବାକି",
                 "HINDU MONTH (PURNIMANTA)": "ହିନ୍ଦୁ ମାସ (ପୂର୍ଣ୍ଣିମାନ୍ତ)", "HINDU MONTH (AMANTA)": "ହିନ୍ଦୁ ମାସ (ଅମାନ୍ତ)", "SOLAR DATE": "ସୌର ଦିନ", "12 Hindu Months List": "୧୨ ହିନ୍ଦୁ ମାସ ତାଲିକା",
                 "Ashwina": "ଆଶ୍ୱିନ", "Ashvina": "ଆଶ୍ୱିନ",
                 "TITHI PRAKARA": "ତିଥି ପ୍ରକାର", "Jaya": "ଜୟା", "Nanda": "ନନ୍ଦା", "Bhadra": "ଭଦ୍ରା", "Rikta": "ରିକ୍ତା", "Purna": "ପୂର୍ଣ୍ଣା",
                 "DAY START RULE": "ଦିନ ଆରମ୍ଭ ନିୟମ", "Vedic Day": "ବୈଦିକ ଦିନ", "Civil Day": "ସାଧାରଣ ଦିନ", "Sunrise (Vedic Day)": "ସୂର୍ଯ୍ୟୋଦୟ (ବୈଦିକ ଦିନ)", "Midnight (Civil Day)": "ମଧ୍ୟରାତ୍ରି (ସାଧାରଣ ଦିନ)",
                 "RITU (SEASON)": "ଋତୁ", "Sharad": "ଶରତ", "Vasant": "ବସନ୍ତ", "Grishma": "ଗ୍ରୀଷ୍ମ", "Varsha": "ବର୍ଷା", "Hemant": "ହେମନ୍ତ", "Shishir": "ଶିଶିର",
-                "UDAYA TITHI": "ଉଦୟ ତିଥି", "TITHI (MIDNIGHT)": "ତିଥି (ମଧ୍ୟରାତ୍ରି)", "NAKSHATRA": "ନକ୍ଷତ୍ର", "YOGA": "ଯୋଗ", "KARANA": "କରଣ",
+                "UDAYA TITHI": "ଉଦୟ ତିଥି", "TITHI (MIDNIGHT)": "ତିଥି (ମଧ୍ୟରାତ୍ରି)", "NAKSHATRA": "ନକ୍ଷତ୍ର", "YOGA": "ଯୋଗ", "KARANA": "କରଣ", "WEEKDAY": "ବାର",
                 "Harshan": "ହର୍ଷଣ", "Harshana": "ହର୍ଷଣ", "Next": "ପରବର୍ତ୍ତୀ", "Next:": "ପରବର୍ତ୍ତୀ:", "upto": "ପର୍ଯ୍ୟନ୍ତ", "Upto": "ପର୍ଯ୍ୟନ୍ତ",
                 "Timings": "ମୁହୂର୍ତ୍ତ ସମୟ", "TIMINGS": "ମୁହୂର୍ତ୍ତ ସମୟ", "NOW": "ବର୍ତ୍ତମାନ", "LIVE": "ସକ୍ରିୟ", "TIMING ANALYSIS": "ସମୟ ବିଶ୍ଳେଷଣ",
                 "Auspicious Timings": "ଶୁଭ ମୁହୂର୍ତ୍ତ ସମୟ", "AUSPICIOUS TIMINGS": "ଶୁଭ ମୁହୂର୍ତ୍ତ ସମୟ",
@@ -16739,7 +17864,7 @@ return b?s.jsx("div",{className:"text-label-359",children:s.jsxs("main",{key:cur
         });
     }
     setShowLocModal(!1);
-}}),s.jsx(SettingsModal,{isOpen:showSettingsModal,onClose:()=>setShowSettingsModal(!1),settings:settings,onSaveSettings:newS=>{setSettings(newS);localStorage.setItem("panchangSettings",JSON.stringify(newS));},data:b}),s.jsx(MonthsGuideModal,{isOpen:show12MonthsModal,onClose:()=>setShow12MonthsModal(!1),settings:settings,data:b}),s.jsxs("header",{className:"panchang-element-361",children:[
+}}),s.jsx(SettingsModal,{isOpen:showSettingsModal,onClose:()=>setShowSettingsModal(!1),settings:settings,currentLang:currentLang,onSelectLanguage:l=>setCurrentLang(l),onSaveSettings:newS=>{setSettings(newS);localStorage.setItem("panchangSettings",JSON.stringify(newS));},data:b}),s.jsx(MonthsGuideModal,{isOpen:show12MonthsModal,onClose:()=>setShow12MonthsModal(!1),settings:settings,data:b}),s.jsxs("header",{className:"panchang-element-361",children:[
             s.jsx("div",{className:"panchang-element-362"}),
             s.jsx("div",{className:"panchang-element-363 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"}),
             s.jsxs("div",{className:"flex-col-364",children:[
@@ -16775,14 +17900,14 @@ return b?s.jsx("div",{className:"text-label-359",children:s.jsxs("main",{key:cur
                     onClick:()=>setShowLocModal(!0),
                     className:"panchang-card-v22",
                     style:{
-                      padding:"3px 10px",
+                      padding:"4px 12px",
                       borderRadius:"9999px",
                       gap:"5px",
                       background:"rgba(255, 255, 255, 0.16)",
                       border:"1px solid rgba(255, 255, 255, 0.28)",
-                      flex:"1 1 auto",
-                      minWidth:0,
-                      maxWidth:"none"
+                      width:"fit-content",
+                      maxWidth:"65%",
+                      flex:"0 1 auto"
                     },
                     title:"Change Location",
                     children:[
@@ -16803,32 +17928,6 @@ return b?s.jsx("div",{className:"text-label-359",children:s.jsxs("main",{key:cur
                     ]
                   }),
                   s.jsxs("div",{className:"header-actions-group",children:[
-                    s.jsxs("div",{
-                      className:"lang-select-wrapper",
-                      children:[
-                        s.jsx("span",{style:{fontSize:"0.82rem",lineHeight:1},children:"🌐"}),
-                        s.jsx("select",{
-                          value:currentLang,
-                          onChange:e=>setCurrentLang(e.target.value),
-                          className:"header-lang-select",
-                          title:"Select Language",
-                          children:[
-                            s.jsx("option",{value:"en",style:{color:"#1f2937",background:"#ffffff"},children:"English"}),
-                            s.jsx("option",{value:"hi",style:{color:"#1f2937",background:"#ffffff"},children:"हिन्दी (Hindi)"}),
-                            s.jsx("option",{value:"or",style:{color:"#1f2937",background:"#ffffff"},children:"ଓଡ଼ିଆ (Odia)"}),
-                            s.jsx("option",{value:"bn",style:{color:"#1f2937",background:"#ffffff"},children:"বাংলা (Bengali)"}),
-                            s.jsx("option",{value:"mr",style:{color:"#1f2937",background:"#ffffff"},children:"मराठी (Marathi)"}),
-                            s.jsx("option",{value:"gu",style:{color:"#1f2937",background:"#ffffff"},children:"ગુજરાતી (Gujarati)"}),
-                            s.jsx("option",{value:"pa",style:{color:"#1f2937",background:"#ffffff"},children:"ਪੰਜਾਬੀ (Punjabi)"}),
-                            s.jsx("option",{value:"ta",style:{color:"#1f2937",background:"#ffffff"},children:"தமிழ் (Tamil)"}),
-                            s.jsx("option",{value:"te",style:{color:"#1f2937",background:"#ffffff"},children:"తెలుగు (Telugu)"}),
-                            s.jsx("option",{value:"kn",style:{color:"#1f2937",background:"#ffffff"},children:"ಕನ್ನಡ (Kannada)"}),
-                            s.jsx("option",{value:"ml",style:{color:"#1f2937",background:"#ffffff"},children:"മലയാളം (Malayalam)"}),
-                            s.jsx("option",{value:"as",style:{color:"#1f2937",background:"#ffffff"},children:"অসমীয়া (Assamese)"})
-                          ]
-                        })
-                      ]
-                    }),
                     s.jsxs("button",{
                       className:"whatsapp-share-btn",
                       onClick:()=>{
@@ -16996,9 +18095,9 @@ return b?s.jsx("div",{className:"text-label-359",children:s.jsxs("main",{key:cur
             children: [
                 { name: "Daily Panchang", i18nKey: "tab_daily_panchang" },
                 { name: "Muhurta & Timings", i18nKey: "tab_muhurta_timings" },
+                { name: "Rashi & Nakshatra", i18nKey: "tab_rashi_nakshatra" },
                 { name: "Chandrabalam & Tarabalam", i18nKey: "tab_balam_dosha" },
                 { name: "Panchaka & Udaya Lagna", i18nKey: "tab_panchaka_lagna" },
-                { name: "Rashi & Nakshatra", i18nKey: "tab_rashi_nakshatra" },
                 { name: "Regional Panjika", i18nKey: "tab_regional_panjika" }
             ].map(tab => 
                 s.jsx("button", {
@@ -17018,9 +18117,9 @@ return b?s.jsx("div",{className:"text-label-359",children:s.jsxs("main",{key:cur
         s.jsx("div",{className:"panchang-element-404 panchang-grid-layout",children:s.jsxs("div",{className:"flex-col-405",children:[
             activeTab === "Daily Panchang" && s.jsx("section",{children:s.jsx(DailyPanchangView,{data:b,settings:settings,onOpen12Months:()=>setShow12MonthsModal(!0)})}),
             activeTab === "Muhurta & Timings" && s.jsx("section",{children:s.jsx(MuhurtaTimingsTab,{data:b,settings:settings})}),
+            activeTab === "Rashi & Nakshatra" && s.jsx("section",{children:s.jsx(RashiNakshatraTab,{data:b})}),
             activeTab === "Chandrabalam & Tarabalam" && s.jsx("section",{children:s.jsx(BalamDoshaTab,{data:b})}),
             activeTab === "Panchaka & Udaya Lagna" && s.jsx("section",{children:s.jsx(PanchakaLagnaTab,{data:b})}),
-            activeTab === "Rashi & Nakshatra" && s.jsx("section",{children:s.jsx(RashiNakshatraTab,{data:b})}),
             activeTab === "Regional Panjika" && s.jsx("section",{children:s.jsx(RegionalPanjikaView,{data:b,settings:settings})})
         ]})})]})}):s.jsx("div",{className:"flex-row-406",children:"Calculating Panchang..."});};
 function mountAppWidget(){
@@ -17539,19 +18638,38 @@ window.enhancePanchang = function(data, date, location) {
       return data;
 };
 // HIGH PRECISION SOLAR ALGORITHM RE-ENGINEERING ---
-  // 1. Precise Ayanamsa Calculation (Lahiri, KP & Raman)
-function getTrueLahiriAyanamsa(date) {
-    const t = window.Astronomy.MakeTime(date);
-    const epoch = window.Astronomy.MakeTime(new Date("2000-01-01T12:00:00Z"));
-    const ayanamsaJ2000 = 23.853; 
-    const precessionRate = 50.29 / 3600; // degrees per year
-    const daysSinceJ2000 = t.tt - epoch.tt;
-    const years = daysSinceJ2000 / 365.25;
-    let baseAy = ayanamsaJ2000 + (precessionRate * years);
-    if (window.selectedAyanamsha === "kp") baseAy -= 0.0986; // KP offset ~5.9 arcmin
-    else if (window.selectedAyanamsha === "raman") baseAy -= 1.4444; // Raman offset ~1°27'
-    return baseAy;
-}
+  // 1. Master Shared Ayanamsha & Sidereal Position Engine (Indian Astronomical Ephemeris / IAE Standard)
+window.getMasterAyanamsha = function(dateOrTime, systemOverride) {
+    if (!window.Astronomy) return 24.0;
+    const t = (dateOrTime instanceof window.Astronomy.AstroTime) ? dateOrTime : window.Astronomy.MakeTime(dateOrTime);
+    // Exact Julian Centuries from J2000.0 (t.tt is days from J2000.0 TT)
+    const T = t.tt / 36525.0;
+    const nut = window.Astronomy.e_tilt(t);
+    const dPsi = nut ? nut.dpsi : 0;
+    // Official Indian Astronomical Ephemeris (IAE) / Calendar Reform Committee Standard:
+    // Base epoch J2000.0 = 23° 51' 25.532" = 23.8570922°, Precession = 5029.0966" / century = 1.3969713° / century
+    let ay = 23.8570922 + (1.3969713 * T) + (dPsi / 3600.0);
+    const sys = systemOverride || window.selectedAyanamsha || "lahiri";
+    if (sys === "kp") ay -= 0.0986; // KP offset ~5'55"
+    else if (sys === "raman") ay -= 1.4444; // Raman offset ~1°26'40"
+    return ay;
+};
+window.getTrueLahiriAyanamsa = function(date) { return window.getMasterAyanamsha(date); };
+window.getSiderealSunLon = function(t) {
+    if (!window.Astronomy) return 0;
+    const tAst = (t instanceof window.Astronomy.AstroTime) ? t : window.Astronomy.MakeTime(t);
+    const geo = window.Astronomy.GeoVector(window.Astronomy.Body.Sun, tAst, true);
+    const elon = window.Astronomy.Ecliptic(geo).elon;
+    return ((elon - window.getMasterAyanamsha(tAst)) % 360 + 360) % 360;
+};
+window.getSiderealMoonLon = function(t) {
+    if (!window.Astronomy) return 0;
+    const tAst = (t instanceof window.Astronomy.AstroTime) ? t : window.Astronomy.MakeTime(t);
+    const geo = window.Astronomy.GeoVector(window.Astronomy.Body.Moon, tAst, true);
+    const elon = window.Astronomy.Ecliptic(geo).elon;
+    return ((elon - window.getMasterAyanamsha(tAst)) % 360 + 360) % 360;
+};
+function getTrueLahiriAyanamsa(date) { return window.getMasterAyanamsha(date); }
 
 window.parseTimeUniversal = function(tStr, refDate) {
     if (!tStr) return null;
@@ -17580,16 +18698,7 @@ function calculateExactPravishte(currentDate, latitude, longitude) {
     const date = new Date(currentDate);
     date.setHours(0, 0, 0, 0);
 
-    const getSiderealSun = (t) => {
-        const geo = Astro.GeoVector(Astro.Body.Sun, t, true);
-        const elon = Astro.Ecliptic(geo).elon;
-        const T_cent = (t.tt - Astro.MakeTime(new Date("2000-01-01T12:00:00Z")).tt) / 36525.0;
-        let ayanamsa = 23.85045 + (50.27972 / 3600.0) * (T_cent * 100);
-        if (window.selectedAyanamsha === "kp") ayanamsa -= 0.0986;
-        else if (window.selectedAyanamsha === "raman") ayanamsa -= 1.4444;
-        let sid = elon - ayanamsa;
-        return ((sid % 360) + 360) % 360;
-    };
+    const getSiderealSun = (t) => window.getSiderealSunLon ? window.getSiderealSunLon(t) : 0;
 
     const rashiNames = ["Mesha", "Vrishabha", "Mithuna", "Karka", "Simha", "Kanya", "Tula", "Vrishchika", "Dhanu", "Makara", "Kumbha", "Meena"];
 
@@ -17727,6 +18836,9 @@ window.VedicPlanner = {
   names: ["Udveg", "Chal", "Labh", "Amrit", "Kaal", "Shubh", "Rog"],
   qualities: ["Bad", "Neutral", "Good", "Good", "Bad", "Good", "Bad"],
   rahuKaalSlots: [7, 1, 6, 4, 5, 3, 2], 
+  vaarVelaSlots: [[3], [6], [1], [4], [7], [2], [5]],
+  kaalVelaSlots: [[4], [1], [5], [2], [6], [3], [0, 7]],
+  kaalRatriSlots: [[5], [3], [1], [6], [4], [2], [0, 7]],
   calculate: function(dateObj, lat, long, timezoneOffset) {
     const noaa = window.NOAA.calculate(dateObj, lat, long, timezoneOffset);
     const nextDateObj = new Date(dateObj.getTime() + 24 * 60 * 60 * 1000);
@@ -17785,15 +18897,24 @@ window.VedicPlanner = {
         const typeIndex = daySequence[i];
         let name = this.names[typeIndex];
         const quality = this.qualities[typeIndex];
+        const badges = [];
         if (i === rahuSlotIndex) {
             name += " (Rahu Kaal)";
+            badges.push("Rahu Kaal");
+        }
+        if (this.vaarVelaSlots[dayIndex]?.includes(i)) {
+            badges.push("Vaar Vela");
+        }
+        if (this.kaalVelaSlots[dayIndex]?.includes(i)) {
+            badges.push("Kaal Vela");
         }
         slots.push({
             name: name,
             startTime: formatTime(start),
             endTime: formatTime(end),
             quality: quality,
-            type: "Day"
+            type: "Day",
+            badges: badges
         });
     }
 
@@ -17803,12 +18924,17 @@ window.VedicPlanner = {
         const typeIndex = nightSequence[i];
         let name = this.names[typeIndex];
         const quality = this.qualities[typeIndex];
+        const badges = [];
+        if (this.kaalRatriSlots[dayIndex]?.includes(i)) {
+            badges.push("Kaal Ratri");
+        }
         slots.push({
             name: name,
             startTime: formatTime(start),
             endTime: formatTime(end),
             quality: quality,
-            type: "Night"
+            type: "Night",
+            badges: badges
         });
     }
 
@@ -18028,7 +19154,7 @@ window.generateGowriPlan = function(dateObj, lat, long) {
       GRISHMA: { name: "Grishma", en: "Summer",     emoji: "☀️", color: "text-label-429" },
       VARSHA:  { name: "Varsha",  en: "Monsoon",    emoji: "🌧️", color: "text-label-430" },
       SHARAD:  { name: "Sharad",  en: "Autumn",     emoji: "🍂", color: "text-label-411" },
-      HEMANT:  { name: "Hemant",  en: "Pre-Winter", emoji: "🌫️", color: "text-label-419" },
+      HEMANT:  { name: "Hemant",  en: "Pre-Winter", emoji: "🍁", color: "text-label-419" },
       SHISHIR: { name: "Shishir", en: "Winter",     emoji: "⛄", color: "text-label-422" }
     };
     // --- Drik Ritu Calculation (Solar/Tropical) ---
@@ -18144,17 +19270,8 @@ window.generateGowriPlan = function(dateObj, lat, long) {
             searchT = nm.AddDays(1);
         }
         if (!lastNM || !nextNM) return { amanta: "", purnimanta: "", amantaIndex: 0, isAdhik: false };
-        const getSiderealSun = (t) => {
-            const geo = Astro.GeoVector(Astro.Body.Sun, t, true);
-            const elon = Astro.Ecliptic(geo).elon;
-            const T_cent = t.tt / 36525.0;
-            let ayanamsa = 23.85045 + (50.27972 / 3600.0) * (T_cent * 100);
-            if (window.selectedAyanamsha === "kp") ayanamsa -= 0.0986;
-            else if (window.selectedAyanamsha === "raman") ayanamsa -= 1.4444;
-            let sid = elon - ayanamsa;
-            return ((sid % 360) + 360) % 360;
-        };
-        // EXACT sidereal Sun at the precise moments of New Moon (NO AddDays offset!)
+        const getSiderealSun = (t) => window.getSiderealSunLon ? window.getSiderealSunLon(t) : 0;
+        // EXACT sidereal Sun at the precise moments of New Moon
         const rashi1 = Math.floor(getSiderealSun(lastNM) / 30);
         const rashi2 = Math.floor(getSiderealSun(nextNM) / 30);
         const sankrantiCount = (rashi2 - rashi1 + 12) % 12;
@@ -18322,7 +19439,11 @@ window.generateGowriPlan = function(dateObj, lat, long) {
             const isBeforeChaitra = currentMidnight.getTime() < thisYearStartMidnight.getTime();
             let shakaYear = isBeforeChaitra ? (currentGregorianYear - 78) - 1 : (currentGregorianYear - 78);
             let vikramYear = shakaYear + 135;
-            const t_now = window.Astronomy.MakeTime(date.date || date);
+            const obsForMonth = new window.Astronomy.Observer(lat, lng, 0);
+            const dSunriseSearch = new Date(date); dSunriseSearch.setHours(0, 0, 0, 0);
+            const srForMonth = window.Astronomy.SearchAltitude(window.Astronomy.Body.Sun, obsForMonth, +1, dSunriseSearch, 1, -0.833333);
+            const evalSunriseDate = srForMonth ? srForMonth.date : new Date(dSunriseSearch.getTime() + 6 * 3600 * 1000);
+            const t_now = window.Astronomy.MakeTime(evalSunriseDate);
             const udayaPaksha = refinedData?.tithi?.paksha || data?.tithi?.paksha;
             const chandramasaData = getAccurateChandramasa(t_now, udayaPaksha);
             let gujaratiYear = (chandramasaData.amantaIndex < 7) ? vikramYear - 1 : vikramYear;
@@ -18434,7 +19555,7 @@ window.generateGowriPlan = function(dateObj, lat, long) {
                         GRISHMA: { name: "Grishma", en: "Summer",     emoji: "☀️", color: "text-label-429" },
                         VARSHA:  { name: "Varsha",  en: "Monsoon",    emoji: "🌧️", color: "text-label-430" },
                         SHARAD:  { name: "Sharad",  en: "Autumn",     emoji: "🍂", color: "text-label-411" },
-                        HEMANT:  { name: "Hemant",  en: "Pre-Winter", emoji: "🌫️", color: "text-label-419" },
+                        HEMANT:  { name: "Hemant",  en: "Pre-Winter", emoji: "🍁", color: "text-label-419" },
                         SHISHIR: { name: "Shishir", en: "Winter",     emoji: "⛄", color: "text-label-422" }
                     };
                     if (lon >= 330 || lon < 30)  return R_CONF.VASANT;
