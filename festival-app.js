@@ -3,7 +3,7 @@
   var _origById = document.getElementById.bind(document);
   document.getElementById = function(id){
     var el = _origById(id);
-    if(!el && (id === "root" || id === "app" || id === "blogger-app-widget-root")) return _origById("widget-festival-app");
+    if(!el && (id === "root" || id === "app" || id === "blogger-app-widget-root")) return _origById("widget-panchang-data");
     return el;
   };
   var _origDocAdd = document.addEventListener.bind(document);
@@ -10370,7 +10370,7 @@ const LocationModal = ({ isOpen, onClose, onSave }) => {
         onSave({ latitude: item.lat, longitude: item.lon,
             name: item.saveName
         });
-          };
+    };
     const handleSaveManual = () => {
         if (!globalData || !selectedCountry || !selectedState) return;
         let targetData = globalData[selectedCountry]?.[selectedState];
@@ -20735,9 +20735,9 @@ return b?s.jsx("div",{className:"text-label-359",children:s.jsxs("main",{key:cur
             activeTab === "Regional Panjika" && s.jsx("section",{children:s.jsx(RegionalPanjikaView,{data:b,settings:settings})})
         ]})})]})}):s.jsx("div",{className:"flex-row-406",children:"Calculating Panchang..."});};
 function mountAppWidget(){
-  var mountNode = document.getElementById("widget-festival-app");
+  var mountNode = document.getElementById("widget-panchang-data");
   if(!mountNode || !window.Astronomy || !window.enhancePanchang || !window.generateVedicPlan){ setTimeout(mountAppWidget, 35); return; }
   if(!mountNode._hasMountedApp){ mountNode._hasMountedApp = true; var xx = Jh.createRoot(mountNode); xx.render(s.jsx(Gh.StrictMode, { children: s.jsx(DivyaDrishtiApp, {}) })); }
 }
 if(document.readyState === "loading"){ document.addEventListener("DOMContentLoaded", mountAppWidget); } else { mountAppWidget(); }
-})();
+})();                                                                                                                                                                                                                      
