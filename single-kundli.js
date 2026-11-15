@@ -21,96 +21,6 @@
 /* --- Engine Script 1 --- */
 (function(){
 
-      const THEME_MOON_SVG = '<svg viewBox="0 0 512 512" width="19" height="19" fill="currentColor"><path d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z"/></svg>';
-      const THEME_SUN_SVG = '<svg viewBox="0 0 512 512" width="20" height="20" fill="#fcd34d"><path d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zm224 0a128 128 0 1 0 -256 0 128 128 0 1 0 256 0z"/></svg>';
-
-      function spawnRandomCosmicMeteor() {
-          if (!document.documentElement.classList.contains('dark')) return;
-          const starfield = document.getElementById('cosmic-starfield');
-          if (!starfield) return;
-
-          const meteor = document.createElement('div');
-          meteor.className = 'cosmic-meteor';
-
-          const startX = Math.random() * (window.innerWidth * 0.6) + (window.innerWidth * 0.25);
-          const startY = Math.random() * (window.innerHeight * 0.6);
-          const width = Math.floor(Math.random() * 6) + 14;
-
-          meteor.style.left = `${startX}px`;
-          meteor.style.top = `${startY}px`;
-          meteor.style.width = `${width}px`;
-
-          meteor.onanimationend = () => meteor.remove();
-          starfield.appendChild(meteor);
-      }
-
-      function toggleDarkMode(explicitState) {
-          const html = document.documentElement;
-          const isDark = (typeof explicitState === 'boolean') ? explicitState : !html.classList.contains('dark');
-
-          if (isDark) {
-              html.classList.add('dark');
-              setTimeout(spawnRandomCosmicMeteor, 800);
-          } else {
-              html.classList.remove('dark');
-          }
-
-          const icon = document.getElementById('theme-toggle-icon');
-          if (icon) {
-              icon.innerHTML = isDark ? THEME_SUN_SVG : THEME_MOON_SVG;
-          }
-
-          try {
-              const newUrl = new URL(window.location.href);
-              newUrl.searchParams.set('theme', isDark ? 'dark' : 'light');
-              const relativeUrl = newUrl.pathname + newUrl.search + newUrl.hash;
-              window.history.replaceState(null, '', relativeUrl);
-          } catch (e) {}
-
-          try {
-              localStorage.setItem('panchang_theme', isDark ? 'dark' : 'light');
-          } catch (e) {}
-      }
-
-      setInterval(() => {
-          if (document.documentElement.classList.contains('dark')) {
-              spawnRandomCosmicMeteor();
-          }
-      }, 5000);
-
-      (function initTheme() {
-          try {
-              const urlParams = new URLSearchParams(window.location.search);
-              const urlTheme = (urlParams.get('theme') || urlParams.get('mode') || '').toLowerCase().trim();
-
-              let isDark = false;
-              if (urlTheme === 'dark') {
-                  isDark = true;
-              } else if (urlTheme === 'light' || urlTheme === 'white') {
-                  isDark = false;
-              } else {
-                  const savedTheme = localStorage.getItem('panchang_theme');
-                  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-                  isDark = (savedTheme === 'dark' || (!savedTheme && prefersDark));
-              }
-
-              const icon = document.getElementById('theme-toggle-icon');
-              if (isDark) {
-                  document.documentElement.classList.add('dark');
-                  if (icon) icon.innerHTML = THEME_SUN_SVG;
-              } else {
-                  document.documentElement.classList.remove('dark');
-                  if (icon) icon.innerHTML = THEME_MOON_SVG;
-              }
-          } catch (e) {}
-      })();
-    
-if(typeof spawnRandomCosmicMeteor==="function"&&typeof window["spawnRandomCosmicMeteor"]==="undefined")window["spawnRandomCosmicMeteor"]=spawnRandomCosmicMeteor;if(typeof toggleDarkMode==="function"&&typeof window["toggleDarkMode"]==="undefined")window["toggleDarkMode"]=toggleDarkMode;
-})();
-
-/* --- Engine Script 2 --- */
-(function(){
-
 const langUrlMap = {
     'english': 'en', 'hindi': 'hi', 'odia': 'or', 'bengali': 'bn',
     'marathi': 'mr', 'gujarati': 'gu', 'punjabi': 'pa', 'tamil': 'ta',
@@ -122,7 +32,7 @@ const _urlParams = new URLSearchParams(window.location.search);
 let _urlLangParam = _urlParams.get('lang');
 let _urlLang = _urlLangParam ? langUrlMap[_urlLangParam.toLowerCase()] : null;
 
-let currentLang = _urlLang || localStorage.getItem('appLang') || 'en';
+let currentLang = _urlLang || localStorage.getItem('vaidik_lang') || localStorage.getItem('appLang') || 'en';
 if (_urlLang) localStorage.setItem('appLang', currentLang);
 
 const PARAGRAPH_BASE_URL = "https://raw.githubusercontent.com/santosh276/panchang-data/main/";
@@ -579,17 +489,27 @@ function applyTranslations() {
 async function changeAppLanguage(langCode) {
     currentLang = langCode;
     localStorage.setItem('appLang', langCode);
+    localStorage.setItem('vaidik_lang', langCode);
 
-    const newUrl = new URL(window.location.href);
-    const fullLangName = urlLangMap[langCode] || 'english';
-    newUrl.searchParams.set('lang', fullLangName);
-    window.history.replaceState({}, '', newUrl);
+    try {
+        const newUrl = new URL(window.location.href);
+        const fullLangName = urlLangMap[langCode] || 'english';
+        newUrl.searchParams.set('lang', fullLangName);
+        window.history.replaceState({}, '', newUrl);
+    } catch (e) {}
 
     // Fetch external paragraphs before updating UI
     await fetchLocalizedParagraphs(langCode);
 
     applyTranslations();
 }
+
+window.changeAppLanguage = changeAppLanguage;
+window.addEventListener('vaidik-lang-change', function(ev) {
+    if (ev && ev.detail && ev.detail.lang && ev.detail.lang !== currentLang) {
+        changeAppLanguage(ev.detail.lang);
+    }
+});
       /*
  MIT
 
@@ -9554,7 +9474,7 @@ function loadPreset(index) {
              allCharts.Gochar.planets.find(p => p.abbr === "Sat").isRetrograde ? (uiEx.lbl_yes || "Yes") : (uiEx.lbl_no || "No");
 
           const currentSaturnSign = allCharts && allCharts.Gochar && allCharts.Gochar.planets && 
-                         allCharts.Gochar.planets.find(p => p.abbr === "Sat") ? 
+             allCharts.Gochar.planets.find(p => p.abbr === "Sat") ? 
              getLocalRashi(allCharts.Gochar.planets.find(p => p.abbr === "Sat").sign) : "-";
 
           const natalMoonSignName = getLocalRashi(natalMoonSign);
@@ -9594,7 +9514,7 @@ function loadPreset(index) {
               const time = date.toLocaleString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
               return `${m} ${d}, ${y} | ${time}`;
           };
-
+        
           const formatPhaseName = (phase) => {
               if (phase === "Rising Phase") return d_txt.ss_phase_rising || "First Dhaiya - <span style='color:#800000;'>Rising</span>";
               if (phase === "Peak Phase") return d_txt.ss_phase_peaking || "Second Dhaiya - <span style='color:#800000;'>Peaking</span>";
