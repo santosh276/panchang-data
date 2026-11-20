@@ -18,16 +18,47 @@
   };
   if(!window.VaidikLocation){
     window.VaidikLocation = {
-      get: function(){ try{ return JSON.parse(localStorage.getItem("vaidik_universal_location") || "null"); }catch(e){ return null; } },
-      set: function(obj){
-        if(!obj) return;
-        var lat = Number(obj.lat !== undefined ? obj.lat : obj.latitude), lng = Number(obj.lng !== undefined ? obj.lng : obj.longitude);
-        if(isNaN(lat) || isNaN(lng)) return;
-        var payload = { lat: lat, lng: lng, latitude: lat, longitude: lng, name: obj.name || (obj.city ? obj.city + (obj.state ? ", " + obj.state : "") : lat.toFixed(2) + ", " + lng.toFixed(2)), city: obj.city || "", state: obj.state || "", country: obj.country || "India", updatedAt: Date.now() };
-        try{ localStorage.setItem("vaidik_universal_location", JSON.stringify(payload)); }catch(e){}
-        window.dispatchEvent(new CustomEvent("vaidik-location-change", { detail: payload }));
+      _norm: function(raw){
+        if(!raw) return null;
+        var lat = Number(raw.lat !== undefined ? raw.lat : raw.latitude), lng = Number(raw.lng !== undefined ? raw.lng : raw.longitude);
+        if(!Number.isFinite(lat) || !Number.isFinite(lng)) return null;
+        var name = raw.name || (raw.city ? raw.city + (raw.state ? ", " + raw.state : "") : lat.toFixed(2) + ", " + lng.toFixed(2));
+        return { lat: lat, lng: lng, latitude: lat, longitude: lng, name: name, city: raw.city || "", state: raw.state || "", country: raw.country || "India", isAutoGPS: !!raw.isAutoGPS, updatedAt: Number(raw.updatedAt) || 0 };
       },
-      onChange: function(cb){ if(typeof cb === "function") window.addEventListener("vaidik-location-change", function(ev){ if(ev && ev.detail) cb(ev.detail); }); }
+      get: function(){
+        try{
+          var u = this._norm(JSON.parse(localStorage.getItem("vaidik_universal_location") || "null"));
+          if(u) return u;
+          var pc = JSON.parse(localStorage.getItem("panchangConfig") || "null");
+          if(pc && pc.location){ var f1 = this._norm(pc.location); if(f1) return f1; }
+          var sv = JSON.parse(localStorage.getItem("savedLocation") || "null");
+          if(sv){ var f2 = this._norm(sv); if(f2) return f2; }
+        }catch(e){}
+        return null;
+      },
+      set: function(obj){
+        if(!obj) return null;
+        var lat = Number(obj.lat !== undefined ? obj.lat : obj.latitude), lng = Number(obj.lng !== undefined ? obj.lng : obj.longitude);
+        if(!Number.isFinite(lat) || !Number.isFinite(lng)) return null;
+        var parts = String(obj.name || "").split(",");
+        var name = obj.name || (obj.city ? obj.city + (obj.state ? ", " + obj.state : "") : lat.toFixed(2) + ", " + lng.toFixed(2));
+        var prev = this.get();
+        if(prev && Math.abs(prev.lat - lat) < 1e-5 && Math.abs(prev.lng - lng) < 1e-5 && prev.name === name && !!prev.isAutoGPS === !!obj.isAutoGPS) return prev;
+        var payload = { lat: lat, lng: lng, latitude: lat, longitude: lng, name: name, city: obj.city || (parts[0] ? parts[0].trim() : ""), state: obj.state || (parts[1] ? parts[1].trim() : ""), country: obj.country || "India", isAutoGPS: !!obj.isAutoGPS, updatedAt: Number(obj.updatedAt) || Date.now() };
+        try{ localStorage.setItem("vaidik_universal_location", JSON.stringify(payload)); }catch(e){}
+        window._vaidikLocEmitting = true;
+        try{ window.dispatchEvent(new CustomEvent("vaidik-location-change", { detail: payload })); }finally{ window._vaidikLocEmitting = false; }
+        return payload;
+      },
+      onChange: function(cb){
+        if(typeof cb !== "function") return function(){};
+        var self = this;
+        var onEv = function(ev){ var n = self._norm(ev && ev.detail); if(n) cb(n); };
+        var onSt = function(ev){ if(ev && ev.key === "vaidik_universal_location" && ev.newValue){ try{ var n = self._norm(JSON.parse(ev.newValue)); if(n) cb(n); }catch(e){} } };
+        window.addEventListener("vaidik-location-change", onEv);
+        window.addEventListener("storage", onSt);
+        return function(){ window.removeEventListener("vaidik-location-change", onEv); window.removeEventListener("storage", onSt); };
+      }
     };
   }
 })();
@@ -10457,12 +10488,42 @@ const LocationModal = ({ isOpen, onClose, onSave, currentLocation }) => {
         setIsDetecting(true);
         navigator.geolocation.getCurrentPosition(
             (position) => {
+                const lat = position.coords.latitude;
+                const lon = position.coords.longitude;
                 onSave({
-                    latitude: position.coords.latitude,
-                    longitude: position.coords.longitude,
-                    name: "Current Location"
+                    latitude: lat,
+                    longitude: lon,
+                    name: "Current Location",
+                    isAutoGPS: true
                 });
                 setIsDetecting(false);
+                fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=10&addressdetails=1`)
+                    .then(r => r.ok ? r.json() : null)
+                    .then(data => {
+                        if (!data) return;
+                        let city = "", state = "", locName = "";
+                        if (data.address) {
+                            city = data.address.city || data.address.town || data.address.village || data.address.county || "";
+                            state = data.address.state || data.address.country || "";
+                            locName = (city && state) ? `${city}, ${state}` : (city || state);
+                        } else if (data.display_name) {
+                            locName = data.display_name.split(",")[0];
+                        }
+                        if (!locName) return;
+                        try {
+                            const cur = JSON.parse(localStorage.getItem("savedLocation") || "null");
+                            if (!cur || Math.abs(Number(cur.latitude) - lat) > 0.001 || Math.abs(Number(cur.longitude) - lon) > 0.001) return;
+                            localStorage.setItem("savedLocation", JSON.stringify({ latitude: lat, longitude: lon, name: locName, isAutoGPS: true }));
+                            if (window.VaidikLocation && typeof window.VaidikLocation.set === "function") {
+                                window.VaidikLocation.set({ lat: lat, lng: lon, latitude: lat, longitude: lon, name: locName, city: city, state: state, isAutoGPS: true });
+                            } else {
+                                const payload = { lat: lat, lng: lon, latitude: lat, longitude: lon, name: locName, city: city, state: state, country: "India", isAutoGPS: true, updatedAt: Date.now() };
+                                localStorage.setItem("vaidik_universal_location", JSON.stringify(payload));
+                                window.dispatchEvent(new CustomEvent("vaidik-location-change", { detail: payload }));
+                            }
+                        } catch (e) {}
+                    })
+                    .catch(() => {});
             },
             () => {
                 setGpsError("GPS permission denied or unavailable. Please search or pick below.");
@@ -10480,7 +10541,7 @@ const LocationModal = ({ isOpen, onClose, onSave, currentLocation }) => {
     const handleSaveManual = () => {
         if (!globalData || !selectedCountry || !selectedState) return;
         let targetData = globalData[selectedCountry]?.[selectedState];
-        if (!targetData) return;
+              if (!targetData) return;
         if (selectedCountry !== "India") {
             const cityData = (Array.isArray(targetData) ? targetData : (targetData.cities || [])).find(c => c[0] === selectedDistrict);
             if (cityData) {
@@ -10508,7 +10569,7 @@ const LocationModal = ({ isOpen, onClose, onSave, currentLocation }) => {
             }
         }
         if (distData._coords) {
-                      onSave({ latitude: distData._coords[1], longitude: distData._coords[0], name: `${selectedDistrict}, ${selectedState}` });
+            onSave({ latitude: distData._coords[1], longitude: distData._coords[0], name: `${selectedDistrict}, ${selectedState}` });
         }
     };
     let canSave = false;
@@ -20707,17 +20768,22 @@ const pushUniversalVaidikLoc = (n) => {
     const parts = (n.name || "").split(",").map(x => x.trim());
     const city = parts[0] || "";
     const state = parts[1] || "";
-    try { localStorage.setItem("savedLocation", JSON.stringify({ latitude: lat, longitude: lng, name: n.name })); } catch (e) {}
+    const isAutoGPS = !!n.isAutoGPS;
+    try { localStorage.setItem("savedLocation", JSON.stringify({ latitude: lat, longitude: lng, name: n.name, isAutoGPS })); } catch (e) {}
     if (window.VaidikLocation && typeof window.VaidikLocation.set === "function") {
-        window.VaidikLocation.set({ lat, lng, latitude: lat, longitude: lng, name: n.name, city, state });
+        window.VaidikLocation.set({ lat, lng, latitude: lat, longitude: lng, name: n.name, city, state, isAutoGPS });
     } else {
-        const payload = { lat, lng, latitude: lat, longitude: lng, name: n.name, city, state, country: "India", updatedAt: Date.now() };
+        try {
+            const cur = JSON.parse(localStorage.getItem("vaidik_universal_location") || "null");
+            if (cur && Math.abs(Number(cur.lat) - lat) < 1e-5 && Math.abs(Number(cur.lng) - lng) < 1e-5 && cur.name === n.name && !!cur.isAutoGPS === isAutoGPS) return;
+        } catch (e) {}
+        const payload = { lat, lng, latitude: lat, longitude: lng, name: n.name, city, state, country: "India", isAutoGPS, updatedAt: Date.now() };
         try { localStorage.setItem("vaidik_universal_location", JSON.stringify(payload)); } catch (e) {}
         window.dispatchEvent(new CustomEvent("vaidik-location-change", { detail: payload }));
     }
 };
 
-const mx={latitude:28.6139,longitude:77.2090},DivyaDrishtiApp=()=>{const[loc,setLoc]=ki.useState(()=>readUniversalVaidikLoc()),[showLocModal,setShowLocModal]=ki.useState(!1),[showSettingsModal,setShowSettingsModal]=ki.useState(!1),[show12MonthsModal,setShow12MonthsModal]=ki.useState(!1),[settings,setSettings]=ki.useState(()=>{let base={region:"all",newYear:"gudi_padwa",monthSystem:"purnimanta",timeFormat:"12h",ayanamsha:"lahiri"};try{const s=localStorage.getItem("panchangSettings");if(s)base=JSON.parse(s);}catch(e){}try{const u=JSON.parse(localStorage.getItem("vaidik_universal_location")||"null"),sv=JSON.parse(localStorage.getItem("savedLocation")||"null");if(u&&(!sv||sv.name!==u.name)){const autoS=detectStateMonthSystem({latitude:Number(u.latitude??u.lat),longitude:Number(u.longitude??u.lng),name:u.name||""});if(autoS){base={...base,monthSystem:autoS};localStorage.setItem("panchangSettings",JSON.stringify(base));}localStorage.setItem("savedLocation",JSON.stringify({latitude:Number(u.latitude??u.lat),longitude:Number(u.longitude??u.lng),name:u.name||""}));}}catch(e){}return base;}),[r,h]=ki.useState(new Date()),[b,o]=ki.useState(()=>{try{if(typeof window.enhancePanchang==="function"&&typeof window.Astronomy!=="undefined"){return computePanchangCached(r,loc,settings?.timeFormat||"12h",settings?.ayanamsha||"lahiri");}}catch(e){}return null;}),[activeTab, setActiveTab]=ki.useState("Daily Panchang"),[currentLang, setCurrentLang]=ki.useState(()=>getInitialLang());const dateInputRef=ki.useRef(null);const handleOpen12Months=ki.useCallback(()=>setShow12MonthsModal(!0),[]);const anyModalOpen=showLocModal||showSettingsModal||show12MonthsModal;ki.useEffect(()=>{const applyExtLoc=(d)=>{if(!d)return;const lat=Number(d.latitude!==undefined?d.latitude:d.lat),lon=Number(d.longitude!==undefined?d.longitude:d.lng);if(!Number.isFinite(lat)||!Number.isFinite(lon))return;const newName=d.name||(d.city?(d.state?`${d.city}, ${d.state}`:d.city):`${lat.toFixed(2)}, ${lon.toFixed(2)}`);setLoc(prev=>{if(prev&&Math.abs(Number(prev.latitude)-lat)<1e-5&&Math.abs(Number(prev.longitude)-lon)<1e-5&&prev.name===newName)return prev;const nextLoc={latitude:lat,longitude:lon,name:newName};try{localStorage.setItem("savedLocation",JSON.stringify(nextLoc));}catch(e){}const autoSys=detectStateMonthSystem(nextLoc);if(autoSys){setSettings(sPrev=>{if(sPrev.monthSystem===autoSys)return sPrev;const sNext={...sPrev,monthSystem:autoSys};try{localStorage.setItem("panchangSettings",JSON.stringify(sNext));}catch(e){}return sNext;});}return nextLoc;});};const onLocEv=(ev)=>applyExtLoc(ev&&ev.detail);const onStorageEv=(ev)=>{if(ev&&ev.key==="vaidik_universal_location"&&ev.newValue){try{applyExtLoc(JSON.parse(ev.newValue));}catch(e){}}};window.addEventListener("vaidik-location-change",onLocEv);window.addEventListener("storage",onStorageEv);return()=>{window.removeEventListener("vaidik-location-change",onLocEv);window.removeEventListener("storage",onStorageEv);};},[]);ki.useEffect(()=>{if(!anyModalOpen)return;const hEl=document.documentElement,bEl=document.body,prevH=hEl.style.overflow,prevB=bEl.style.overflow;hEl.style.overflow="hidden";bEl.style.overflow="hidden";hEl.classList.add("modal-open-perf");bEl.classList.add("modal-open-perf");return()=>{hEl.style.overflow=prevH;bEl.style.overflow=prevB;hEl.classList.remove("modal-open-perf");bEl.classList.remove("modal-open-perf");};},[anyModalOpen]);const timeFmt=settings?.timeFormat||"12h",ayanSys=settings?.ayanamsha||"lahiri";window.currentTimeFormat=timeFmt;window.selectedAyanamsha=ayanSys;window.dayStartRule="sunrise";window.getCurrentPanchangLang=()=>currentLang;ki.useEffect(()=>{try{localStorage.setItem("panchangAppLang",currentLang);}catch(e){}try{const url=new URL(window.location.href);const fullLangName=urlLangMap[currentLang]||currentLang;url.searchParams.set("lang",fullLangName);window.history.replaceState({},"",url);}catch(e){}fetchLocalizedParagraphs(currentLang);window.dispatchEvent(new CustomEvent("panchangLanguageChanged",{detail:{lang:currentLang}}));if(window.translatePanchangDOM){window.translatePanchangDOM(currentLang);}},[currentLang]);ki.useEffect(()=>{if(window.translatePanchangDOM && currentLang!=="en"){const tid=setTimeout(()=>window.translatePanchangDOM(currentLang),60);return()=>clearTimeout(tid);}},[b,r,activeTab,loc,currentLang]);ki.useEffect(()=>{const q=computePanchangCached(r,loc,timeFmt,ayanSys);o(q);let idleId=null,idleTimer=null,cancelled=!1;const prefetch=()=>{if(cancelled||document.hidden)return;try{const dNext=new Date(r.getTime());dNext.setDate(dNext.getDate()+1);computePanchangCached(dNext,loc,timeFmt,ayanSys);const dPrev=new Date(r.getTime());dPrev.setDate(dPrev.getDate()-1);computePanchangCached(dPrev,loc,timeFmt,ayanSys);}catch(e){}};idleTimer=setTimeout(()=>{if(typeof window.requestIdleCallback==="function"){idleId=window.requestIdleCallback(prefetch,{timeout:1500});}else{prefetch();}},500);return()=>{cancelled=!0;clearTimeout(idleTimer);if(idleId!==null&&typeof window.cancelIdleCallback==="function")window.cancelIdleCallback(idleId);};},[r,loc,timeFmt,ayanSys]);const H=()=>{const z=new Date(r);z.setDate(z.getDate()-1),h(z);},U=()=>{const z=new Date(r);z.setDate(z.getDate()+1),h(z);},O=z=>{if(z.target.value){const[q,V,Q]=z.target.value.split("-").map(Number);h(new Date(q,V-1,Q));}},S=z=>{const q=z.getFullYear(),V=String(z.getMonth()+1).padStart(2,"0"),Q=String(z.getDate()).padStart(2,"0");return`${q}-${V}-${Q}`;},openCalendarPicker=()=>{if(dateInputRef.current){try{if(typeof dateInputRef.current.showPicker==="function"){dateInputRef.current.showPicker();}else{dateInputRef.current.focus();dateInputRef.current.click();}}catch(e){dateInputRef.current.focus();dateInputRef.current.click();}}},getDayName=z=>z.toLocaleDateString("en-US",{weekday:"long",timeZone:(window.currentTz||"Asia/Kolkata")}),getDateStr=z=>z.toLocaleDateString("en-US",{month:"long",day:"numeric",year:"numeric",timeZone:(window.currentTz||"Asia/Kolkata")});
+const mx={latitude:28.6139,longitude:77.2090},DivyaDrishtiApp=()=>{const[loc,setLoc]=ki.useState(()=>readUniversalVaidikLoc()),[showLocModal,setShowLocModal]=ki.useState(!1),[showSettingsModal,setShowSettingsModal]=ki.useState(!1),[show12MonthsModal,setShow12MonthsModal]=ki.useState(!1),[settings,setSettings]=ki.useState(()=>{let base={region:"all",newYear:"gudi_padwa",monthSystem:"purnimanta",timeFormat:"12h",ayanamsha:"lahiri"};try{const s=localStorage.getItem("panchangSettings");if(s)base=JSON.parse(s);}catch(e){}try{const u=JSON.parse(localStorage.getItem("vaidik_universal_location")||"null"),sv=JSON.parse(localStorage.getItem("savedLocation")||"null");const uLat=u?Number(u.latitude??u.lat):NaN,uLon=u?Number(u.longitude??u.lng):NaN;if(u&&Number.isFinite(uLat)&&Number.isFinite(uLon)&&(!sv||sv.name!==u.name||Math.abs(Number(sv.latitude)-uLat)>1e-4||Math.abs(Number(sv.longitude)-uLon)>1e-4)){const autoS=detectStateMonthSystem({latitude:uLat,longitude:uLon,name:u.name||""});if(autoS){base={...base,monthSystem:autoS};localStorage.setItem("panchangSettings",JSON.stringify(base));}localStorage.setItem("savedLocation",JSON.stringify({latitude:uLat,longitude:uLon,name:u.name||"",isAutoGPS:!!u.isAutoGPS}));}}catch(e){}return base;}),[r,h]=ki.useState(new Date()),[b,o]=ki.useState(()=>{try{if(typeof window.enhancePanchang==="function"&&typeof window.Astronomy!=="undefined"){return computePanchangCached(r,loc,settings?.timeFormat||"12h",settings?.ayanamsha||"lahiri");}}catch(e){}return null;}),[activeTab, setActiveTab]=ki.useState("Daily Panchang"),[currentLang, setCurrentLang]=ki.useState(()=>getInitialLang());const dateInputRef=ki.useRef(null);const handleOpen12Months=ki.useCallback(()=>setShow12MonthsModal(!0),[]);const anyModalOpen=showLocModal||showSettingsModal||show12MonthsModal;ki.useEffect(()=>{const applyExtLoc=(d)=>{if(!d)return;const lat=Number(d.latitude!==undefined?d.latitude:d.lat),lon=Number(d.longitude!==undefined?d.longitude:d.lng);if(!Number.isFinite(lat)||!Number.isFinite(lon))return;const newName=d.name||(d.city?(d.state?`${d.city}, ${d.state}`:d.city):`${lat.toFixed(2)}, ${lon.toFixed(2)}`);setLoc(prev=>{if(prev&&Math.abs(Number(prev.latitude)-lat)<1e-5&&Math.abs(Number(prev.longitude)-lon)<1e-5&&prev.name===newName)return prev;const nextLoc={latitude:lat,longitude:lon,name:newName};try{localStorage.setItem("savedLocation",JSON.stringify({...nextLoc,isAutoGPS:!!d.isAutoGPS}));}catch(e){}const autoSys=detectStateMonthSystem(nextLoc);if(autoSys){setSettings(sPrev=>{if(sPrev.monthSystem===autoSys)return sPrev;const sNext={...sPrev,monthSystem:autoSys};try{localStorage.setItem("panchangSettings",JSON.stringify(sNext));}catch(e){}return sNext;});}return nextLoc;});};if(window.VaidikLocation&&typeof window.VaidikLocation.onChange==="function"){return window.VaidikLocation.onChange(applyExtLoc);}const onLocEv=(ev)=>applyExtLoc(ev&&ev.detail);const onStorageEv=(ev)=>{if(ev&&ev.key==="vaidik_universal_location"&&ev.newValue){try{applyExtLoc(JSON.parse(ev.newValue));}catch(e){}}};window.addEventListener("vaidik-location-change",onLocEv);window.addEventListener("storage",onStorageEv);return()=>{window.removeEventListener("vaidik-location-change",onLocEv);window.removeEventListener("storage",onStorageEv);};},[]);ki.useEffect(()=>{if(!anyModalOpen)return;const hEl=document.documentElement,bEl=document.body,prevH=hEl.style.overflow,prevB=bEl.style.overflow;hEl.style.overflow="hidden";bEl.style.overflow="hidden";hEl.classList.add("modal-open-perf");bEl.classList.add("modal-open-perf");return()=>{hEl.style.overflow=prevH;bEl.style.overflow=prevB;hEl.classList.remove("modal-open-perf");bEl.classList.remove("modal-open-perf");};},[anyModalOpen]);const timeFmt=settings?.timeFormat||"12h",ayanSys=settings?.ayanamsha||"lahiri";window.currentTimeFormat=timeFmt;window.selectedAyanamsha=ayanSys;window.dayStartRule="sunrise";window.getCurrentPanchangLang=()=>currentLang;ki.useEffect(()=>{try{localStorage.setItem("panchangAppLang",currentLang);}catch(e){}try{const url=new URL(window.location.href);const fullLangName=urlLangMap[currentLang]||currentLang;url.searchParams.set("lang",fullLangName);window.history.replaceState({},"",url);}catch(e){}fetchLocalizedParagraphs(currentLang);window.dispatchEvent(new CustomEvent("panchangLanguageChanged",{detail:{lang:currentLang}}));if(window.translatePanchangDOM){window.translatePanchangDOM(currentLang);}},[currentLang]);ki.useEffect(()=>{if(window.translatePanchangDOM && currentLang!=="en"){const tid=setTimeout(()=>window.translatePanchangDOM(currentLang),60);return()=>clearTimeout(tid);}},[b,r,activeTab,loc,currentLang]);ki.useEffect(()=>{const q=computePanchangCached(r,loc,timeFmt,ayanSys);o(q);let idleId=null,idleTimer=null,cancelled=!1;const prefetch=()=>{if(cancelled||document.hidden)return;try{const dNext=new Date(r.getTime());dNext.setDate(dNext.getDate()+1);computePanchangCached(dNext,loc,timeFmt,ayanSys);const dPrev=new Date(r.getTime());dPrev.setDate(dPrev.getDate()-1);computePanchangCached(dPrev,loc,timeFmt,ayanSys);}catch(e){}};idleTimer=setTimeout(()=>{if(typeof window.requestIdleCallback==="function"){idleId=window.requestIdleCallback(prefetch,{timeout:1500});}else{prefetch();}},500);return()=>{cancelled=!0;clearTimeout(idleTimer);if(idleId!==null&&typeof window.cancelIdleCallback==="function")window.cancelIdleCallback(idleId);};},[r,loc,timeFmt,ayanSys]);const H=()=>{const z=new Date(r);z.setDate(z.getDate()-1),h(z);},U=()=>{const z=new Date(r);z.setDate(z.getDate()+1),h(z);},O=z=>{if(z.target.value){const[q,V,Q]=z.target.value.split("-").map(Number);h(new Date(q,V-1,Q));}},S=z=>{const q=z.getFullYear(),V=String(z.getMonth()+1).padStart(2,"0"),Q=String(z.getDate()).padStart(2,"0");return`${q}-${V}-${Q}`;},openCalendarPicker=()=>{if(dateInputRef.current){try{if(typeof dateInputRef.current.showPicker==="function"){dateInputRef.current.showPicker();}else{dateInputRef.current.focus();dateInputRef.current.click();}}catch(e){dateInputRef.current.focus();dateInputRef.current.click();}}},getDayName=z=>z.toLocaleDateString("en-US",{weekday:"long",timeZone:(window.currentTz||"Asia/Kolkata")}),getDateStr=z=>z.toLocaleDateString("en-US",{month:"long",day:"numeric",year:"numeric",timeZone:(window.currentTz||"Asia/Kolkata")});
 
 const weekDays = ki.useMemo(() => {
   const start = new Date(r);
