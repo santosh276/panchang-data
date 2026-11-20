@@ -1,9 +1,9 @@
-/* --- Universal Lifecycle & Root ID Shim --- */
+/* --- Universal Lifecycle, Root ID & Location SDK Shim --- */
 (function(){
   var _origById = document.getElementById.bind(document);
   document.getElementById = function(id){
     var el = _origById(id);
-    if(!el && (id === "root" || id === "app" || id === "blogger-app-widget-root")) return _origById("widget-festival-app");
+    if(!el && (id === "root" || id === "app" || id === "blogger-app-widget-root")) return _origById("widget-festival-app") || document.querySelector('[id^="widget-"]');
     return el;
   };
   var _origDocAdd = document.addEventListener.bind(document);
@@ -16,6 +16,20 @@
     if(type === "load" && document.readyState === "complete"){ setTimeout(fn, 20); return; }
     return _origWinAdd(type, fn, opts);
   };
+  if(!window.VaidikLocation){
+    window.VaidikLocation = {
+      get: function(){ try{ return JSON.parse(localStorage.getItem("vaidik_universal_location") || "null"); }catch(e){ return null; } },
+      set: function(obj){
+        if(!obj) return;
+        var lat = Number(obj.lat !== undefined ? obj.lat : obj.latitude), lng = Number(obj.lng !== undefined ? obj.lng : obj.longitude);
+        if(isNaN(lat) || isNaN(lng)) return;
+        var payload = { lat: lat, lng: lng, latitude: lat, longitude: lng, name: obj.name || (obj.city ? obj.city + (obj.state ? ", " + obj.state : "") : lat.toFixed(2) + ", " + lng.toFixed(2)), city: obj.city || "", state: obj.state || "", country: obj.country || "India", updatedAt: Date.now() };
+        try{ localStorage.setItem("vaidik_universal_location", JSON.stringify(payload)); }catch(e){}
+        window.dispatchEvent(new CustomEvent("vaidik-location-change", { detail: payload }));
+      },
+      onChange: function(cb){ if(typeof cb === "function") window.addEventListener("vaidik-location-change", function(ev){ if(ev && ev.detail) cb(ev.detail); }); }
+    };
+  }
 })();
 
 /* --- Engine Script 2 --- */
@@ -2861,22 +2875,36 @@ const getTBInfo=(c)=>{const m={1:{name:"Janma",desc:"Not Good",status:"Bad"},2:{
 fe.detailedTarabalam={currentNakshatra:Wi[wa],nextNakshatra:(Qt&&Qt<U)?Wi[(wa+1)%27]:null,transitTime:(Qt&&Qt<U)?V(Qt).replace("upto ",""):null,nakshatras:Wi.map((nakName,idx)=>{let c1=((wa-idx+27)%27)+1;let t1=c1%9;if(t1===0)t1=9;let res={name:nakName,current:{count:t1,info:getTBInfo(t1)},next:null};if(Qt&&Qt<U){let c2=(((wa+1)%27-idx+27)%27)+1;let t2=c2%9;if(t2===0)t2=9;res.next={count:t2,info:getTBInfo(t2)};}return res;})};
 const Rl={lagnas:[],panchaka:[]};if(A&&U){const X=[];let w=ge(A);const ca=ge(U),ba=$a=>M0($a,h.latitude,h.longitude),Xa=ba(w);let Ka=Math.floor(Xa/30),Xt=A;let wB=w;for(let i=0;i<20;i++){wB-=15/1440;if(Math.floor(ba(wB)/30)!==Ka%12){Xt=xa(((O,I,le)=>{for(let ci=0;ci<20;ci++){const M=(O+I)/2;Math.floor(ba(M)/30)===le?I=M:O=M;}return I;})(wB,wB+15/1440,Ka%12));break;}}for(;w<ca;){let $a=w,ot=!1;for(let Me=0;Me<12;Me++){$a+=15/1440;const Ae=ba($a);if(Math.floor(Ae/30)!==Ka%12){ot=!0;break;}}let st=ca;ot&&(st=((Ae,Ot,le)=>{let Ie=Ae,Cl=Ot;for(let ci=0;ci<20;ci++){const Yl=(Ie+Cl)/2,Bl=ba(Yl);Math.floor(Bl/30)===le?Ie=Yl:Cl=Yl;}return Cl;})(w,$a,Ka%12)),st>ca&&(st=ca);const Kt=xa(st);if(X.push({sign:Le[Ka%12],startTime:Xt,endTime:Kt,timeRange:Q(Xt,Kt)}),Xt=Kt,w=st+1e-4,Ka++,w>=ca)break;}Rl.lagnas=X;const Ca=new Set();Ca.add(ge(A)),Ca.add(ge(U)),X.forEach($a=>Ca.add(ge($a.endTime))),ga>ge(A)&&ga<ca&&Ca.add(ga);const ee=Rr(ga+.1,ua+2);ee<ca&&Ca.add(ee),La>ge(A)&&La<ca&&Ca.add(La);const _t=Hr(La+.1,Ma,wa+2);_t<ca&&Ca.add(_t);const Zt=Array.from(Ca).sort(($a,ot)=>$a-ot),Fe=[],Hl=Da+1;for(let $a=0;$a<Zt.length-1;$a++){const ot=Zt[$a],st=Zt[$a+1];if(st<=ot+1e-5)continue;const Kt=(ot+st)/2,Me=W(Kt),Ae=Math.floor(Me)+1,Ot=Ma(Kt),le=Math.floor(Ot)+1,Ie=M0(Kt,h.latitude,h.longitude),Cl=Math.floor(Ie/30)+1,Yl=(Ae+Hl+le+Cl)%9;let Bl="Bad",Ut="Good Muhurta",key="shubha";switch(Yl){case 1:Ut="Mrityu Panchaka";key="mrityu";break;case 2:Ut="Agni Panchaka";key="agni";break;case 4:Ut="Raja Panchaka";key="raja";break;case 6:Ut="Chora Panchaka";key="chora";break;case 8:Ut="Roga Panchaka";key="roga";break;default:Ut="Good Muhurta";Bl="Good";key="shubha";}const lagnaName=Le[(Cl-1)%12];const matchingLagna=X.find(l=>l.sign===lagnaName);const lagnaPreStart=(matchingLagna&&matchingLagna.startTime<A)?matchingLagna.startTime:null;const hs=xa(ot),xs=xa(st);const Pe=Fe[Fe.length-1];if(Pe&&Pe.key===key&&Pe.lagna===lagnaName){Pe.endTime=xs;Pe.timeRange=Q(Pe.startTime,xs);}else{Fe.push({name:Ut,key:key,type:Bl,lagna:lagnaName,lagnaIdx:Cl,tithiIdx:Ae,tithiName:E0[(Ae-1)%30],varaIdx:Hl,nakIdx:le,nakName:Wi[(le-1)%27],sum:Ae+Hl+le+Cl,rem:Yl,startTime:hs,endTime:xs,timeRange:Q(hs,xs),preStart:lagnaPreStart});}}Rl.panchaka=Fe;}return{date:r,location:h,sunrise:nt(A),sunset:nt(T),moonrise:O?window.formatMoonTime(O,b):"No Rise",moonset:S?window.formatMoonTime(S,b):"No Set",tithi:{name:Wa,number:ua+1,paksha:pa,endTime:Ta,endTimeStr:V(Ta),description:pa==="Shukla"?"Waxing Moon":"Waning Moon",next:{name:Ra}},nakshatra:{name:Nl,number:wa+1,ruler:["Ketu","Venus","Sun","Moon","Mars","Rahu","Jupiter","Saturn","Mercury"][wa%9],endTime:xa(La),endTimeStr:V(xa(La)),next:{name:Qn}},yoga:{name:Xn,number:Xe+1,meaning:"Yoga",endTime:xa(Fi),endTimeStr:V(xa(Fi)),next:{name:Ii}},karana:{name:Pi.name,number:Ze+1,type:Pi.type,endTime:Pl[0].endTime,endTimeStr:Pl[0].endTimeStr,next:{name:ju.name},sequence:Pl},sunSign:{western:Le[Math.floor(q.sun/30)],indian:Le[Ke],longitude:parseFloat(q.sun.toFixed(2))},moonSign:{western:Le[Math.floor(q.moon/30)],indian:Le[ft],longitude:parseFloat(q.moon.toFixed(2))},ayana:ns,ritu:sn,vikramSamvat:et,shakaSamvat:Ha,amantaMonth:Ba,purnimantaMonth:za,weekday:ax[Da],choghadiya:li,hora:horaData,gowri:gowriData,muhurats:{rahuKaal:`${nt(Ga)} - ${nt(it)}`,yamagandam:`${nt(te)} - ${nt(Dl)}`,gulika:`${nt(un)} - ${nt($n)}`,abhijit:`${nt(cn)} - ${nt(pe)}`,dushtaMuhurta:El},samvatDetails:{vikram:{year:et,name:M},shaka:{year:Ha,name:B},gujarati:{year:N,name:C},samvatsara:{name:M,nextName:R,endTimeStr:`upto ${V(rt).replace("upto ","")}`},chandramasa:{purnimanta:`${za} - Purnimanta`,amanta:`${Ba} - Amanta`},pravishte:yt},rashiNakshatra:{moonSign:{name:Le[ft],endTimeStr:V(qt),nextName:Le[(ft+1)%12]},sunSign:Le[Ke],suryaNakshatra:{name:en,pada:ye},nakshatraPadas:Ml},rituAyana:{drikRitu:sn,vedicRitu:Jn,drikAyana:ns,vedicAyana:is,dinamana:kn,ratrimana:Wn,madhyahna:H?nt(H):"--:--"},auspiciousTimings:{brahmaMuhurta:Q(be,ce),pratahSandhya:Q(We,Se),abhijit:Q(cn,pe),vijayaMuhurta:Q(Qa,Fn),godhuliMuhurta:Q(In,re),sayahnaSandhya:Q(Ne,ss),amritKalam:"--:-- to --:--",nishitaMuhurta:Q(Pn,ai),},inauspiciousTimings:{rahuKalam:Q(Ga,it),yamaganda:Q(te,Dl),gulikaiKalam:Q(un,$n),varjyam:zl,aadalYoga:`${nt(A)} to ${V(xa(La)).replace("upto ","")}`,vidaalYoga:`${V(xa(La)).replace("upto ","")} to ${nt(U)}`,baana:`Raja upto ${V(xa(La)).replace("upto ","")}`},anandadiTamil:{anandadiYoga:{name:_l.name,status:_l.status,endTimeStr:V(xa(La)),nextName:Vt.name,nextStatus:Vt.status},tamilYoga:{name:Nt,endTimeStr:V(xa(La)),nextName:us},jeevanama:Eu,netrama:ei},nivasShool:{homahuti:{current:ui,next:rn,endTimeStr:V(xa(La))},agnivasa:{location:Ol.location,description:Ol.description,endTimeStr:V(Ta)},shivavasa:{current:cs.location,next:jt.location,description:cs.description,endTimeStr:V(Ta)},dishaShool:fs,chandraVasa:{current:ni,next:je,endTimeStr:ii},rahuVasa:$e,kumbhaChakra:{current:on.location,next:Te.location,currentStatus:on.status,nextStatus:Te.status,endTimeStr:V(xa(La))}},otherEpochs:ct,taraChandra:fe,panchakaLagna:Rl,significantEvents:zt,auspiciousness:75};},
 
-ActiveTimer = ({ render }) => {
-    const [currentTime, setCurrentTime] = ki.useState(new Date());
+getFastTzNow = () => {
+    const tz = window.currentTz || "Asia/Kolkata";
+    const nowMs = Date.now();
+    const cache = window.__tzOffsetCache;
+    if (!cache || cache.tz !== tz || (nowMs - cache.ts) > 300000) {
+        const localNow = new Date(new Date(nowMs).toLocaleString("en-US", { timeZone: tz }));
+        window.__tzOffsetCache = { tz, ts: nowMs, delta: localNow.getTime() - nowMs };
+        return localNow;
+    }
+    return new Date(nowMs + cache.delta);
+},
+
+ActiveTimer = ({ render, intervalMs = 15000 }) => {
+    const [currentTime, setCurrentTime] = ki.useState(() => new Date());
     ki.useEffect(() => {
-        const timer = setInterval(() => setCurrentTime(new Date()), 1000);
+        const timer = setInterval(() => {
+            if (!document.hidden) setCurrentTime(new Date());
+        }, intervalMs);
         return () => clearInterval(timer);
-    }, []);
+    }, [intervalMs]);
     return render(currentTime);
 },
 
 GowriPanels = ({data: r}) => {
-    const [currentTime, setCurrentTime] = ki.useState(() => new Date(new Date().toLocaleString('en-US', { timeZone: window.currentTz || 'Asia/Kolkata' })));
+    const [currentTime, setCurrentTime] = ki.useState(() => getFastTzNow());
     
     ki.useEffect(() => {
         const timer = setInterval(() => {
-            setCurrentTime(new Date(new Date().toLocaleString('en-US', { timeZone: window.currentTz || 'Asia/Kolkata' })));
-        }, 1000);
+            if (!document.hidden) setCurrentTime(getFastTzNow());
+        }, 15000);
         return () => clearInterval(timer);
     }, []);
 
@@ -3071,12 +3099,12 @@ GowriPanels = ({data: r}) => {
 },
 
 HoraPanels = ({data: r}) => {
-    const [currentTime, setCurrentTime] = ki.useState(() => new Date(new Date().toLocaleString('en-US', { timeZone: window.currentTz || 'Asia/Kolkata' })));
+    const [currentTime, setCurrentTime] = ki.useState(() => getFastTzNow());
     
     ki.useEffect(() => {
         const timer = setInterval(() => {
-            setCurrentTime(new Date(new Date().toLocaleString('en-US', { timeZone: window.currentTz || 'Asia/Kolkata' })));
-        }, 1000);
+            if (!document.hidden) setCurrentTime(getFastTzNow());
+        }, 15000);
         return () => clearInterval(timer);
     }, []);
 
@@ -3358,10 +3386,10 @@ ashtaKaalaMeta = {
 },
 
 AshtaKaalaPanels = ({ data: r }) => {
-    const [currentTime, setCurrentTime] = ki.useState(() => new Date(new Date().toLocaleString('en-US', { timeZone: window.currentTz || 'Asia/Kolkata' })));
+    const [currentTime, setCurrentTime] = ki.useState(() => getFastTzNow());
     const [kaalaFilter, setKaalaFilter] = ki.useState("all");
     ki.useEffect(() => {
-        const timer = setInterval(() => setCurrentTime(new Date(new Date().toLocaleString('en-US', { timeZone: window.currentTz || 'Asia/Kolkata' }))), 1000);
+        const timer = setInterval(() => { if (!document.hidden) setCurrentTime(getFastTzNow()); }, 1000);
         return () => clearInterval(timer);
     }, []);
 
@@ -3611,26 +3639,32 @@ AshtaKaalaPanels = ({ data: r }) => {
 },
 
 ChoghadiyaPlanner = ({slots: r}) => {
-    const [currentTime, setCurrentTime] = ki.useState(() => new Date(new Date().toLocaleString('en-US', { timeZone: window.currentTz || 'Asia/Kolkata' })));
+    const [currentTime, setCurrentTime] = ki.useState(() => getFastTzNow());
 
     ki.useEffect(() => {
         const timer = setInterval(() => {
-            setCurrentTime(new Date(new Date().toLocaleString('en-US', { timeZone: window.currentTz || 'Asia/Kolkata' })));
+            if (!document.hidden) setCurrentTime(getFastTzNow());
         }, 1000);
         return () => clearInterval(timer);
     }, []);
 
+    const sunHM = ki.useMemo(() => {
+        const daySlot0 = r && r[0];
+        const daySlot7 = r && r[7];
+        if (!window.parseTimeUniversal) return null;
+        const refD = new Date();
+        const srP = window.parseTimeUniversal(daySlot0?.startTime, refD);
+        const ssP = window.parseTimeUniversal(daySlot7?.endTime, refD);
+        if (!srP || !ssP) return null;
+        return { srH: srP.getHours(), srM: srP.getMinutes(), ssH: ssP.getHours(), ssM: ssP.getMinutes() };
+    }, [r]);
+
     // Exact Solar Day/Night Determination & Mathematical Active Choghadiya
     const { isDaytime, activeDayChogIdx, activeNightChogIdx, slotElapsedPct, slotRemainingStr } = ki.useMemo(() => {
         try {
-            // Read sunrise and sunset from the slots sequence (Slot 0 start is sunrise, Slot 7 end is sunset)
-            const daySlot0 = r && r[0];
-            const daySlot7 = r && r[7];
-
-            const parseT = (tStr, refD) => window.parseTimeUniversal ? window.parseTimeUniversal(tStr, refD) : null;
-            let sr = parseT(daySlot0?.startTime, currentTime);
-            let ss = parseT(daySlot7?.endTime, currentTime);
-            if (!sr || !ss) return { isDaytime: true, activeDayChogIdx: 0, activeNightChogIdx: -1, slotElapsedPct: 0, slotRemainingStr: "" };
+            if (!sunHM) return { isDaytime: true, activeDayChogIdx: 0, activeNightChogIdx: -1, slotElapsedPct: 0, slotRemainingStr: "" };
+            let sr = new Date(currentTime.getFullYear(), currentTime.getMonth(), currentTime.getDate(), sunHM.srH, sunHM.srM, 0, 0);
+            let ss = new Date(currentTime.getFullYear(), currentTime.getMonth(), currentTime.getDate(), sunHM.ssH, sunHM.ssM, 0, 0);
 
             if (ss <= sr) ss.setDate(ss.getDate() + 1);
 
@@ -3793,11 +3827,14 @@ ChoghadiyaPlanner = ({slots: r}) => {
 
                     let pct = 0;
                     let timeLeftNode = null;
-                    const parseT = (tStr, refD) => window.parseTimeUniversal ? window.parseTimeUniversal(tStr, refD) : null;
-                    let chStart = parseT(ch.startTime, currentTime);
-                    let chEnd = parseT(ch.endTime, currentTime);
-                    if (chStart && chEnd && chEnd <= chStart) {
-                        chEnd = new Date(chEnd.getTime() + 24 * 60 * 60 * 1000);
+                    let chStart = null;
+                    let chEnd = null;
+                    if (isActive && window.parseTimeUniversal) {
+                        chStart = window.parseTimeUniversal(ch.startTime, currentTime);
+                        chEnd = window.parseTimeUniversal(ch.endTime, currentTime);
+                        if (chStart && chEnd && chEnd <= chStart) {
+                            chEnd = new Date(chEnd.getTime() + 24 * 60 * 60 * 1000);
+                        }
                     }
 
                     if (isActive && chStart && chEnd) {
@@ -4485,7 +4522,7 @@ const RashiNakshatraTab = ({data: r}) => {
         const color = houseColors[house];
         const isKendra = [1, 4, 7, 10].includes(house);
         svg += `<path id="chart-house-${house}" class="house-section interactable-house house-${house} ${isKendra ? 'chart-kendra-cell' : 'chart-house-cell'}" onclick="window.kundaliSelectHouse(${house})" onmouseenter="window.kundaliHouseHover(event, ${house})" onmousemove="window.kundaliMoveTooltip(event)" onmouseleave="window.kundaliHideTooltip()" d="${housePaths[house]}" 
-          fill="${color}" stroke="none" data-house="${house}" filter="url(#houseShadow_${containerId})"/>`;
+          fill="${color}" stroke="none" data-house="${house}"/>`;
       }
 
       svg += `
@@ -4553,7 +4590,7 @@ const RashiNakshatraTab = ({data: r}) => {
         const iconPos = iconCenters[house];
 
         svg += `<text class="chart-sign-num" x="${numPos.x}" y="${numPos.y + 6 * textScale}" text-anchor="middle" 
-                      style="fill: #2C1810; font-weight: 800; font-size: ${16 * textScale}px; font-family: 'Outfit', sans-serif;" filter="url(#textShadow_${containerId})">
+                      style="fill: #2C1810; font-weight: 800; font-size: ${16 * textScale}px; font-family: 'Outfit', sans-serif;">
                       ${sign}
                 </text>`;
         
@@ -4654,7 +4691,7 @@ const RashiNakshatraTab = ({data: r}) => {
         const houseNum = ((sign - effectiveLagna + 12) % 12) + 1;
 
         svg += `<rect id="chart-house-${houseNum}" class="house-section interactable-house house-${houseNum} chart-house-cell" onclick="window.kundaliSelectHouse(${houseNum})" onmouseenter="window.kundaliHouseHover(event, ${houseNum})" onmousemove="window.kundaliMoveTooltip(event)" onmouseleave="window.kundaliHideTooltip()" x="${x}" y="${y}" width="${gridSize}" height="${gridSize}" 
-                fill="${color}" stroke="url(#redBorderGrad_${containerId})" stroke-width="2.5" filter="url(#cellShadow_${containerId})"/>`;
+                fill="${color}" stroke="url(#redBorderGrad_${containerId})" stroke-width="2.5"/>`;
       }
 
       const centerX = padding + gridSize;
@@ -6086,13 +6123,13 @@ const ClassicTimingsTables = ki.memo(({ data: r, filterCategory = 'all' }) => {
 });
 
 const DetailedTimingsPanels = ({data: r}) => {
-    const [currentTime, setCurrentTime] = ki.useState(() => new Date(new Date().toLocaleString('en-US', { timeZone: window.currentTz || 'Asia/Kolkata' })));
+    const [currentTime, setCurrentTime] = ki.useState(() => getFastTzNow());
     const [filterCategory, setFilterCategory] = ki.useState('all');
 
     ki.useEffect(() => {
         const timer = setInterval(() => {
-            setCurrentTime(new Date(new Date().toLocaleString('en-US', { timeZone: window.currentTz || 'Asia/Kolkata' })));
-        }, 1000);
+            if (!document.hidden) setCurrentTime(getFastTzNow());
+        }, 15000);
         return () => clearInterval(timer);
     }, []);
 
@@ -6645,14 +6682,13 @@ const DirIcon = ({ dir, className }) => {
             borderRadius: "9px",
             background: bg,
             border: `1px solid ${border}`,
-            flexShrink: 0,
-            boxShadow: `0 3px 6px -1px ${shadowColor}, inset 0 1.5px 1.5px rgba(255,255,255,0.9)`
+            flexShrink: 0
         },
         children: s.jsxs("svg", {
             viewBox: "0 0 24 24",
             width: "16px",
             height: "16px",
-            style: { transform: `rotate(${deg}deg)`, transition: "transform 0.25s ease", filter: "drop-shadow(0 2px 2px rgba(0,0,0,0.15))" },
+            style: { transform: `rotate(${deg}deg)` },
             children: [
                 s.jsx("path", { d: "M12 2L4.5 11.5H9.5V22H12V2Z", fill: colorTop }),
                 s.jsx("path", { d: "M12 2L19.5 11.5H14.5V22H12V2Z", fill: colorRight }),
@@ -6685,21 +6721,20 @@ const PlanetIcon = ({ planet }) => {
             borderRadius: "9px",
             background: c.bg,
             border: `1px solid ${c.border}`,
-            flexShrink: 0,
-            boxShadow: "0 3px 6px -1px rgba(0,0,0,0.06), inset 0 1.5px 1.5px rgba(255,255,255,0.9)"
+            flexShrink: 0
         },
         children: s.jsxs("svg", {
             viewBox: "0 0 24 24",
             width: "20px",
             height: "20px",
-            style: { overflow: "visible", filter: "drop-shadow(0 2px 3px rgba(0,0,0,0.18))" },
+            style: { overflow: "visible" },
             children: [
                 c.hasRing && s.jsx("ellipse", { cx: "12", cy: "12", rx: "11", ry: "3.5", fill: "none", stroke: "#F59E0B", strokeWidth: "1.6", transform: "rotate(-25 12 12)", opacity: "0.85" }),
                 s.jsx("circle", { cx: "12", cy: "12", r: "8.5", fill: c.g2 }),
                 s.jsx("circle", { cx: "9.5", cy: "9.5", r: "5.5", fill: c.g1, opacity: "0.55" }),
                 s.jsx("path", { d: "M4.5 14.5 C6 18.5, 12 20.5, 17.5 17.5 C15 19.5, 9 20, 4.5 14.5 Z", fill: c.g3, opacity: "0.75" }),
                 c.hasRing && s.jsx("path", { d: "M2 13 A11 3.5 0 0 0 22 11", fill: "none", stroke: "#F59E0B", strokeWidth: "1.6", transform: "rotate(-25 12 12)" }),
-                s.jsx("text", { x: "12", y: "15.5", textAnchor: "middle", style: { fill: "#FFFFFF", fontSize: "11px", fontWeight: "900", fontFamily: "sans-serif", filter: "drop-shadow(0 1px 1px rgba(0,0,0,0.4))" }, children: c.sym })
+                s.jsx("text", { x: "12", y: "15.5", textAnchor: "middle", style: { fill: "#FFFFFF", fontSize: "11px", fontWeight: "900", fontFamily: "sans-serif" }, children: c.sym })
             ]
         })
     });
@@ -6717,14 +6752,12 @@ const RealmIcon = ({ realm }) => {
                 borderRadius: "9px",
                 background: "linear-gradient(135deg, #F0F9FF 0%, #E0F2FE 100%)",
                 border: "1px solid rgba(2,132,199,0.3)",
-                flexShrink: 0,
-                boxShadow: "0 3px 6px -1px rgba(2,132,199,0.18), inset 0 1.5px 1.5px rgba(255,255,255,0.9)"
+                flexShrink: 0
             },
             children: s.jsxs("svg", {
                 viewBox: "0 0 28 28",
                 width: "22px",
                 height: "22px",
-                style: { filter: "drop-shadow(0 2px 4px rgba(2,132,199,0.22))" },
                 children: [
                     s.jsx("circle", { cx: "18", cy: "9", r: "5.5", fill: "#F59E0B" }),
                     s.jsx("circle", { cx: "17.2", cy: "8.2", r: "3.5", fill: "#FDE047" }),
@@ -6751,14 +6784,12 @@ const RealmIcon = ({ realm }) => {
                 borderRadius: "9px",
                 background: "linear-gradient(135deg, #FEF2F2 0%, #FEE2E2 100%)",
                 border: "1px solid rgba(220,38,38,0.3)",
-                flexShrink: 0,
-                boxShadow: "0 3px 6px -1px rgba(220,38,38,0.18), inset 0 1.5px 1.5px rgba(255,255,255,0.9)"
+                flexShrink: 0
             },
             children: s.jsxs("svg", {
                 viewBox: "0 0 28 28",
                 width: "22px",
                 height: "22px",
-                style: { filter: "drop-shadow(0 2px 4px rgba(220,38,38,0.22))" },
                 children: [
                     s.jsx("circle", { cx: "14", cy: "5", r: "2.5", fill: "#EF4444", opacity: "0.25" }),
                     s.jsx("circle", { cx: "14", cy: "5.5", r: "1.5", fill: "#FDE047" }),
@@ -6785,14 +6816,12 @@ const RealmIcon = ({ realm }) => {
             borderRadius: "9px",
             background: "linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%)",
             border: "1px solid rgba(5,150,105,0.3)",
-            flexShrink: 0,
-            boxShadow: "0 3px 6px -1px rgba(5,150,105,0.18), inset 0 1.5px 1.5px rgba(255,255,255,0.9)"
+            flexShrink: 0
         },
         children: s.jsxs("svg", {
             viewBox: "0 0 28 28",
             width: "22px",
             height: "22px",
-            style: { filter: "drop-shadow(0 2px 4px rgba(2,132,199,0.25))" },
             children: [
                 s.jsx("circle", { cx: "14", cy: "14", r: "10.5", fill: "#0284C7" }),
                 s.jsx("circle", { cx: "11.5", cy: "10", r: "8", fill: "#38BDF8", opacity: "0.45" }),
@@ -6816,14 +6845,12 @@ const ShivaIcon = () => s.jsx("span", {
         borderRadius: "9px",
         background: "linear-gradient(135deg, #FAF5FF 0%, #F3E8FF 100%)",
         border: "1px solid rgba(147,51,234,0.3)",
-        flexShrink: 0,
-        boxShadow: "0 3px 6px -1px rgba(147,51,234,0.18), inset 0 1.5px 1.5px rgba(255,255,255,0.9)"
+        flexShrink: 0
     },
     children: s.jsxs("svg", {
         viewBox: "0 0 28 28",
         width: "22px",
         height: "22px",
-        style: { filter: "drop-shadow(0 2px 3px rgba(147,51,234,0.25))" },
         children: [
             s.jsx("rect", { x: "6.5", y: "21.5", width: "15", height: "3", rx: "1", fill: "#D97706" }),
             s.jsx("path", { d: "M4 16.5C4 15.5 4.8 15.5 5.5 15.8L8 17H20C22 17 23.5 18 23.5 19.4C23.5 20.8 22 21.6 20 21.6H6C4.5 21.6 4 20.4 4 19Z", fill: "#2E1065" }),
@@ -6849,14 +6876,12 @@ const KumbhaStatusBadge = ({ isGood }) => s.jsx("span", {
         borderRadius: "9px",
         background: isGood ? "linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%)" : "linear-gradient(135deg, #FEF2F2 0%, #FEE2E2 100%)",
         border: `1px solid ${isGood ? "rgba(16,185,129,0.3)" : "rgba(239,68,68,0.3)"}`,
-        flexShrink: 0,
-        boxShadow: `0 3px 6px -1px ${isGood ? "rgba(16,185,129,0.18)" : "rgba(239,68,68,0.18)"}, inset 0 1.5px 1.5px rgba(255,255,255,0.9)`
+        flexShrink: 0
     },
     children: isGood ? s.jsxs("svg", {
         viewBox: "0 0 24 24",
         width: "20px",
         height: "20px",
-        style: { filter: "drop-shadow(0 2px 3px rgba(16,185,129,0.3))" },
         children: [
             s.jsx("circle", { cx: "12", cy: "12", r: "9.5", fill: "#10B981" }),
             s.jsx("circle", { cx: "9.5", cy: "9.5", r: "6", fill: "#34D399", opacity: "0.45" }),
@@ -6867,7 +6892,6 @@ const KumbhaStatusBadge = ({ isGood }) => s.jsx("span", {
         viewBox: "0 0 24 24",
         width: "20px",
         height: "20px",
-        style: { filter: "drop-shadow(0 2px 3px rgba(239,68,68,0.3))" },
         children: [
             s.jsx("circle", { cx: "12", cy: "12", r: "9.5", fill: "#EF4444" }),
             s.jsx("circle", { cx: "9.5", cy: "9.5", r: "6", fill: "#F87171", opacity: "0.45" }),
@@ -6899,15 +6923,17 @@ const VedicClock = ({ data: r }) => {
     });
 
     ki.useEffect(() => {
-        const update = () => {
-            if (!r || !r.sunrise || !r.sunset) return;
-            const tz = window.currentTz || "Asia/Kolkata";
-            const realNow = new Date();
-            const now = new Date(realNow.toLocaleString("en-US", { timeZone: tz }));
+        if (!r || !r.sunrise || !r.sunset || !window.parseTimeUniversal) return;
+        const refSr = window.parseTimeUniversal(r.sunrise, new Date());
+        const refSs = window.parseTimeUniversal(r.sunset, new Date());
+        if (!refSr || !refSs) return;
+        const srH = refSr.getHours(), srM = refSr.getMinutes();
+        const ssH = refSs.getHours(), ssM = refSs.getMinutes();
 
-            let sr = window.parseTimeUniversal ? window.parseTimeUniversal(r.sunrise, now) : null;
-            let ss = window.parseTimeUniversal ? window.parseTimeUniversal(r.sunset, now) : null;
-            if (!sr || !ss) return;
+        const update = () => {
+            const now = getFastTzNow();
+            let sr = new Date(now.getFullYear(), now.getMonth(), now.getDate(), srH, srM, 0, 0);
+            let ss = new Date(now.getFullYear(), now.getMonth(), now.getDate(), ssH, ssM, 0, 0);
 
             if (ss <= sr) ss.setDate(ss.getDate() + 1);
 
@@ -7027,7 +7053,7 @@ const VedicClock = ({ data: r }) => {
         };
 
         update();
-        const timer = setInterval(update, 1000);
+        const timer = setInterval(() => { if (!document.hidden) update(); }, 1000);
         return () => clearInterval(timer);
     }, [r, ghatiMode]);
 
@@ -7352,7 +7378,7 @@ const STARS = [
     [166,42,0.3,'t2',1.9,1.4],[172,32,0.5,'t3',2.1,0.5],[178,22,0.4,'t4',2.4,0.8],[184,38,0.5,'t1',1.7,0.2],[190,28,0.3,'t3',2.8,1.0]
   ];
 
-const NightStarsLayer = () => {
+const NightStarsLayer = ki.memo(() => {
     let isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
     let rScale = isMobile ? 0.25 : 0.35;
     let flareScale = isMobile ? 0.65 : 0.9;
@@ -7382,16 +7408,27 @@ const NightStarsLayer = () => {
             })
         ]})
     ]});
-};
+});
 
 const DayNightCycleCard = ({ data: r }) => {
+    const cardRef = ki.useRef(null);
     const [cycleState, setCycleState] = ki.useState({ pct: 0, isDay: true, remTime: '-- Hours -- minutes -- seconds', hrs: '--', mins: '--', sec: '--', phaseLabel: 'Day', untilLabel: 'Sunset', pctStr: '--%', cx: 30, cy_val: 175, dayLength: '--', nightLength: '--' });
+
+    ki.useEffect(() => {
+        const el = cardRef.current;
+        if (!el || typeof IntersectionObserver === "undefined") return;
+        const obs = new IntersectionObserver((entries) => {
+            const vis = entries[0] && entries[0].isIntersecting;
+            el.classList.toggle("cycle-offscreen", !vis);
+        }, { rootMargin: "160px 0px" });
+        obs.observe(el);
+        return () => obs.disconnect();
+    }, []);
 
     ki.useEffect(() => {
         let interval;
         const updateCycle = () => {
-            const realNow = new Date();
-            const now = new Date(realNow.toLocaleString('en-US', { timeZone: window.currentTz || 'Asia/Kolkata' }));
+            const now = getFastTzNow();
             if (!r.sunrise || !r.sunset) return;
             
             const parseTimeStr = (tStr) => {
@@ -7452,15 +7489,16 @@ const angle = Math.PI + ((pct/100) * Math.PI);
             const arc_r = 130;
             const ix = arc_cx + arc_r * Math.cos(angle);
             const iy = arc_cy + arc_r * Math.sin(angle);
+            const nextPctStr = Math.floor(pct) + '%';
             
-            setCycleState({
+            setCycleState(prev => (prev.hrs === hrs && prev.mins === mins && prev.isDay === isDay && prev.pctStr === nextPctStr && prev.dayLength === dayLength && Math.abs(prev.pct - pct) < 0.25) ? prev : {
                 pct,
                 isDay,
                 remTime: `${hrs} Hours ${mins} minutes ${sec} seconds`,
                 hrs, mins, sec,
                 phaseLabel,
                 untilLabel,
-                pctStr: Math.floor(pct) + '%',
+                pctStr: nextPctStr,
                 cx: ix,
                 cy_val: iy,
                 dayLength,
@@ -7469,11 +7507,11 @@ const angle = Math.PI + ((pct/100) * Math.PI);
         };
         
         updateCycle();
-        interval = setInterval(updateCycle, 1000);
+        interval = setInterval(() => { if (!document.hidden) updateCycle(); }, 10000);
         return () => clearInterval(interval);
     }, [r])
 
-    return s.jsx("div", { className: "panchang-element-211", style: { marginTop: "0px", marginBottom: "12px" }, children: 
+    return s.jsx("div", { ref: cardRef, className: "panchang-element-211", style: { marginTop: "0px", marginBottom: "12px" }, children: 
             s.jsxs("div", { className: "panchang-element-212 cycle-card", style: { background: "#020617", boxShadow: "0 4px 12px rgba(0,0,0,0.05)" }, children: [
                 s.jsx("div", { className: "panchang-element-213", children: 
                     s.jsxs("svg", { width: "100%", height: "100%", viewBox: "0 0 320 200", preserveAspectRatio: "xMidYMid slice", xmlns: "http://www.w3.org/2000/svg", children: [
@@ -8011,7 +8049,7 @@ const CurrentRituCard = ({ data: r }) => {
                 months: { or: "ଫାଲ୍ଗୁନ - ଚୈତ୍ର", hi: "फाल्गुन - चैत्र", en: "Phalguna - Chaitra", bn: "ফাল্গুন - চৈত্র", mr: "फाल्गुन - चैत्र", gu: "ફાગણ - ચૈત્ર", ta: "பங்குனி - சித்திரை", te: "ఫాల్గుణము - చైత్రము", kn: "ಫಾಲ್ಗುಣ - ಚೈತ್ರ", ml: "കുംഭം - മീനം", pa: "ਫੱਗਣ - ਚੇਤ", as: "ফাগুন - চ’ত" },
                 range: "MID-FEBRUARY TO MID-APRIL (18 FEB - 19 APR)",
                 color: "#F43F5E",
-                bgImage: "https://images.unsplash.com/photo-1522383225653-ed111181a951?auto=format&fit=crop&w=1200&q=80",
+                bgImage: "https://images.unsplash.com/photo-1522383225653-ed111181a951?auto=format&fit=crop&w=640&q=72",
                 icon: "🌸"
             },
             grishma: {
@@ -8019,7 +8057,7 @@ const CurrentRituCard = ({ data: r }) => {
                 months: { or: "ବୈଶାଖ - ଜ୍ୟୈଷ୍ଠ", hi: "वैशाख - ज्येष्ठ", en: "Vaishakha - Jyeshtha", bn: "বৈশাখ - জ্যৈষ্ঠ", mr: "वैशाख - ज्येष्ठ", gu: "વૈશાખ - જેઠ", ta: "வைகாசி - ஆனி", te: "వైశాఖము - జ్యేష్ఠము", kn: "ವೈಶಾಖ - ಜ್ಯೇಷ್ಠ", ml: "മേടം - ഇടവം", pa: "ਵੈਸਾਖ - ਜੇਠ", as: "ব’হাগ - জেଠ" },
                 range: "MID-APRIL TO MID-JUNE (20 APR - 21 JUN)",
                 color: "#F97316",
-                bgImage: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80",
+                bgImage: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=640&q=72",
                 icon: "☀️"
             },
             varsha: {
@@ -8027,15 +8065,15 @@ const CurrentRituCard = ({ data: r }) => {
                 months: { or: "ଆଷାଢ଼ - ଶ୍ରାବଣ", hi: "आषाढ़ - श्रावण", en: "Ashadha - Shravana", bn: "আষাঢ় - শ্রাবণ", mr: "आषाढ - श्रावण", gu: "અષાઢ - શ્રાવણ", ta: "ஆடி - ஆவணி", te: "ஆషాఢము - శ్రావణము", kn: "ಆಷಾಢ - ಶ್ರಾವಣ", ml: "മിഥുനം - കർക്കടകം", pa: "ਹਾੜ੍ਹ - ਸਾਵਣ", as: "আহাৰ - শাওণ" },
                 range: "MID-JUNE TO MID-AUGUST (22 JUN - 22 AUG)",
                 color: "#38BDF8",
-                bgImage: "https://images.unsplash.com/photo-1534274988757-a28bf1a57c17?auto=format&fit=crop&w=1200&q=80",
+                bgImage: "https://images.unsplash.com/photo-1534274988757-a28bf1a57c17?auto=format&fit=crop&w=640&q=72",
                 icon: "🌧️"
             },
             sharad: {
                 title: { or: "ଶରତ", hi: "शरद", en: "Sharad (Autumn)", bn: "শরৎ", mr: "शरद", gu: "શરદ", ta: "கூதிர்", te: "శరత్ ఋతువు", kn: "ಶರದ್ ಋತು", ml: "ശരത്", pa: "ਪਤਝੜ", as: "শৰৎ" },
-                months: { or: "ଭାଦ୍ରବ - ଆଶ୍ୱିନ", hi: "भाद्रपद - आश्विन", en: "Bhadrapada - Ashwina", bn: "ভাদ্র - আশ্বিন", mr: "भाद्रपद - अश्विन", gu: "ભાદરવો - આસો", ta: "புரட்டாசி - ஐப்பசி", te: "భాద్రపదము - ఆశ్వయుజము", kn: "ಭಾದ್ರಪದ - ಆಶ್ವಯುಜ", ml: "ചിങ്ങം - കന്നി", pa: "ਭਾਦੋਂ - ਅੱਸੂ", as: "ভাদ - আহিন" },
+                months: { or: "ଭାଦ୍ରବ - ଆଶ୍ୱିନ", hi: "भाद्रपद - अश्विन", en: "Bhadrapada - Ashwina", bn: "ভাদ্র - আশ্বিন", mr: "भाद्रपद - अश्विन", gu: "ભાદરવો - આસો", ta: "புரட்டாசி - ஐப்பசி", te: "భాద్రపదము - ఆశ్వయుజము", kn: "ಭಾದ್ರಪದ - ಆಶ್ವಯುಜ", ml: "ചിങ്ങം - കന്നി", pa: "ਭਾਦੋਂ - ਅੱਸੂ", as: "ভাদ - আহিন" },
                 range: "MID-AUGUST TO MID-OCTOBER (23 AUG - 22 OCT)",
                 color: "#F59E0B",
-                bgImage: "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=1200&q=80",
+                bgImage: "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=640&q=72",
                 icon: "🌾"
             },
             hemant: {
@@ -8043,15 +8081,15 @@ const CurrentRituCard = ({ data: r }) => {
                 months: { or: "କାର୍ତ୍ତିକ - ମାର୍ଗଶିର", hi: "कार्तिक - मार्गशीर्ष", en: "Kartika - Margashirsha", bn: "কার্তিক - অগ্রহায়ণ", mr: "कार्तिक - मार्गशीर्ष", gu: "કારતક - માગશર", ta: "கார்த்திகை - மார்கழி", te: "కార్తీకము - మార్గశిరము", kn: "ಕಾರ್ತಿಕ - ಮಾರ್ಗಶಿರ", ml: "തുലാം - വൃശ്ചികം", pa: "ਕੱਤਕ - ਮੱਘਰ", as: "কাতি - আঘোণ" },
                 range: "MID-OCTOBER TO MID-DECEMBER (23 OCT - 21 DEC)",
                 color: "#2DD4BF",
-                bgImage: "https://images.unsplash.com/photo-1476820865390-c52aeebb9891?auto=format&fit=crop&w=1200&q=80",
+                bgImage: "https://images.unsplash.com/photo-1476820865390-c52aeebb9891?auto=format&fit=crop&w=640&q=72",
                 icon: "🍁"
             },
             shishir: {
-                title: { or: "ଶିଶିର", hi: "शिशिर", en: "Shishir (Winter)", bn: "শিশির", mr: "शिशिर", gu: "શિશિર", ta: "பின்பனி", te: "శిశిరము", kn: "ಶಿಶಿರ", ml: "ശിശിരം", pa: "ਸਿਆਲ", as: "শিশিৰ" },
+                title: { or: "ଶିଶିର", hi: "शिशिर", en: "Shishir (Winter)", bn: "শিশिर", mr: "शिशिर", gu: "શિશિર", ta: "பின்பனி", te: "శిశిరము", kn: "ಶಿಶಿರ", ml: "ശിശിരം", pa: "ਸਿਆਲ", as: "শিশিৰ" },
                 months: { or: "ପୌଷ - ମାଘ", hi: "पौष - माघ", en: "Pausha - Magha", bn: "পৌষ - মাঘ", mr: "पौष - माघ", gu: "પોષ - મહા", ta: "தை - மாசி", te: "పుష్యము - మాఘము", kn: "ಪುಷ್ಯ - ಮಾಘ", ml: "ധനു - മകരം", pa: "ਪੋਹ - ਮਾਘ", as: "পুহ - মাঘ" },
                 range: "MID-DECEMBER TO MID-FEBRUARY (22 DEC - 17 FEB)",
                 color: "#38BDF8",
-                bgImage: "https://images.unsplash.com/photo-1483921020237-2ff51e8e4b22?auto=format&fit=crop&w=1200&q=80",
+                bgImage: "https://images.unsplash.com/photo-1483921020237-2ff51e8e4b22?auto=format&fit=crop&w=640&q=72",
                 icon: "❄️"
             }
         };
@@ -8350,32 +8388,42 @@ const DailyPanchangView = ({data: r, settings, onOpen12Months}) => {
 
 
     const upcomingTithisNode = ki.useMemo(() => {
-        const upcoming = [];
-        let scanDate = new Date(r.date || new Date());
-        scanDate.setDate(scanDate.getDate() + 1);
-        for(let i=0; i<35; i++) {
-            if (upcoming.length >= 3) break;
-            let checkTime = new Date(scanDate);
-            if (r?.sunrise && window.parseTimeUniversal) {
-                const sr = window.parseTimeUniversal(r.sunrise, scanDate);
-                checkTime = sr ? sr : new Date(scanDate.setHours(6, 40, 0, 0));
-            } else {
-                checkTime.setHours(6, 40, 0, 0);
-            }
-            const astro = calculateTithi(checkTime);
-            if (!astro) return null;
-            if ([14, 29, 10, 25].includes(astro.index)) {
-                const last = upcoming[upcoming.length - 1];
-                if (!last || last.index !== astro.index) {
-                    upcoming.push({
-                        date: new Date(scanDate),
-                        tithi: astro.tithi,
-                        index: astro.index,
-                        paksha: astro.paksha
-                    });
-                }
-            }
+        const baseD = new Date(r.date || new Date());
+        const uKey = `${baseD.getFullYear()}-${baseD.getMonth()}-${baseD.getDate()}|${r?.sunrise || ''}|${window.selectedAyanamsha || 'lahiri'}`;
+        window.__upcomingTithisCache = window.__upcomingTithisCache || new Map();
+        let upcoming = window.__upcomingTithisCache.get(uKey);
+        if (!upcoming) {
+            upcoming = [];
+            let scanDate = new Date(baseD);
             scanDate.setDate(scanDate.getDate() + 1);
+            for(let i=0; i<35; i++) {
+                if (upcoming.length >= 3) break;
+                let checkTime = new Date(scanDate);
+                if (r?.sunrise && window.parseTimeUniversal) {
+                    const sr = window.parseTimeUniversal(r.sunrise, scanDate);
+                    checkTime = sr ? sr : new Date(scanDate.setHours(6, 40, 0, 0));
+                } else {
+                    checkTime.setHours(6, 40, 0, 0);
+                }
+                const astro = calculateTithi(checkTime);
+                if (!astro) return null;
+                if ([14, 29, 10, 25].includes(astro.index)) {
+                    const last = upcoming[upcoming.length - 1];
+                    if (!last || last.index !== astro.index) {
+                        upcoming.push({
+                            date: new Date(scanDate),
+                            tithi: astro.tithi,
+                            index: astro.index,
+                            paksha: astro.paksha
+                        });
+                    }
+                }
+                scanDate.setDate(scanDate.getDate() + 1);
+            }
+            if (upcoming.length > 0) {
+                if (window.__upcomingTithisCache.size > 60) window.__upcomingTithisCache.clear();
+                window.__upcomingTithisCache.set(uKey, upcoming);
+            }
         }
         
         if (upcoming.length === 0) return null;
@@ -8403,7 +8451,17 @@ const DailyPanchangView = ({data: r, settings, onOpen12Months}) => {
     
     const sankrantiNode = ki.useMemo(() => {
         let sankrantiScanDate = r.date || new Date();
-        const nextSankranti = getUpcomingSankranti(sankrantiScanDate);
+        const baseS = new Date(sankrantiScanDate);
+        const sKey = `${baseS.getFullYear()}-${baseS.getMonth()}-${baseS.getDate()}|${window.selectedAyanamsha || 'lahiri'}`;
+        window.__sankrantiCache = window.__sankrantiCache || new Map();
+        let nextSankranti = window.__sankrantiCache.get(sKey);
+        if (!nextSankranti) {
+            nextSankranti = getUpcomingSankranti(sankrantiScanDate);
+            if (nextSankranti) {
+                if (window.__sankrantiCache.size > 60) window.__sankrantiCache.clear();
+                window.__sankrantiCache.set(sKey, nextSankranti);
+            }
+        }
         if (!nextSankranti) return null;
         
         const isToday = (nextSankranti.dateObj.getDate() === sankrantiScanDate.getDate() && 
@@ -8619,6 +8677,10 @@ const DailyPanchangView = ({data: r, settings, onOpen12Months}) => {
                             const evalDate = r?.date ? new Date(r.date) : new Date();
                             const tz = window.currentTz || "Asia/Kolkata";
                             if (!Astro) return { full: "", short: "" };
+                            const spanKey = `${mode}|${evalDate.getFullYear()}-${evalDate.getMonth()}-${evalDate.getDate()}|${Number(r?.location?.latitude ?? 28.61).toFixed(2)},${Number(r?.location?.longitude ?? 77.21).toFixed(2)}|${tz}|${window.currentTimeFormat || '12h'}|${window.selectedAyanamsha || 'lahiri'}|${curLang}|${souraInfo?.day || ''}`;
+                            window.__dynamicSpanCache = window.__dynamicSpanCache || new Map();
+                            const cachedSpan = window.__dynamicSpanCache.get(spanKey);
+                            if (cachedSpan) return cachedSpan;
                             const sunriseD = window.parseTimeUniversal ? (window.parseTimeUniversal(r?.sunrise, evalDate) || new Date(evalDate.getFullYear(), evalDate.getMonth(), evalDate.getDate(), 6, 0, 0)) : new Date(evalDate.getFullYear(), evalDate.getMonth(), evalDate.getDate(), 6, 0, 0);
                             const t_now = Astro.MakeTime(sunriseD);
                             let dStart = null, dEnd = null;
@@ -8794,7 +8856,10 @@ const DailyPanchangView = ({data: r, settings, onOpen12Months}) => {
                                 exactSpan = `${formatVedicBoundary(dStart, true)} – ${formatVedicBoundary(dEnd, false)}`;
                             }
                             
-                            return { full: fullStr, short: shortStr, exactSpan, totalDays, currentDay };
+                            const spanResult = { full: fullStr, short: shortStr, exactSpan, totalDays, currentDay };
+                            if (window.__dynamicSpanCache.size > 120) window.__dynamicSpanCache.clear();
+                            window.__dynamicSpanCache.set(spanKey, spanResult);
+                            return spanResult;
                         } catch (e) {
                             return { full: "", short: "", totalDays: 30, currentDay: 1 };
                         }
@@ -9821,10 +9886,10 @@ TarabalamPanel = ({ data: r }) => {
 },
 
 PanchakaPanel = ({ data: r }) => {
-    const [currentTime, setCurrentTime] = ki.useState(() => new Date(new Date().toLocaleString('en-US', { timeZone: window.currentTz || 'Asia/Kolkata' })));
+    const [currentTime, setCurrentTime] = ki.useState(() => getFastTzNow());
     const [filter, setFilter] = ki.useState("all");
     ki.useEffect(() => {
-        const timer = setInterval(() => setCurrentTime(new Date(new Date().toLocaleString('en-US', { timeZone: window.currentTz || 'Asia/Kolkata' }))), 1000);
+        const timer = setInterval(() => { if (!document.hidden) setCurrentTime(getFastTzNow()); }, 15000);
         return () => clearInterval(timer);
     }, []);
 
@@ -9932,11 +9997,11 @@ lagnaNatureMap = {
 },
 
 UdayaLagnaPanel = ({ data: r }) => {
-    const [currentTime, setCurrentTime] = ki.useState(() => new Date(new Date().toLocaleString('en-US', { timeZone: window.currentTz || 'Asia/Kolkata' })));
+    const [currentTime, setCurrentTime] = ki.useState(() => getFastTzNow());
     const [filter, setFilter] = ki.useState("all");
 
     ki.useEffect(() => {
-        const timer = setInterval(() => setCurrentTime(new Date(new Date().toLocaleString('en-US', { timeZone: window.currentTz || 'Asia/Kolkata' }))), 1000);
+        const timer = setInterval(() => { if (!document.hidden) setCurrentTime(getFastTzNow()); }, 15000);
         return () => clearInterval(timer);
     }, []);
 
@@ -10183,10 +10248,43 @@ const ShubhScoreFlashCard = ({ score }) => {
   });
 };
 
-const LocationModal = ({ isOpen, onClose, onSave }) => {
-    const [globalData, setGlobalData] = ki.useState(null);
-    const [isLoading, setIsLoading] = ki.useState(true);
+window.fetchVaidikLocationDB = function(onStatus) {
+    if (window.__vaidikLocData) return Promise.resolve(window.__vaidikLocData);
+    if (window.__vaidikLocPromise) return window.__vaidikLocPromise;
+    const cdnUrl = "https://cdn.jsdelivr.net/gh/santosh276/panchang-data@main/locations.json";
+    const rawUrl = "https://raw.githubusercontent.com/santosh276/panchang-data/refs/heads/main/locations.json";
+    const fetchWithTimeout = (url, ms) => {
+        const ctrl = typeof AbortController !== "undefined" ? new AbortController() : null;
+        const timer = ctrl ? setTimeout(() => ctrl.abort(), ms) : null;
+        return fetch(url, ctrl ? { signal: ctrl.signal } : {})
+            .then(r => { if (timer) clearTimeout(timer); if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+            .catch(e => { if (timer) clearTimeout(timer); throw e; });
+    };
+    if (onStatus) onStatus("Downloading from fast Edge CDN...");
+    window.__vaidikLocPromise = fetchWithTimeout(cdnUrl, 8000)
+        .catch(() => {
+            if (onStatus) onStatus("Switching to GitHub backup mirror...");
+            return fetchWithTimeout(rawUrl, 20000);
+        })
+        .then(data => {
+            window.__vaidikLocData = data;
+            window.__vaidikLocPromise = null;
+            return data;
+        })
+        .catch(err => {
+            window.__vaidikLocPromise = null;
+            throw err;
+        });
+    return window.__vaidikLocPromise;
+};
+
+const LocationModal = ({ isOpen, onClose, onSave, currentLocation }) => {
+    const [globalData, setGlobalData] = ki.useState(() => window.__vaidikLocData || null);
+    const [isLoading, setIsLoading] = ki.useState(() => !window.__vaidikLocData);
+    const [loadStatus, setLoadStatus] = ki.useState("Fetching cities, districts & villages");
+    const [isSearching, setIsSearching] = ki.useState(false);
     const [error, setError] = ki.useState(null);
+    const [gpsError, setGpsError] = ki.useState(null);
     const [searchTerm, setSearchTerm] = ki.useState("");
     const [debouncedTerm, setDebouncedTerm] = ki.useState("");
     const [filteredCities, setFilteredCities] = ki.useState([]);
@@ -10196,102 +10294,90 @@ const LocationModal = ({ isOpen, onClose, onSave }) => {
     const [selectedBlock, setSelectedBlock] = ki.useState("");
     const [selectedPanchayat, setSelectedPanchayat] = ki.useState("");
     const [isDetecting, setIsDetecting] = ki.useState(false);
+    const [showAllSacred, setShowAllSacred] = ki.useState(false);
+    const [showManualBrowse, setShowManualBrowse] = ki.useState(false);
+    const [activePicker, setActivePicker] = ki.useState(null);
+    const [pickerFilter, setPickerFilter] = ki.useState("");
     ki.useEffect(() => {
         if (!isOpen) return;
-        if (globalData) {
+        document.documentElement.classList.add("modal-open-perf");
+        document.body.classList.add("modal-open-perf");
+        return () => {
+            document.documentElement.classList.remove("modal-open-perf");
+            document.body.classList.remove("modal-open-perf");
+        };
+    }, [isOpen]);
+    ki.useEffect(() => {
+        if (!isOpen) return;
+        setGpsError(null);
+        setActivePicker(null);
+        setPickerFilter("");
+        if (globalData || window.__vaidikLocData) {
+            if (!globalData && window.__vaidikLocData) setGlobalData(window.__vaidikLocData);
             setIsLoading(false);
             return;
         }
         let isMounted = true;
-        const fetchData = async () => {
-            try {
-                const response = await fetch("https://raw.githubusercontent.com/santosh276/panchang-data/refs/heads/main/locations.json");
-                if (!response.ok) throw new Error("Database unavailable");
-                const data = await response.json();
+        setIsLoading(true);
+        setError(null);
+        window.fetchVaidikLocationDB((st) => { if (isMounted) setLoadStatus(st); })
+            .then((data) => {
                 if (isMounted) {
                     setGlobalData(data);
                     setIsLoading(false);
                 }
-            } catch (err) {
+            })
+            .catch(() => {
                 if (isMounted) {
                     setError("⚠️ Location database is currently unavailable. Please use Auto Detect GPS.");
                     setIsLoading(false);
                 }
-            }
-        };
-        fetchData();
+            });
         return () => { isMounted = false; };
     }, [isOpen]);
     const flatData = ki.useMemo(() => {
         if (!globalData) return [];
-        let districtsArr = [];
-        let blocksArr = [];
-        let panchayatsArr = [];
+        if (window.__vaidikLocTier1) return window.__vaidikLocTier1;
+        const districtsArr = [];
         for (const [country, states] of Object.entries(globalData)) {
             for (const [state, stateData] of Object.entries(states)) {
                 if (Array.isArray(stateData)) {
                     for (const city of stateData) {
+                        const lbl = `${city[0]}, ${state}, ${country}`;
                         districtsArr.push({
-                            label: `${city[0]}, ${state}, ${country}`,
-                            name: city[0],
-                            saveName: `${city[0]}, ${state}`,
-                            type: 1, 
-                            lon: city[1], lat: city[2]
+                            label: lbl, name: city[0], saveName: `${city[0]}, ${state}`,
+                            nl: city[0].toLowerCase(), ll: lbl.toLowerCase(),
+                            type: 1, lon: city[1], lat: city[2]
                         });
                     }
                 } else if (typeof stateData === 'object' && stateData !== null) {
                     if (stateData.cities && Array.isArray(stateData.cities)) {
                         for (const city of stateData.cities) {
+                            const lbl = `${city[0]}, ${state}, ${country}`;
                             districtsArr.push({
-                                label: `${city[0]}, ${state}, ${country}`,
-                                name: city[0],
-                                saveName: `${city[0]}, ${state}`,
-                                type: 1, 
-                                lon: city[1], lat: city[2],
-                                timezone: stateData._timezone
+                                label: lbl, name: city[0], saveName: `${city[0]}, ${state}`,
+                                nl: city[0].toLowerCase(), ll: lbl.toLowerCase(),
+                                type: 1, lon: city[1], lat: city[2], timezone: stateData._timezone
                             });
                         }
                     } else {
                         for (const [district, districtData] of Object.entries(stateData)) {
                             if (district === "_timezone" || district === "cities") continue;
                             if (districtData._coords) {
+                                const lbl = `${district} (District, ${state})`;
                                 districtsArr.push({
-                                    label: `${district} (District, ${state})`,
-                                    name: district,
-                                    saveName: `${district}, ${state}`,
-                                    type: 1,
-                                    lon: districtData._coords[0], lat: districtData._coords[1]
+                                    label: lbl, name: district, saveName: `${district}, ${state}`,
+                                    nl: district.toLowerCase(), ll: lbl.toLowerCase(),
+                                    type: 1, lon: districtData._coords[0], lat: districtData._coords[1]
                                 });
-                            }
-                            for (const [block, blockData] of Object.entries(districtData)) {
-                                if (block === "_coords") continue;
-                                if (blockData._coords) {
-                                    blocksArr.push({
-                                        label: `${block} (Block, ${district})`,
-                                        name: block,
-                                        saveName: `${block}, ${district}`,
-                                        type: 2,
-                                        lon: blockData._coords[0], lat: blockData._coords[1]
-                                    });
-                                }
-                                if (blockData._panchayats) {
-                                    for (const p of blockData._panchayats) {
-                                        panchayatsArr.push({
-                                            label: `${p[0]} (Panchayat, ${block}, ${district})`,
-                                            name: p[0],
-                                            saveName: `${p[0]}, ${block}`,
-                                            type: 3,
-                                            lon: p[1], lat: p[2]
-                                        });
-                                    }
-                                }
                             }
                         }
                     }
                 }
             }
         }
-        return [...districtsArr, ...blocksArr, ...panchayatsArr];
+        window.__vaidikLocTier1 = districtsArr;
+        return districtsArr;
     }, [globalData]);
     ki.useEffect(() => {
         const handler = setTimeout(() => {
@@ -10300,54 +10386,74 @@ const LocationModal = ({ isOpen, onClose, onSave }) => {
         return () => clearTimeout(handler);
     }, [searchTerm]);
     ki.useEffect(() => {
-        if (!debouncedTerm || debouncedTerm.length < 2 || !flatData.length) {
-            setFilteredCities([]);
-            return;
+        const lowerTerm = (debouncedTerm || "").trim().toLowerCase();
+        if (lowerTerm.length < 2 || !globalData) { setFilteredCities([]); setIsSearching(false); return; }
+        let cancelled = false, timer = null;
+        setIsSearching(true);
+        let exact = [], starts = [], others = [];
+        for (let k = 0; k < flatData.length; k++) {
+            const item = flatData[k];
+            if (item.nl === lowerTerm) exact.push(item);
+            else if (item.nl.startsWith(lowerTerm)) { if (starts.length < 30) starts.push(item); }
+            else if (others.length < 30 && (item.nl.includes(lowerTerm) || item.ll.includes(lowerTerm))) others.push(item);
         }
-        const lowerTerm = debouncedTerm.toLowerCase();
-        let matches = [];
-        let i = 0;
-        let timer;
-        const processChunk = () => {
-            const chunkEnd = Math.min(i + 10000, flatData.length);
-            for (; i < chunkEnd; i++) {
-                if (flatData[i].name.toLowerCase().includes(lowerTerm) || flatData[i].label.toLowerCase().includes(lowerTerm)) {
-                    matches.push(flatData[i]);
-                    if (matches.length >= 100) break; 
+        const indiaStates = Object.entries(globalData.India || {});
+        let sIdx = 0, dEntries = null, dIdx = 0;
+        const stepSearch = () => {
+            if (cancelled) return;
+            const t0 = Date.now();
+            while (sIdx < indiaStates.length) {
+                const [stName, stData] = indiaStates[sIdx];
+                if (!dEntries) dEntries = (stData && typeof stData === "object") ? Object.entries(stData) : [];
+                while (dIdx < dEntries.length) {
+                    const [dist, distData] = dEntries[dIdx++];
+                    if (dist === "_timezone" || dist === "cities" || !distData) continue;
+                    for (const [blk, blkData] of Object.entries(distData)) {
+                        if (blk === "_coords" || !blkData) continue;
+                        const bL = blk.toLowerCase();
+                        if (bL === lowerTerm && blkData._coords) exact.push({ label: `${blk} (Block, ${dist}, ${stName})`, name: blk, saveName: `${blk}, ${dist}`, type: 2, lon: blkData._coords[0], lat: blkData._coords[1] });
+                        else if (starts.length < 30 && bL.startsWith(lowerTerm) && blkData._coords) starts.push({ label: `${blk} (Block, ${dist}, ${stName})`, name: blk, saveName: `${blk}, ${dist}`, type: 2, lon: blkData._coords[0], lat: blkData._coords[1] });
+                        else if (others.length < 30 && bL.includes(lowerTerm) && blkData._coords) others.push({ label: `${blk} (Block, ${dist}, ${stName})`, name: blk, saveName: `${blk}, ${dist}`, type: 2, lon: blkData._coords[0], lat: blkData._coords[1] });
+                        const pList = blkData._panchayats;
+                        if (pList) for (let j = 0; j < pList.length; j++) {
+                            const p = pList[j], pL = p[0].toLowerCase();
+                            if (pL === lowerTerm) exact.push({ label: `${p[0]} (Panchayat, ${blk}, ${dist})`, name: p[0], saveName: `${p[0]}, ${blk}`, type: 3, lon: p[1], lat: p[2] });
+                            else if (starts.length < 30 && pL.startsWith(lowerTerm)) starts.push({ label: `${p[0]} (Panchayat, ${blk}, ${dist})`, name: p[0], saveName: `${p[0]}, ${blk}`, type: 3, lon: p[1], lat: p[2] });
+                            else if (others.length < 30 && (pL.includes(lowerTerm) || bL.includes(lowerTerm))) others.push({ label: `${p[0]} (Panchayat, ${blk}, ${dist})`, name: p[0], saveName: `${p[0]}, ${blk}`, type: 3, lon: p[1], lat: p[2] });
+                        }
+                    }
+                    if ((Date.now() - t0) > 7) { timer = typeof requestAnimationFrame === "function" ? requestAnimationFrame(stepSearch) : setTimeout(stepSearch, 0); return; }
                 }
+                sIdx++; dEntries = null; dIdx = 0;
             }
-            if (matches.length >= 100 || i >= flatData.length) {
-                matches.sort((a, b) => {
-                    const aExact = a.name.toLowerCase() === lowerTerm;
-                    const bExact = b.name.toLowerCase() === lowerTerm;
-                    if (aExact && !bExact) return -1;
-                    if (!aExact && bExact) return 1;
-                    return a.type - b.type;
-                });
-                setFilteredCities(matches.slice(0, 15));
-            } else {
-                if (typeof window !== 'undefined' && window.requestAnimationFrame) {
-                    timer = window.requestAnimationFrame(processChunk);
-                } else {
-                    timer = setTimeout(processChunk, 0);
-                }
-            }
+            const byType = (a, b) => a.type - b.type; exact.sort(byType); starts.sort(byType); others.sort(byType);
+            const top = [...exact, ...starts, ...others].slice(0, 15).map(c => {
+                let tzBadge = "";
+                try { if (window.tzlookup) { const tZ = window.tzlookup(c.lat, c.lon), d = new Date(), tStr = new Intl.DateTimeFormat('en-US', { timeZone: tZ, hour: 'numeric', minute: 'numeric', hour12: true }).format(d), oP = new Intl.DateTimeFormat('en-US', { timeZone: tZ, timeZoneName: 'shortOffset' }).formatToParts(d).find(p => p.type === 'timeZoneName'); tzBadge = `${oP ? oP.value : 'GMT'} · ${tStr}`; } } catch (e) {}
+                return { ...c, tzBadge };
+            });
+            setFilteredCities(top); setIsSearching(false);
         };
-        processChunk();
-        return () => {
-            if (typeof window !== 'undefined' && window.cancelAnimationFrame && timer) {
-                window.cancelAnimationFrame(timer);
-            } else {
-                clearTimeout(timer);
-            }
-        };
-    }, [searchTerm, flatData]);
+        timer = typeof requestAnimationFrame === "function" ? requestAnimationFrame(stepSearch) : setTimeout(stepSearch, 0);
+        return () => { cancelled = true; if (timer) { typeof cancelAnimationFrame === "function" ? cancelAnimationFrame(timer) : clearTimeout(timer); } };
+    }, [debouncedTerm, flatData, globalData]);
+    const countryOpts = ki.useMemo(() => globalData ? Object.keys(globalData).sort() : [], [globalData]);
+    const stateOpts = ki.useMemo(() => (globalData && selectedCountry) ? Object.keys(globalData[selectedCountry] || {}).filter(k => k !== "_timezone").sort() : [], [globalData, selectedCountry]);
+    const districtOpts = ki.useMemo(() => {
+        if (!globalData || !selectedCountry || !selectedState) return [];
+        const st = globalData[selectedCountry]?.[selectedState];
+        if (!st) return [];
+        return selectedCountry === "India" ? Object.keys(st).sort() : (Array.isArray(st) ? st : (st.cities || [])).map(c => c[0]);
+    }, [globalData, selectedCountry, selectedState]);
+    const blockOpts = ki.useMemo(() => (globalData && selectedCountry === "India" && selectedState && selectedDistrict) ? Object.keys(globalData["India"]?.[selectedState]?.[selectedDistrict] || {}).filter(k => k !== "_coords").sort() : [], [globalData, selectedCountry, selectedState, selectedDistrict]);
+    const panchayatOpts = ki.useMemo(() => (globalData && selectedCountry === "India" && selectedState && selectedDistrict && selectedBlock) ? (globalData["India"]?.[selectedState]?.[selectedDistrict]?.[selectedBlock]?._panchayats || []).map(p => p[0]).sort() : [], [globalData, selectedCountry, selectedState, selectedDistrict, selectedBlock]);
     if (!isOpen) return null;
     const handleAutoDetect = () => {
         if (!navigator.geolocation) {
-            alert("Geolocation is not supported by your browser");
+            setGpsError("GPS is not supported by your browser.");
             return;
         }
+        setGpsError(null);
         setIsDetecting(true);
         navigator.geolocation.getCurrentPosition(
             (position) => {
@@ -10358,8 +10464,8 @@ const LocationModal = ({ isOpen, onClose, onSave }) => {
                 });
                 setIsDetecting(false);
             },
-            (error) => {
-                alert("Unable to retrieve your location");
+            () => {
+                setGpsError("GPS permission denied or unavailable. Please search or pick below.");
                 setIsDetecting(false);
             }
         );
@@ -10370,7 +10476,7 @@ const LocationModal = ({ isOpen, onClose, onSave }) => {
         onSave({ latitude: item.lat, longitude: item.lon,
             name: item.saveName
         });
-          };
+    };
     const handleSaveManual = () => {
         if (!globalData || !selectedCountry || !selectedState) return;
         let targetData = globalData[selectedCountry]?.[selectedState];
@@ -10402,7 +10508,7 @@ const LocationModal = ({ isOpen, onClose, onSave }) => {
             }
         }
         if (distData._coords) {
-            onSave({ latitude: distData._coords[1], longitude: distData._coords[0], name: `${selectedDistrict}, ${selectedState}` });
+                      onSave({ latitude: distData._coords[1], longitude: distData._coords[0], name: `${selectedDistrict}, ${selectedState}` });
         }
     };
     let canSave = false;
@@ -10442,6 +10548,41 @@ const LocationModal = ({ isOpen, onClose, onSave }) => {
         { name: "Guruvayur, Kerala", label: "Guruvayurappan", state: "Kerala", icon: "🪈", lat: 10.5946, lon: 76.0407, badge: "BHULOKA VKNT", color: "#16A34A" },
         { name: "Shirdi, Maharashtra", label: "Shirdi Sai Baba", state: "Maharashtra", icon: "🌸", lat: 19.7667, lon: 74.4762, badge: "SAMADHI", color: "#D97706" }
     ];
+    const openPicker = (type) => { setPickerFilter(""); setActivePicker(type); };
+    const renderPickerPanel = () => {
+        const cfg = {
+            country: { title: "Select Country", opts: countryOpts, val: selectedCountry, onPick: (v) => { setSelectedCountry(v); setSelectedState(""); setSelectedDistrict(""); setSelectedBlock(""); setSelectedPanchayat(""); } },
+            state: { title: "Select State", opts: stateOpts, val: selectedState, onPick: (v) => { setSelectedState(v); setSelectedDistrict(""); setSelectedBlock(""); setSelectedPanchayat(""); } },
+            district: { title: selectedCountry === "India" ? "Select District" : "Select City", opts: districtOpts, val: selectedDistrict, onPick: (v) => { setSelectedDistrict(v); setSelectedBlock(""); setSelectedPanchayat(""); } },
+            block: { title: "Select Block", opts: blockOpts, val: selectedBlock, optional: true, onPick: (v) => { setSelectedBlock(v); setSelectedPanchayat(""); } },
+            panchayat: { title: "Select Panchayat / Village", opts: panchayatOpts, val: selectedPanchayat, optional: true, onPick: (v) => setSelectedPanchayat(v) }
+        }[activePicker];
+        if (!cfg) return null;
+        const q = pickerFilter.trim().toLowerCase();
+        const items = q ? cfg.opts.filter(o => o.toLowerCase().includes(q)) : cfg.opts;
+        return s.jsxs("div", {
+            className: "loc-picker-panel",
+            children: [
+                s.jsxs("div", { className: "loc-picker-header", children: [
+                    s.jsxs("button", { type: "button", className: "loc-picker-back", onClick: () => setActivePicker(null), children: [s.jsx("i", { className: "fa-solid fa-arrow-left" }), s.jsx("span", { children: "Back" })] }),
+                    s.jsx("span", { className: "loc-picker-title", children: cfg.title }),
+                    cfg.optional && cfg.val ? s.jsx("button", { type: "button", className: "loc-picker-clear", onClick: () => { cfg.onPick(""); setActivePicker(null); }, children: "Clear" }) : s.jsx("span", { style: { width: "42px" } })
+                ]}),
+                s.jsxs("div", { className: "panchang-element-220", children: [
+                    s.jsx("i", { className: "text-label-345 fa-solid fa-magnifying-glass", style: { fontSize: "12px", color: "#9CA3AF" } }),
+                    s.jsx("input", { type: "text", value: pickerFilter, onChange: (e) => setPickerFilter(e.target.value), placeholder: `Filter ${cfg.title.replace("Select ", "")}...`, className: "panchang-card-v17" }),
+                    pickerFilter.length > 0 && s.jsx("button", { type: "button", onClick: () => setPickerFilter(""), style: { position: "absolute", right: "8px", top: "50%", transform: "translateY(-50%)", width: "22px", height: "22px", borderRadius: "50%", border: "none", background: "rgba(148, 163, 184, 0.2)", color: "#6B7280", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", fontSize: "11px" }, children: s.jsx("i", { className: "fa-solid fa-xmark" }) })
+                ]}),
+                s.jsx("div", { className: "loc-picker-list custom-scrollbar", children: items.length === 0 ? s.jsx("div", { style: { padding: "16px", textAlign: "center", fontSize: "0.78rem", color: "#9CA3AF" }, children: "No matching items found" }) : items.map((opt) => {
+                    const isSel = opt === cfg.val;
+                    return s.jsxs("button", { key: opt, type: "button", className: `loc-picker-item ${isSel ? "is-selected" : ""}`, onClick: () => { cfg.onPick(opt); setActivePicker(null); }, children: [
+                        s.jsx("span", { style: { overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: opt }),
+                        isSel && s.jsx("i", { className: "fa-solid fa-check", style: { color: "#EA580C", fontSize: "12px", flexShrink: 0 } })
+                    ]});
+                })})
+            ]
+        });
+    };
 
     return s.jsxs("div", {
         className: "flex-row-322",
@@ -10455,74 +10596,95 @@ const LocationModal = ({ isOpen, onClose, onSave }) => {
                         children: [
                             s.jsxs("div", {
                                 className: "flex-row-19",
-                                children: [
-                                    s.jsx(window.PanchangIcon, { className: "text-label-326", children: "location_on" }),
-                                    s.jsx("h2", { className: "text-label-327", children: "Choose Location" })
-                                ]
-                            }),
-                            s.jsx("button", {
-                                onClick: onClose,
-                                className: "panchang-card-v13",
-                                children: s.jsx(window.PanchangIcon, { className: "text-label-154-v1", children: "close" })
-                            })
-                        ]
-                    }),
-                    s.jsxs("div", {
-                        className: "flex-col-330 custom-scrollbar",
-                        style: { padding: "12px 10px", gap: "10px" },
-                        children: [
-                            s.jsx("button", {
-                                onClick: handleAutoDetect,
-                                disabled: isDetecting,
-                                className: "panchang-card-v14",
-                                style: { padding: "10px 12px", borderRadius: "14px", gap: "10px" },
+                                style: { gap: "10px" },
                                 children: [
                                     s.jsx("div", {
-                                        className: "panchang-card-v15",
-                                        style: { width: "32px", height: "32px", borderRadius: "10px" },
-                                        children: s.jsx("i", { className: isDetecting ? "fa-solid fa-rotate animate-spin" : "fa-solid fa-crosshairs", style: { fontSize: "15px", color: "#EA580C" } })
+                                        className: "loc-header-icon-box",
+                                        children: s.jsx("i", { className: "fa-solid fa-location-dot", style: { fontSize: "15px", color: "#FFFFFF" } })
                                     }),
                                     s.jsxs("div", {
-                                        className: "text-label-333",
+                                        style: { display: "flex", flexDirection: "column" },
                                         children: [
-                                            s.jsx("div", { className: "text-label-164", style: { fontSize: "0.92rem", fontWeight: 800 }, children: "Auto Detect GPS" }),
-                                            s.jsx("div", { className: "text-label-255-v1", style: { fontSize: "0.72rem" }, children: isDetecting ? "Detecting location..." : "Get location automatically" })
+                                            s.jsx("h2", { className: "text-label-327", children: "Choose Location" }),
+                                            s.jsx("span", { style: { fontSize: "0.66rem", fontWeight: 600, color: "rgba(255, 255, 255, 0.86)", letterSpacing: "0.2px" }, children: "GPS · Sacred Tirthas · Global Search" })
                                         ]
                                     })
                                 ]
                             }),
-                            isLoading ? s.jsx("div", {
-                                className: "flex-col-334",
-                                children: s.jsx("i", { className: "text-label-335 fa-solid fa-rotate animate-spin", style: { color: "#EA580C", fontSize: "2rem" } })
-                            }) : error ? s.jsxs("div", {
-                                className: "panchang-box-v27",
+                            s.jsx("button", {
+                                type: "button",
+                                onClick: onClose,
+                                className: "panchang-card-v13",
+                                "aria-label": "Close",
+                                children: s.jsx(window.PanchangIcon, { className: "text-label-154-v1", children: "close" })
+                            })
+                        ]
+                    }),
+                    activePicker ? renderPickerPanel() : s.jsxs("div", {
+                        className: "flex-col-330 custom-scrollbar",
+                        style: { padding: "10px 10px 12px 10px", gap: "8px" },
+                        children: [
+                            s.jsxs("div", {
+                                className: "loc-active-pill",
                                 children: [
-                                    s.jsx("div", { className: "text-label-337", children: error }),
-                                    s.jsx("button", { 
-                                        onClick: () => {
-                                            setIsLoading(true);
-                                            setError(null);
-                                            fetch("https://raw.githubusercontent.com/santosh276/panchang-data/refs/heads/main/locations.json")
-                                                .then(r => { if (!r.ok) throw new Error(); return r.json(); })
-                                                .then(d => { setGlobalData(d); setIsLoading(false); })
-                                                .catch(e => { setError("⚠️ Location database is currently unavailable. Please use Auto Detect GPS."); setIsLoading(false); });
-                                        },
-                                        className: "panchang-card-v16",
-                                        children: "Retry"
+                                    s.jsxs("div", {
+                                        style: { display: "flex", alignItems: "center", gap: "6px", minWidth: 0 },
+                                        children: [
+                                            s.jsx("i", { className: "fa-solid fa-location-dot", style: { color: "#10B981", fontSize: "12px", flexShrink: 0 } }),
+                                            s.jsx("span", { style: { opacity: 0.75, fontSize: "0.68rem", textTransform: "uppercase", flexShrink: 0 }, children: "Active:" }),
+                                            s.jsx("span", { style: { fontWeight: 800, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: currentLocation?.name || "New Delhi, IN" })
+                                        ]
+                                    }),
+                                    currentLocation?.latitude && s.jsx("span", {
+                                        style: { fontSize: "0.62rem", opacity: 0.75, flexShrink: 0 },
+                                        children: `${Number(currentLocation.latitude).toFixed(2)}°, ${Number(currentLocation.longitude).toFixed(2)}°`
                                     })
                                 ]
-                            }) : s.jsxs("div", {
-                                className: "panchang-element-339",
+                            }),
+                            s.jsxs("button", {
+                                type: "button",
+                                onClick: handleAutoDetect,
+                                disabled: isDetecting,
+                                className: "panchang-card-v14",
                                 children: [
+                                    s.jsxs("div", {
+                                        style: { display: "flex", alignItems: "center", gap: "9px", minWidth: 0 },
+                                        children: [
+                                            s.jsx("div", {
+                                                className: "panchang-card-v15",
+                                                children: s.jsx("i", { className: isDetecting ? "fa-solid fa-rotate animate-spin" : "fa-solid fa-crosshairs", style: { fontSize: "14px", color: "#EA580C" } })
+                                            }),
+                                            s.jsxs("div", {
+                                                className: "text-label-333",
+                                                children: [
+                                                    s.jsx("div", { className: "text-label-164", style: { fontSize: "0.88rem", fontWeight: 800 }, children: "Auto Detect GPS" }),
+                                                    s.jsx("div", { className: "text-label-255-v1", style: { fontSize: "0.7rem" }, children: isDetecting ? "Detecting location..." : "Use device current location" })
+                                                ]
+                                            })
+                                        ]
+                                    }),
+                                    s.jsx("span", {
+                                        style: { fontSize: "0.64rem", fontWeight: 900, padding: "3px 8px", borderRadius: "999px", background: "rgba(234, 88, 12, 0.14)", color: "#EA580C", flexShrink: 0 },
+                                        children: isDetecting ? "..." : "DETECT"
+                                    })
+                                ]
+                            }),
+                            gpsError && s.jsxs("div", {
+                                style: { padding: "6px 10px", borderRadius: "10px", background: "rgba(239, 68, 68, 0.1)", border: "1px solid rgba(239, 68, 68, 0.3)", color: "#DC2626", fontSize: "0.72rem", fontWeight: 700, display: "flex", alignItems: "center", gap: "6px" },
+                                children: [
+                                    s.jsx("i", { className: "fa-solid fa-circle-exclamation" }),
+                                    s.jsx("span", { children: gpsError })
+                                ]
+                            }),
                                     s.jsxs("div", {
                                         className: "sacred-places-container",
                                         style: {
                                             display: "flex",
                                             flexDirection: "column",
-                                            gap: "8px",
-                                            marginBottom: "12px",
-                                            padding: "10px 8px 8px 8px",
-                                            borderRadius: "18px",
+                                            gap: "6px",
+                                            marginBottom: "8px",
+                                            padding: "8px",
+                                            borderRadius: "16px",
                                             overflow: "hidden",
                                             background: "rgba(255, 107, 0, 0.05)",
                                             border: "1.5px solid rgba(255, 107, 0, 0.3)"
@@ -10534,7 +10696,7 @@ const LocationModal = ({ isOpen, onClose, onSave }) => {
                                                     s.jsxs("div", {
                                                         style: { display: "flex", alignItems: "center", gap: "6px" },
                                                         children: [
-                                                            s.jsx("span", { style: { fontSize: "14px" }, children: "🌟" }),
+                                                            s.jsx("span", { style: { fontSize: "13px" }, children: "🌟" }),
                                                             s.jsx("span", {
                                                                 style: { fontSize: "9.5px", fontWeight: 800, color: "#C2410C", textTransform: "uppercase", letterSpacing: "0.5px" },
                                                                 children: "Sacred Places & Char Dham"
@@ -10543,7 +10705,7 @@ const LocationModal = ({ isOpen, onClose, onSave }) => {
                                                     }),
                                                     s.jsx("span", {
                                                         style: { fontSize: "8px", fontWeight: 800, color: "#EA580C", background: "rgba(255, 107, 0, 0.12)", padding: "2px 7px", borderRadius: "999px" },
-                                                        children: "1-TAP SELECT"
+                                                        children: "1-TAP"
                                                     })
                                                 ]
                                             }),
@@ -10553,8 +10715,8 @@ const LocationModal = ({ isOpen, onClose, onSave }) => {
                                                     display: "grid",
                                                     gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
                                                     gap: "6px",
-                                                    maxHeight: "190px",
-                                                    overflowY: "auto",
+                                                    maxHeight: showAllSacred ? "220px" : "none",
+                                                    overflowY: showAllSacred ? "auto" : "visible",
                                                     padding: "1px"
                                                 },
                                                 children: [
@@ -10563,7 +10725,7 @@ const LocationModal = ({ isOpen, onClose, onSave }) => {
                                                         type: "button",
                                                         onClick: () => onSave({ latitude: ujjainMeridian.lat, longitude: ujjainMeridian.lon, name: ujjainMeridian.name }),
                                                         style: { display: "flex", flexDirection: "column", justifyContent: "space-between", padding: "7px 9px", borderRadius: "12px", background: "linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%)", border: "1.5px solid rgba(245, 158, 11, 0.5)", boxShadow: "0 2px 6px rgba(245, 158, 11, 0.12)", cursor: "pointer", textAlign: "left", gap: "3px", minWidth: 0, gridColumn: "span 2", transition: "all 0.2s ease" },
-                                                        className: "sacred-place-chip is-featured",
+                                                        className: `sacred-place-chip is-featured ${(currentLocation?.name || "").toLowerCase() === ujjainMeridian.name.toLowerCase() ? "is-selected" : ""}`,
                                                         children: [
                                                             s.jsxs("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", minWidth: 0 }, children: [
                                                                 s.jsxs("div", { style: { display: "flex", alignItems: "center", gap: "6px", minWidth: 0 }, children: [
@@ -10574,19 +10736,19 @@ const LocationModal = ({ isOpen, onClose, onSave }) => {
                                                             ] }),
                                                             s.jsxs("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", minWidth: 0 }, children: [
                                                                 s.jsx("span", { style: { fontSize: "0.62rem", color: "#B45309", fontWeight: 700, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: ujjainMeridian.desc }),
-                                                                s.jsx("span", { style: { fontSize: "6.5px", color: "#D97706", fontWeight: 800 }, children: "TAP TO SET" })
+                                                                s.jsx("span", { style: { fontSize: "6.5px", color: "#D97706", fontWeight: 800 }, children: (currentLocation?.name || "").toLowerCase() === ujjainMeridian.name.toLowerCase() ? "✓ ACTIVE" : "TAP TO SET" })
                                                             ] })
                                                         ]
                                                     }),
 
                                                     // 2. Char Dham Header
-                                                    s.jsx("div", { style: { gridColumn: "span 2", fontSize: "8px", fontWeight: 900, color: "#EA580C", letterSpacing: "0.6px", textTransform: "uppercase", marginTop: "3px", marginBottom: "1px" }, children: "🛕 MAHA CHAR DHAM & KEDARNATH" }),
+                                                    s.jsx("div", { style: { gridColumn: "span 2", fontSize: "8px", fontWeight: 900, color: "#EA580C", letterSpacing: "0.6px", textTransform: "uppercase", marginTop: "2px" }, children: showAllSacred ? "🛕 MAHA CHAR DHAM & KEDARNATH" : "🛕 MAHA CHAR DHAM" }),
 
                                                     // Char Dham Cards
-                                                    charDhams.map((t, idx) => s.jsxs("button", {
+                                                    charDhams.slice(0, showAllSacred ? charDhams.length : 4).map((t, idx) => s.jsxs("button", {
                                                         key: "cd_" + idx, type: "button", onClick: () => onSave({ latitude: t.lat, longitude: t.lon, name: t.name }),
                                                         style: { display: "flex", flexDirection: "column", justifyContent: "space-between", padding: "6px 7px", borderRadius: "12px", background: "#FFFFFF", border: "1px solid rgba(0, 0, 0, 0.08)", boxShadow: "0 1px 3px rgba(0, 0, 0, 0.02)", cursor: "pointer", textAlign: "left", gap: "4px", minWidth: 0, transition: "all 0.2s ease" },
-                                                        className: "sacred-place-chip",
+                                                        className: `sacred-place-chip ${(currentLocation?.name || "").toLowerCase() === t.name.toLowerCase() ? "is-selected" : ""}`,
                                                         children: [
                                                             s.jsxs("div", { style: { display: "flex", alignItems: "center", gap: "5px", width: "100%", minWidth: 0 }, children: [
                                                                 s.jsx("span", { style: { fontSize: "13px", flexShrink: 0, lineHeight: 1 }, children: t.icon }),
@@ -10594,19 +10756,19 @@ const LocationModal = ({ isOpen, onClose, onSave }) => {
                                                             ] }),
                                                             s.jsxs("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", minWidth: 0 }, children: [
                                                                 s.jsx("span", { style: { fontSize: "0.58rem", color: "#6B7280", fontWeight: 600, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: t.state }),
-                                                                s.jsx("span", { style: { fontSize: "6.5px", fontWeight: 900, background: `${t.color}18`, color: t.color, padding: "1px 4.5px", borderRadius: "4px", flexShrink: 0, letterSpacing: "0.2px" }, children: t.badge })
+                                                                s.jsx("span", { style: { fontSize: "6.5px", fontWeight: 900, background: `${t.color}18`, color: t.color, padding: "1px 4.5px", borderRadius: "4px", flexShrink: 0, letterSpacing: "0.2px" }, children: (currentLocation?.name || "").toLowerCase() === t.name.toLowerCase() ? "✓ ACTIVE" : t.badge })
                                                             ] })
                                                         ]
                                                     })),
 
                                                     // 3. Sacred Tirthas Header
-                                                    s.jsx("div", { style: { gridColumn: "span 2", fontSize: "8px", fontWeight: 900, color: "#7C3AED", letterSpacing: "0.6px", textTransform: "uppercase", marginTop: "4px", marginBottom: "1px" }, children: "🕉️ SACRED TIRTHAS & JYOTIRLINGAS" }),
+                                                    showAllSacred && s.jsx("div", { style: { gridColumn: "span 2", fontSize: "8px", fontWeight: 900, color: "#7C3AED", letterSpacing: "0.6px", textTransform: "uppercase", marginTop: "4px", marginBottom: "1px" }, children: "🕉️ SACRED TIRTHAS & JYOTIRLINGAS" }),
 
                                                     // Sacred Tirthas Cards
-                                                    sacredTirthas.map((t, idx) => s.jsxs("button", {
+                                                    showAllSacred && sacredTirthas.map((t, idx) => s.jsxs("button", {
                                                         key: "st_" + idx, type: "button", onClick: () => onSave({ latitude: t.lat, longitude: t.lon, name: t.name }),
                                                         style: { display: "flex", flexDirection: "column", justifyContent: "space-between", padding: "6px 7px", borderRadius: "12px", background: "#FFFFFF", border: "1px solid rgba(0, 0, 0, 0.08)", boxShadow: "0 1px 3px rgba(0, 0, 0, 0.02)", cursor: "pointer", textAlign: "left", gap: "4px", minWidth: 0, transition: "all 0.2s ease" },
-                                                        className: "sacred-place-chip",
+                                                        className: `sacred-place-chip ${(currentLocation?.name || "").toLowerCase() === t.name.toLowerCase() ? "is-selected" : ""}`,
                                                         children: [
                                                             s.jsxs("div", { style: { display: "flex", alignItems: "center", gap: "5px", width: "100%", minWidth: 0 }, children: [
                                                                 s.jsx("span", { style: { fontSize: "13px", flexShrink: 0, lineHeight: 1 }, children: t.icon }),
@@ -10614,15 +10776,57 @@ const LocationModal = ({ isOpen, onClose, onSave }) => {
                                                             ] }),
                                                             s.jsxs("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", minWidth: 0 }, children: [
                                                                 s.jsx("span", { style: { fontSize: "0.58rem", color: "#6B7280", fontWeight: 600, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: t.state }),
-                                                                s.jsx("span", { style: { fontSize: "6.5px", fontWeight: 900, background: `${t.color}18`, color: t.color, padding: "1px 4.5px", borderRadius: "4px", flexShrink: 0, letterSpacing: "0.2px" }, children: t.badge })
+                                                                s.jsx("span", { style: { fontSize: "6.5px", fontWeight: 900, background: `${t.color}18`, color: t.color, padding: "1px 4.5px", borderRadius: "4px", flexShrink: 0, letterSpacing: "0.2px" }, children: (currentLocation?.name || "").toLowerCase() === t.name.toLowerCase() ? "✓ ACTIVE" : t.badge })
                                                             ] })
                                                         ]
                                                     }))
                                                 ]
+                                            }),
+                                            s.jsxs("button", {
+                                                type: "button",
+                                                className: "loc-expand-btn",
+                                                onClick: () => setShowAllSacred(prev => !prev),
+                                                children: [
+                                                    s.jsx("span", { children: showAllSacred ? "Show Less" : `Show ${(charDhams.length - 4) + sacredTirthas.length} More Sacred Places` }),
+                                                    s.jsx("i", { className: showAllSacred ? "fa-solid fa-chevron-up" : "fa-solid fa-chevron-down" })
+                                                ]
                                             })
                                         ]
                                     }),
-                                    s.jsx("div", {
+                            isLoading ? s.jsxs("div", {
+                                className: "loc-loading-card",
+                                children: [
+                                    s.jsx("div", { className: "loc-spinner-ring" }),
+                                    s.jsxs("div", {
+                                        style: { display: "flex", flexDirection: "column", gap: "2px", textAlign: "left" },
+                                        children: [
+                                            s.jsx("span", { className: "loc-loading-title", style: { fontSize: "0.84rem", fontWeight: 800, color: "#1F2937" }, children: "Loading Global Directory..." }),
+                                            s.jsx("span", { className: "loc-loading-sub", style: { fontSize: "0.7rem", fontWeight: 600, color: "#6B7280" }, children: loadStatus })
+                                        ]
+                                    })
+                                ]
+                            }) : error ? s.jsxs("div", {
+                                className: "panchang-box-v27",
+                                style: { padding: "12px", borderRadius: "14px", gap: "8px" },
+                                children: [
+                                    s.jsx("div", { className: "text-label-337", children: error }),
+                                    s.jsx("button", {
+                                        type: "button",
+                                        onClick: () => {
+                                            setIsLoading(true);
+                                            setError(null);
+                                            window.fetchVaidikLocationDB((st) => setLoadStatus(st))
+                                                .then((d) => { setGlobalData(d); setIsLoading(false); })
+                                                .catch(() => { setError("⚠️ Global directory unavailable. GPS & Sacred Places still work!"); setIsLoading(false); });
+                                        },
+                                        className: "panchang-card-v16",
+                                        children: "Retry"
+                                    })
+                                ]
+                            }) : s.jsxs("div", {
+                                className: "panchang-element-339",
+                                children: [
+                                    s.jsxs("div", {
                                         className: "flex-row-340",
                                         children: [
                                             s.jsx("div", { className: "panchang-element-341" }),
@@ -10642,152 +10846,132 @@ const LocationModal = ({ isOpen, onClose, onSave }) => {
                                                         value: searchTerm,
                                                         onChange: (e) => setSearchTerm(e.target.value),
                                                         onBlur: () => setTimeout(() => setFilteredCities([]), 250),
-                                                        placeholder: "Type city or state (min 2 chars)...",
+                                                        placeholder: "Type city, district or village (min 2 chars)...",
                                                         className: "panchang-card-v17"
                                                     }),
-                                                    searchTerm.length >= 2 && filteredCities.length > 0 && s.jsx("div", {
-                                                        className: "panchang-card-v18",
-                                                        children: filteredCities.map((city, idx) => s.jsx("button", {
-                                                            key: idx,
-                                                            type: "button",
-                                                            onPointerDown: (e) => e.preventDefault(),
-                                                            onClick: () => handleSearchSelect(city),
-                                                            className: "text-label-348",
-                                                            children: s.jsxs("div", {
-                                                                children: [
-                                                                    s.jsx("div", { className: "text-label-349", children: city.name }),
-                                                                    s.jsx("div", { className: "text-label-255-v1", children: (() => {
-    let extra = "";
-    try {
-        if(window.tzlookup) {
-            const tZ = window.tzlookup(city.lat, city.lon);
-            const d = new Date();
-            const tStr = new Intl.DateTimeFormat('en-US', { timeZone: tZ, hour: 'numeric', minute: 'numeric', hour12: true }).format(d);
-            const oParts = new Intl.DateTimeFormat('en-US', { timeZone: tZ, timeZoneName: 'shortOffset' }).formatToParts(d);
-            const oP = oParts.find(p => p.type === 'timeZoneName');
-            const oStr = oP ? oP.value : 'GMT';
-            extra = ` | ${oStr} | ${tStr}`;
-        }
-    } catch(e) {}
-    return city.label + extra;
-})() })
-                                                                ]
-                                                            })
-                                                        }))
+                                                    searchTerm.length > 0 && s.jsx("button", {
+                                                        type: "button",
+                                                        onPointerDown: (e) => e.preventDefault(),
+                                                        onClick: () => { setSearchTerm(""); setDebouncedTerm(""); setFilteredCities([]); },
+                                                        style: { position: "absolute", right: "8px", top: "50%", transform: "translateY(-50%)", width: "22px", height: "22px", borderRadius: "50%", border: "none", background: "rgba(148, 163, 184, 0.2)", color: "#6B7280", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", fontSize: "11px" },
+                                                        title: "Clear search",
+                                                        children: s.jsx("i", { className: "fa-solid fa-xmark" })
                                                     })
                                                 ]
+                                            }),
+                                            searchTerm.length >= 2 && filteredCities.length > 0 && s.jsx("div", {
+                                                className: "panchang-card-v18 custom-scrollbar",
+                                                children: filteredCities.map((city, idx) => s.jsx("button", {
+                                                    key: idx,
+                                                    type: "button",
+                                                    onPointerDown: (e) => e.preventDefault(),
+                                                    onClick: () => handleSearchSelect(city),
+                                                    className: "text-label-348",
+                                                    children: s.jsxs("div", {
+                                                        style: { width: "100%" },
+                                                        children: [
+                                                            s.jsxs("div", {
+                                                                style: { display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: "8px" },
+                                                                children: [
+                                                                    s.jsx("span", { className: "text-label-349", children: city.name }),
+                                                                    city.tzBadge && s.jsx("span", { className: "loc-search-tz-badge", children: city.tzBadge })
+                                                                ]
+                                                            }),
+                                                            s.jsx("div", { className: "text-label-255-v1", children: city.label })
+                                                        ]
+                                                    })
+                                                }))
+                                            }),
+                                            searchTerm.length >= 2 && debouncedTerm.length >= 2 && filteredCities.length === 0 && s.jsx("div", {
+                                                style: { marginTop: "6px", padding: "8px 10px", borderRadius: "10px", fontSize: "0.74rem", fontWeight: 600, color: "#9CA3AF", textAlign: "center", border: "1px dashed rgba(148, 163, 184, 0.35)" },
+                                                children: isSearching ? "Searching cities, blocks & villages..." : "No matching places found. Try browsing by region below."
                                             })
                                         ]
-                                                                         }),
-                                    s.jsxs("div", {
-                                                                              className: "panchang-element-350",
+                                    }),
+                                    s.jsxs("button", {
+                                        type: "button",
+                                        className: "loc-browse-toggle",
+                                        onClick: () => setShowManualBrowse(prev => !prev),
+                                        children: [
+                                            s.jsxs("span", {
+                                                style: { display: "inline-flex", alignItems: "center", gap: "6px" },
+                                                children: [
+                                                    s.jsx("i", { className: "fa-solid fa-map-location-dot", style: { color: "#EA580C" } }),
+                                                    s.jsx("span", { children: "Browse by Country / State / Block" })
+                                                ]
+                                            }),
+                                            s.jsx("i", { className: showManualBrowse ? "fa-solid fa-chevron-up" : "fa-solid fa-chevron-down" })
+                                        ]
+                                    }),
+                                    showManualBrowse && s.jsxs("div", {
+                                        className: "panchang-element-350",
+                                        style: { marginTop: "8px" },
                                         children: [
                                             s.jsxs("div", {
                                                 className: "panchang-element-351",
                                                 children: [
                                                     s.jsx("label", { className: "text-label-344", children: "COUNTRY" }),
-                                                    s.jsxs("select", {
-                                                        value: selectedCountry,
-                                                        onChange: (e) => {
-                                                            setSelectedCountry(e.target.value);
-                                                            setSelectedState("");
-                                                            setSelectedDistrict("");
-                                                            setSelectedBlock("");
-                                                            setSelectedPanchayat("");
-                                                        },
-                                                        className: "panchang-card-v19",
-                                                        children: [
-                                                            s.jsx("option", { value: "", disabled: true, children: "Select Country" }),
-                                                            Object.keys(globalData).sort().map(country => s.jsx("option", { key: country, value: country, children: country }))
-                                                        ]
+                                                    s.jsx("button", {
+                                                        type: "button",
+                                                        onClick: () => openPicker("country"),
+                                                        className: "panchang-card-v19 loc-picker-trigger",
+                                                        children: s.jsx("span", { className: `loc-picker-val ${!selectedCountry ? "is-placeholder" : ""}`, children: selectedCountry || "Select Country" })
                                                     })
                                                 ]
                                             }),
                                             selectedCountry && s.jsxs("div", {
                                                 className: "panchang-element-351",
                                                 children: [
-                                                    s.jsx("label", { className: "text-label-344", children: "STATE / REGION" }),
-                                                    s.jsxs("select", {
-                                                        value: selectedState,
-                                                        onChange: (e) => {
-                                                            setSelectedState(e.target.value);
-                                                            setSelectedDistrict("");
-                                                            setSelectedBlock("");
-                                                            setSelectedPanchayat("");
-                                                        },
-                                                        className: "panchang-card-v19",
-                                                        children: [
-                                                            s.jsx("option", { value: "", disabled: true, children: "Select State" }),
-                                                            Object.keys(globalData[selectedCountry] || {}).filter(k => k !== "_timezone").sort().map(state => s.jsx("option", { key: state, value: state, children: state }))
-                                                        ]
+                                                    s.jsx("label", { className: "text-label-344", children: "STATE" }),
+                                                    s.jsx("button", {
+                                                        type: "button",
+                                                        onClick: () => openPicker("state"),
+                                                        className: "panchang-card-v19 loc-picker-trigger",
+                                                        children: s.jsx("span", { className: `loc-picker-val ${!selectedState ? "is-placeholder" : ""}`, children: selectedState || "Select State" })
                                                     })
                                                 ]
                                             }),
                                             selectedState && s.jsxs("div", {
-                                                className: "panchang-element-351",
+                                                className: `panchang-element-351 ${selectedCountry !== "India" ? "loc-span-2" : ""}`,
                                                 children: [
                                                     s.jsx("label", { className: "text-label-344", children: selectedCountry === "India" ? "DISTRICT" : "CITY" }),
-                                                    s.jsxs("select", {
-                                                        value: selectedDistrict,
-                                                        onChange: (e) => {
-                                                            setSelectedDistrict(e.target.value);
-                                                            setSelectedBlock("");
-                                                            setSelectedPanchayat("");
-                                                        },
-                                                        className: "panchang-card-v19",
-                                                        children: [
-                                                            s.jsx("option", { value: "", disabled: true, children: selectedCountry === "India" ? "Select District" : "Select City" }),
-                                                            selectedCountry === "India" 
-                                                                ? Object.keys(globalData[selectedCountry][selectedState] || {}).sort().map(d => s.jsx("option", { key: d, value: d, children: d }))
-                                                                : (Array.isArray(globalData[selectedCountry][selectedState]) ? globalData[selectedCountry][selectedState] : (globalData[selectedCountry][selectedState]?.cities || [])).map(c => s.jsx("option", { key: c[0], value: c[0], children: c[0] }))
-                                                        ]
+                                                    s.jsx("button", {
+                                                        type: "button",
+                                                        onClick: () => openPicker("district"),
+                                                        className: "panchang-card-v19 loc-picker-trigger",
+                                                        children: s.jsx("span", { className: `loc-picker-val ${!selectedDistrict ? "is-placeholder" : ""}`, children: selectedDistrict || (selectedCountry === "India" ? "Select District" : "Select City") })
                                                     })
                                                 ]
                                             }),
                                             selectedCountry === "India" && selectedDistrict && s.jsxs("div", {
                                                 className: "panchang-element-351",
                                                 children: [
-                                                    s.jsx("label", { className: "text-label-344", children: "BLOCK (OPTIONAL)" }),
-                                                    s.jsxs("select", {
-                                                        value: selectedBlock,
-                                                        onChange: (e) => {
-                                                            setSelectedBlock(e.target.value);
-                                                            setSelectedPanchayat("");
-                                                        },
-                                                        className: "panchang-card-v19",
-                                                        children: [
-                                                            s.jsx("option", { value: "", children: "Select Block" }),
-                                                            Object.keys(globalData[selectedCountry][selectedState][selectedDistrict] || {})
-                                                                .filter(k => k !== "_coords")
-                                                                .sort()
-                                                                .map(b => s.jsx("option", { key: b, value: b, children: b }))
-                                                        ]
+                                                    s.jsx("label", { className: "text-label-344", children: "BLOCK (OPT.)" }),
+                                                    s.jsx("button", {
+                                                        type: "button",
+                                                        onClick: () => openPicker("block"),
+                                                        className: "panchang-card-v19 loc-picker-trigger",
+                                                        children: s.jsx("span", { className: `loc-picker-val ${!selectedBlock ? "is-placeholder" : ""}`, children: selectedBlock || "Select Block" })
                                                     })
                                                 ]
                                             }),
                                             selectedCountry === "India" && selectedBlock && s.jsxs("div", {
-                                                className: "panchang-element-351",
+                                                className: "panchang-element-351 loc-span-2",
                                                 children: [
-                                                    s.jsx("label", { className: "text-label-344", children: "PANCHAYAT / VILLAGE (OPTIONAL)" }),
-                                                    s.jsxs("select", {
-                                                        value: selectedPanchayat,
-                                                        onChange: (e) => setSelectedPanchayat(e.target.value),
-                                                        className: "panchang-card-v19",
-                                                        children: [
-                                                            s.jsx("option", { value: "", children: "Select Panchayat" }),
-                                                            (globalData[selectedCountry][selectedState][selectedDistrict][selectedBlock]._panchayats || [])
-                                                                .map(p => p[0])
-                                                                .sort()
-                                                                .map(p => s.jsx("option", { key: p, value: p, children: p }))
-                                                        ]
+                                                    s.jsx("label", { className: "text-label-344", children: "PANCHAYAT / VILLAGE (OPT.)" }),
+                                                    s.jsx("button", {
+                                                        type: "button",
+                                                        onClick: () => openPicker("panchayat"),
+                                                        className: "panchang-card-v19 loc-picker-trigger",
+                                                        children: s.jsx("span", { className: `loc-picker-val ${!selectedPanchayat ? "is-placeholder" : ""}`, children: selectedPanchayat || "Select Panchayat" })
                                                     })
                                                 ]
                                             })
                                         ]
                                     }),
                                     
-                                    canSave && s.jsxs("div", {
-                                        className: "panchang-box-v28",
+                                    showManualBrowse && canSave && s.jsxs("div", {
+                                        className: "loc-tz-strip",
                                         children: (() => {
                                             let lat, lon;
                                             if (selectedCountry !== "India") {
@@ -10813,15 +10997,18 @@ const LocationModal = ({ isOpen, onClose, onSave }) => {
                                                 const oP = oParts.find(p => p.type === 'timeZoneName');
                                                 const oStr = oP ? oP.value : 'GMT';
                                                 return [
-                                                    s.jsxs("div", { className: "flex-row-354", key: "tz1", children: [s.jsx("span", { className: "text-label-355", children: "OLSON TIME ZONE FOR DST RULES" }), s.jsx("span", { className: "text-label-164", children: tZ })] }),
-                                                    s.jsxs("div", { className: "flex-row-354", key: "tz2", children: [s.jsx("span", { className: "text-label-355", children: "TIME ZONE" }), s.jsx("span", { className: "text-label-164", children: oStr })] }),
-                                                    s.jsxs("div", { className: "flex-row-356", key: "tz3", children: [s.jsx("span", { className: "text-label-355", children: "CURRENT TIME" }), s.jsx("span", { className: "text-label-357", children: tStr })] })
+                                                    s.jsxs("span", { key: "tzl", style: { display: "inline-flex", alignItems: "center", gap: "5px", minWidth: 0 }, children: [
+                                                        s.jsx("i", { className: "fa-regular fa-clock", style: { color: "#EA580C" } }),
+                                                        s.jsx("span", { style: { whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: `${tZ} · ${oStr}` })
+                                                    ] }),
+                                                    s.jsx("span", { key: "tzr", style: { fontWeight: 900, whiteSpace: "nowrap" }, children: tStr })
                                                 ];
                                             }
                                             return null;
                                         })()
                                     }),
-                                    s.jsx("button", {
+                                    showManualBrowse && s.jsx("button", {
+                                        type: "button",
                                         onClick: handleSaveManual,
                                         disabled: !canSave,
                                         className: "panchang-card-v20",
@@ -10872,7 +11059,7 @@ const OdiaBelaPanels = ({ data: r, langMode }) => {
             return isOdia ? timeStr.replace(/[0-9]/g, (digit) => odiaDigits[parseInt(digit, 10)]) : timeStr;
         };
 
-        const now = new Date(realNow.toLocaleString("en-US", { timeZone: (window.currentTz || "Asia/Kolkata") }));
+        const now = getFastTzNow();
 
         const yamaItems = [
             {
@@ -18504,8 +18691,6 @@ const AssamesePanjikaView = ({ data: b, settings }) => {
 };
 
 const MonthsGuideModal = ({ isOpen, onClose, settings, data }) => {
-    if (!isOpen) return null;
-
     const [showDoMasiGuide, setShowDoMasiGuide] = ki.useState(false);
     const curLang = (window.getCurrentPanchangLang && window.getCurrentPanchangLang()) || 'en';
     const locGuide = (typeof localizedParagraphs !== 'undefined' && localizedParagraphs[curLang]?.monthsGuide) || null;
@@ -18538,8 +18723,16 @@ const MonthsGuideModal = ({ isOpen, onClose, settings, data }) => {
     const normActive = norm(activeMonthName);
     const normAmanta = norm(cleanAmanta);
 
-    // Dynamic 12-Month Astronomical Span Engine (Pure Math - No Hardcoding)
+    const evalD = data?.date ? new Date(data.date) : new Date();
+    const cKey = `${evalD.getFullYear()}_${evalD.getMonth()}_${evalD.getDate()}_${settings?.monthSystem || "purnimanta"}_${curLang}_${Number(data?.location?.latitude ?? 28.61).toFixed(2)}_${Number(data?.location?.longitude ?? 77.21).toFixed(2)}_${window.currentTimeFormat || "12h"}`;
+
+    // Dynamic 12-Month Astronomical Span Engine (Pure Math - Cached)
     const dynamicSpansMap = ki.useMemo(() => {
+        if (!isOpen) return [];
+        if (typeof window !== "undefined") {
+            window.__vaidikMonthsSpanCache = window.__vaidikMonthsSpanCache || {};
+            if (window.__vaidikMonthsSpanCache[cKey]) return window.__vaidikMonthsSpanCache[cKey];
+        }
         try {
             const Astro = window.Astronomy;
             if (!Astro) return {};
@@ -18628,17 +18821,25 @@ const MonthsGuideModal = ({ isOpen, onClose, settings, data }) => {
             const list = [];
             
             const is12HLocal = window.currentTimeFormat !== "24h";
+            const obsUjjain = new window.Astronomy.Observer(23.1765, 75.7685, 0);
+            const tzTimeFmt = new Intl.DateTimeFormat("en-US", { hour: "2-digit", minute: "2-digit", hour12: is12HLocal, timeZone: tz });
+            const tzPartsFmt = new Intl.DateTimeFormat("en-US", { timeZone: tz, year: "numeric", month: "numeric", day: "numeric", hour: "numeric", minute: "numeric", hour12: false });
             
             const formatVedicBoundary = (dateObj, isStart) => {
                 if (!dateObj) return "";
-                const timeStr = dateObj.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: is12HLocal, timeZone: tz });
+                const timeStr = tzTimeFmt.format(dateObj);
+                const dParts = tzPartsFmt.formatToParts(dateObj);
+                let yr = 2026, mo = 1, dy = 1, hr = 6, min = 0;
+                for (let k = 0; k < dParts.length; k++) {
+                    const p = dParts[k];
+                    if (p.type === "year") yr = parseInt(p.value, 10);
+                    else if (p.type === "month") mo = parseInt(p.value, 10);
+                    else if (p.type === "day") dy = parseInt(p.value, 10);
+                    else if (p.type === "hour") hr = parseInt(p.value, 10) % 24;
+                    else if (p.type === "minute") min = parseInt(p.value, 10);
+                }
                 let isBeforeSunrise = false;
                 try {
-                    // Classical Ujjain Meridian (23.1765° N, 75.7685° E) - The Universal Zero-Point for Indian Month Reckoning
-                    const obsUjjain = new window.Astronomy.Observer(23.1765, 75.7685, 0);
-                    const dParts = new Intl.DateTimeFormat('en-US', { timeZone: tz, hour: 'numeric', minute: 'numeric', hour12: false }).formatToParts(dateObj);
-                    const hr = parseInt(dParts.find(p => p.type === 'hour').value, 10);
-                    const min = parseInt(dParts.find(p => p.type === 'minute').value, 10);
                     if (hr >= 8) {
                         isBeforeSunrise = false;
                     } else if (hr < 4) {
@@ -18647,18 +18848,13 @@ const MonthsGuideModal = ({ isOpen, onClose, settings, data }) => {
                         const elapsedMins = hr * 60 + min;
                         const approxMidnight = new Date(dateObj.getTime() - elapsedMins * 60000 - 3600000);
                         const srEvent = window.Astronomy.SearchAltitude(window.Astronomy.Body.Sun, obsUjjain, +1, window.Astronomy.MakeTime(approxMidnight), 1, -0.833333);
-                        if (srEvent) {
-                            isBeforeSunrise = dateObj.getTime() < srEvent.date.getTime();
-                        } else {
-                            isBeforeSunrise = hr < 6;
-                        }
+                        isBeforeSunrise = srEvent ? (dateObj.getTime() < srEvent.date.getTime()) : (hr < 6);
                     }
                 } catch(e) {
-                    const hr = parseInt(dateObj.toLocaleTimeString("en-US", { hour: "numeric", hour12: false, timeZone: tz }));
                     isBeforeSunrise = hr < 6;
                 }
 
-                let displayDate = new Date(dateObj.toLocaleString("en-US", { timeZone: tz }));
+                let displayDate = new Date(yr, mo - 1, dy);
                 if (isBeforeSunrise) {
                     displayDate.setDate(displayDate.getDate() - 1);
                 }
@@ -18744,9 +18940,14 @@ const MonthsGuideModal = ({ isOpen, onClose, settings, data }) => {
                 });
             });
 
+            if (typeof window !== "undefined" && window.__vaidikMonthsSpanCache) {
+                window.__vaidikMonthsSpanCache[cKey] = list;
+            }
             return list;
         } catch (e) { return []; }
-    }, [data?.date, settings?.monthSystem, curLang]);
+    }, [isOpen, cKey]);
+
+    if (!isOpen) return null;
 
     const monthsData = [
         {
@@ -18861,7 +19062,7 @@ const MonthsGuideModal = ({ isOpen, onClose, settings, data }) => {
 
     return s.jsxs("div", {
         className: "flex-row-322",
-        style: { zIndex: 10001, backdropFilter: "blur(6px)", WebkitBackdropFilter: "blur(6px)" },
+        style: { zIndex: 10001 },
         children: [
             s.jsx("div", {
                 className: "panchang-element-323",
@@ -18869,7 +19070,7 @@ const MonthsGuideModal = ({ isOpen, onClose, settings, data }) => {
                 onClick: onClose
             }),
             s.jsxs("div", {
-                className: "panchang-card-v12 custom-scrollbar",
+                className: "panchang-card-v12 months-modal-card",
                 style: {
                     position: "relative",
                     zIndex: 20,
@@ -18879,10 +19080,9 @@ const MonthsGuideModal = ({ isOpen, onClose, settings, data }) => {
                     borderRadius: "24px",
                     background: "#FFFFFF",
                     border: "1.5px solid rgba(255, 107, 0, 0.3)",
-                    boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.35)",
                     display: "flex",
                     flexDirection: "column",
-                    overflow: "hidden"
+                    overflow: "clip"
                 },
                 children: [
                     // Header
@@ -18940,13 +19140,18 @@ const MonthsGuideModal = ({ isOpen, onClose, settings, data }) => {
 
                     // Scrollable List Body
                     s.jsxs("div", {
+                        className: "months-guide-scroll custom-scrollbar",
                         style: {
                             padding: "14px 16px",
                             display: "flex",
                             flexDirection: "column",
                             gap: "10px",
                             overflowY: "auto",
-                            flexGrow: 1
+                            flexGrow: 1,
+                            minHeight: 0,
+                            WebkitOverflowScrolling: "touch",
+                            overscrollBehavior: "contain",
+                            touchAction: "pan-y"
                         },
                         children: [
                             // Informative Banner
@@ -19112,9 +19317,8 @@ const MonthsGuideModal = ({ isOpen, onClose, settings, data }) => {
                                     style: {
                                         padding: "12px 14px",
                                         borderRadius: "16px",
-                                        background: isCurrent ? "linear-gradient(145deg, #FFFDF8 0%, #FEF3C7 100%)" : "#FFFFFF",
+                                        background: isCurrent ? "#FFFBEB" : "#FFFFFF",
                                         border: isCurrent ? "2px solid #F59E0B" : "1.5px solid #E5E7EB",
-                                        boxShadow: isCurrent ? "0 4px 14px rgba(245, 158, 11, 0.16)" : "0 2px 6px rgba(0, 0, 0, 0.02)",
                                         display: "flex",
                                         flexDirection: "column",
                                         gap: "6px"
@@ -19520,6 +19724,7 @@ const ODIA_JSON_URL = "https://raw.githubusercontent.com/santosh276/Festival-/re
 let localizedParagraphs = {};
 
 async function fetchLocalizedParagraphs(langCode) {
+    if (!langCode || langCode === 'en' || localizedParagraphs[langCode]) return;
     try {
         const fetchUrl = langCode === 'or' 
             ? `${ODIA_JSON_URL}?v=${Date.now()}`
@@ -20095,9 +20300,13 @@ const formatLocalTimeDisplay = (str, lang) => {
 (function() {
     let isTranslating = false;
     let observer = null;
+    const translationCache = {};
 
     function buildTranslationMap(langCode) {
-        if (!langCode || !langData[langCode]) return { map: {}, nums: null, regex: null };
+        if (!langCode || !langData[langCode]) return { map: {}, lowerMap: {}, nums: null, regex: null };
+        const locRef = (typeof localizedParagraphs !== 'undefined' && localizedParagraphs[langCode]) || null;
+        const cached = translationCache[langCode];
+        if (cached && cached.locRef === locRef) return cached;
         const lang = langData[langCode];
         const translationMap = {};
 
@@ -20225,6 +20434,12 @@ const formatLocalTimeDisplay = (str, lang) => {
         }
 
         const sortedKeys = Object.keys(translationMap).sort((a, b) => b.length - a.length);
+        const lowerMap = {};
+        for (let i = 0; i < sortedKeys.length; i++) {
+            const k = sortedKeys[i];
+            const lk = k.toLowerCase();
+            if (lowerMap[lk] === undefined) lowerMap[lk] = translationMap[k];
+        }
         let regex = null;
         if (sortedKeys.length > 0) {
             const escaped = sortedKeys.map(k => k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
@@ -20232,11 +20447,15 @@ const formatLocalTimeDisplay = (str, lang) => {
             regex = new RegExp(`(^|[^\\p{L}\\p{N}_])(${escaped.join('|')})(?=[^\\p{L}\\p{N}_]|$)`, 'giu');
         }
 
-        return {
+        const built = {
             map: translationMap,
+            lowerMap: lowerMap,
             nums: lang.nums,
-            regex: regex
+            regex: regex,
+            locRef: locRef
         };
+        translationCache[langCode] = built;
+        return built;
     }
 
     window.translatePanchangDOM = function(langCode, targetEl) {
@@ -20245,7 +20464,7 @@ const formatLocalTimeDisplay = (str, lang) => {
         if (!rootEl) return;
 
         isTranslating = true;
-        const { map: translationMap, nums, regex } = buildTranslationMap(langCode);
+        const { map: translationMap, lowerMap, nums, regex } = buildTranslationMap(langCode);
 
         const i18nElements = rootEl.hasAttribute && rootEl.hasAttribute('data-i18n') 
             ? [rootEl, ...rootEl.querySelectorAll('[data-i18n]')] 
@@ -20273,16 +20492,7 @@ const formatLocalTimeDisplay = (str, lang) => {
                         }
                     }
                 }
-                if (!trans && translationMap[key]) trans = translationMap[key];
-                if (!trans) {
-                    const lowerK = key.toLowerCase();
-                    for (const k in translationMap) {
-                        if (k.toLowerCase() === lowerK) {
-                            trans = translationMap[k];
-                            break;
-                        }
-                    }
-                }
+                if (!trans) trans = translationMap[key] || lowerMap[key.toLowerCase()] || null;
                 // Flaw 4 Fix: Safe HTML text replacement to avoid destroying nested React Icons
                 if (trans && el.innerHTML.indexOf('<') === -1 && el.textContent !== trans) {
                     el.textContent = trans;
@@ -20319,13 +20529,8 @@ const formatLocalTimeDisplay = (str, lang) => {
 
             if (regex) {
                 text = text.replace(regex, (match, p1, p2) => {
-                    const lower = p2.toLowerCase();
-                    for (const k in translationMap) {
-                        if (k.toLowerCase() === lower) {
-                            return p1 + translationMap[k];
-                        }
-                    }
-                    return match;
+                    const hit = lowerMap[p2.toLowerCase()];
+                    return hit !== undefined ? p1 + hit : match;
                 });
             }
             
@@ -20381,7 +20586,7 @@ const formatLocalTimeDisplay = (str, lang) => {
 
             if (liveNodesToUpdate.length > 0 && !needsTranslation) {
                 // Micro-translation purely for the clock's ticking numbers to save battery
-                const { nums } = buildTranslationMap(currentLang);
+                const nums = langData[currentLang] && langData[currentLang].nums;
                 if (nums) {
                     isTranslating = true;
                     liveNodesToUpdate.forEach(node => {
@@ -20440,7 +20645,79 @@ const detectStateMonthSystem = (l) => {
     return null;
 };
 
-const mx={latitude:28.6139,longitude:77.2090},DivyaDrishtiApp=()=>{const[loc,setLoc]=ki.useState(()=>{const saved=localStorage.getItem("savedLocation");return saved?JSON.parse(saved):{latitude:28.6139,longitude:77.2090,name:"New Delhi, IN"};}),[showLocModal,setShowLocModal]=ki.useState(!1),[showSettingsModal,setShowSettingsModal]=ki.useState(!1),[show12MonthsModal,setShow12MonthsModal]=ki.useState(!1),[settings,setSettings]=ki.useState(()=>{try{const s=localStorage.getItem("panchangSettings");return s?JSON.parse(s):{region:"all",newYear:"gudi_padwa",monthSystem:"purnimanta",timeFormat:"12h",ayanamsha:"lahiri"};}catch(e){return{region:"all",newYear:"gudi_padwa",monthSystem:"purnimanta",timeFormat:"12h",ayanamsha:"lahiri"};}}),[r,h]=ki.useState(new Date()),[b,o]=ki.useState(null),[A,T]=ki.useState(!0),[activeTab, setActiveTab]=ki.useState("Daily Panchang"),[currentLang, setCurrentLang]=ki.useState(()=>getInitialLang());const dateInputRef=ki.useRef(null);window.currentTimeFormat=settings?.timeFormat||"12h";window.selectedAyanamsha=settings?.ayanamsha||"lahiri";window.dayStartRule="sunrise";window.getCurrentPanchangLang=()=>currentLang;ki.useEffect(()=>{localStorage.setItem("panchangAppLang",currentLang);try{const url=new URL(window.location.href);const fullLangName=urlLangMap[currentLang]||currentLang;url.searchParams.set("lang",fullLangName);window.history.replaceState({},"",url);}catch(e){}fetchLocalizedParagraphs(currentLang);window.dispatchEvent(new CustomEvent("panchangLanguageChanged",{detail:{lang:currentLang}}));if(window.translatePanchangDOM){window.translatePanchangDOM(currentLang);}},[currentLang]);ki.useEffect(()=>{if(window.translatePanchangDOM && currentLang!=="en"){setTimeout(()=>window.translatePanchangDOM(currentLang),100);}},[b,r,activeTab,loc,currentLang]);ki.useEffect(()=>{if(loc && loc.latitude && loc.longitude && window.tzlookup){window.currentTz=window.tzlookup(loc.latitude,loc.longitude);}T(!0);const z=setTimeout(()=>{const q=window.enhancePanchang(ix(r,loc),r,loc);o(q),T(!1);},200);return()=>clearTimeout(z);},[r,loc,settings]);const H=()=>{const z=new Date(r);z.setDate(z.getDate()-1),h(z);},U=()=>{const z=new Date(r);z.setDate(z.getDate()+1),h(z);},O=z=>{if(z.target.value){const[q,V,Q]=z.target.value.split("-").map(Number);h(new Date(q,V-1,Q));}},S=z=>{const q=z.getFullYear(),V=String(z.getMonth()+1).padStart(2,"0"),Q=String(z.getDate()).padStart(2,"0");return`${q}-${V}-${Q}`;},openCalendarPicker=()=>{if(dateInputRef.current){try{if(typeof dateInputRef.current.showPicker==="function"){dateInputRef.current.showPicker();}else{dateInputRef.current.focus();dateInputRef.current.click();}}catch(e){dateInputRef.current.focus();dateInputRef.current.click();}}},getDayName=z=>z.toLocaleDateString("en-US",{weekday:"long",timeZone:(window.currentTz||"Asia/Kolkata")}),getDateStr=z=>z.toLocaleDateString("en-US",{month:"long",day:"numeric",year:"numeric",timeZone:(window.currentTz||"Asia/Kolkata")});
+const computePanchangCached = (dateObj, locObj, timeFmt, ayan) => {
+    if (locObj && locObj.latitude != null && locObj.longitude != null && window.tzlookup) {
+        window.currentTz = window.tzlookup(locObj.latitude, locObj.longitude);
+    }
+    window.currentTimeFormat = timeFmt;
+    window.selectedAyanamsha = ayan;
+    const tz = window.currentTz || "Asia/Kolkata";
+    const key = `${dateObj.getFullYear()}-${dateObj.getMonth()}-${dateObj.getDate()}|${Number(locObj.latitude).toFixed(3)},${Number(locObj.longitude).toFixed(3)}|${tz}|${timeFmt}|${ayan}`;
+    window.__panchangDayCache = window.__panchangDayCache || new Map();
+    const hit = window.__panchangDayCache.get(key);
+    if (hit) return hit;
+    const computed = window.enhancePanchang(ix(dateObj, locObj), dateObj, locObj);
+    if (window.__panchangDayCache.size >= 45) {
+        window.__panchangDayCache.delete(window.__panchangDayCache.keys().next().value);
+    }
+    window.__panchangDayCache.set(key, computed);
+    return computed;
+};
+
+const MemoShubhScoreFlashCard = ki.memo(ShubhScoreFlashCard);
+const MemoDailyPanchangView = ki.memo(DailyPanchangView);
+const MemoMuhurtaTimingsTab = ki.memo(MuhurtaTimingsTab);
+const MemoRashiNakshatraTab = ki.memo(RashiNakshatraTab);
+const MemoBalamDoshaTab = ki.memo(BalamDoshaTab);
+const MemoPanchakaLagnaTab = ki.memo(PanchakaLagnaTab);
+const MemoRegionalPanjikaView = ki.memo(RegionalPanjikaView);
+
+const readUniversalVaidikLoc = () => {
+    try {
+        const u = (window.VaidikLocation && typeof window.VaidikLocation.get === "function")
+            ? window.VaidikLocation.get()
+            : JSON.parse(localStorage.getItem("vaidik_universal_location") || "null");
+        if (u) {
+            const lat = Number(u.latitude !== undefined ? u.latitude : u.lat);
+            const lon = Number(u.longitude !== undefined ? u.longitude : u.lng);
+            if (Number.isFinite(lat) && Number.isFinite(lon)) {
+                return {
+                    latitude: lat,
+                    longitude: lon,
+                    name: u.name || (u.city ? (u.state ? `${u.city}, ${u.state}` : u.city) : `${lat.toFixed(2)}, ${lon.toFixed(2)}`)
+                };
+            }
+        }
+    } catch (e) {}
+    try {
+        const saved = localStorage.getItem("savedLocation");
+        if (saved) {
+            const p = JSON.parse(saved);
+            if (p && Number.isFinite(Number(p.latitude)) && Number.isFinite(Number(p.longitude))) return p;
+        }
+    } catch (e) {}
+    return { latitude: 28.6139, longitude: 77.2090, name: "New Delhi, IN" };
+};
+
+const pushUniversalVaidikLoc = (n) => {
+    if (!n) return;
+    const lat = Number(n.latitude !== undefined ? n.latitude : n.lat);
+    const lng = Number(n.longitude !== undefined ? n.longitude : n.lng);
+    if (!Number.isFinite(lat) || !Number.isFinite(lng)) return;
+    const parts = (n.name || "").split(",").map(x => x.trim());
+    const city = parts[0] || "";
+    const state = parts[1] || "";
+    try { localStorage.setItem("savedLocation", JSON.stringify({ latitude: lat, longitude: lng, name: n.name })); } catch (e) {}
+    if (window.VaidikLocation && typeof window.VaidikLocation.set === "function") {
+        window.VaidikLocation.set({ lat, lng, latitude: lat, longitude: lng, name: n.name, city, state });
+    } else {
+        const payload = { lat, lng, latitude: lat, longitude: lng, name: n.name, city, state, country: "India", updatedAt: Date.now() };
+        try { localStorage.setItem("vaidik_universal_location", JSON.stringify(payload)); } catch (e) {}
+        window.dispatchEvent(new CustomEvent("vaidik-location-change", { detail: payload }));
+    }
+};
+
+const mx={latitude:28.6139,longitude:77.2090},DivyaDrishtiApp=()=>{const[loc,setLoc]=ki.useState(()=>readUniversalVaidikLoc()),[showLocModal,setShowLocModal]=ki.useState(!1),[showSettingsModal,setShowSettingsModal]=ki.useState(!1),[show12MonthsModal,setShow12MonthsModal]=ki.useState(!1),[settings,setSettings]=ki.useState(()=>{let base={region:"all",newYear:"gudi_padwa",monthSystem:"purnimanta",timeFormat:"12h",ayanamsha:"lahiri"};try{const s=localStorage.getItem("panchangSettings");if(s)base=JSON.parse(s);}catch(e){}try{const u=JSON.parse(localStorage.getItem("vaidik_universal_location")||"null"),sv=JSON.parse(localStorage.getItem("savedLocation")||"null");if(u&&(!sv||sv.name!==u.name)){const autoS=detectStateMonthSystem({latitude:Number(u.latitude??u.lat),longitude:Number(u.longitude??u.lng),name:u.name||""});if(autoS){base={...base,monthSystem:autoS};localStorage.setItem("panchangSettings",JSON.stringify(base));}localStorage.setItem("savedLocation",JSON.stringify({latitude:Number(u.latitude??u.lat),longitude:Number(u.longitude??u.lng),name:u.name||""}));}}catch(e){}return base;}),[r,h]=ki.useState(new Date()),[b,o]=ki.useState(()=>{try{if(typeof window.enhancePanchang==="function"&&typeof window.Astronomy!=="undefined"){return computePanchangCached(r,loc,settings?.timeFormat||"12h",settings?.ayanamsha||"lahiri");}}catch(e){}return null;}),[activeTab, setActiveTab]=ki.useState("Daily Panchang"),[currentLang, setCurrentLang]=ki.useState(()=>getInitialLang());const dateInputRef=ki.useRef(null);const handleOpen12Months=ki.useCallback(()=>setShow12MonthsModal(!0),[]);const anyModalOpen=showLocModal||showSettingsModal||show12MonthsModal;ki.useEffect(()=>{const applyExtLoc=(d)=>{if(!d)return;const lat=Number(d.latitude!==undefined?d.latitude:d.lat),lon=Number(d.longitude!==undefined?d.longitude:d.lng);if(!Number.isFinite(lat)||!Number.isFinite(lon))return;const newName=d.name||(d.city?(d.state?`${d.city}, ${d.state}`:d.city):`${lat.toFixed(2)}, ${lon.toFixed(2)}`);setLoc(prev=>{if(prev&&Math.abs(Number(prev.latitude)-lat)<1e-5&&Math.abs(Number(prev.longitude)-lon)<1e-5&&prev.name===newName)return prev;const nextLoc={latitude:lat,longitude:lon,name:newName};try{localStorage.setItem("savedLocation",JSON.stringify(nextLoc));}catch(e){}const autoSys=detectStateMonthSystem(nextLoc);if(autoSys){setSettings(sPrev=>{if(sPrev.monthSystem===autoSys)return sPrev;const sNext={...sPrev,monthSystem:autoSys};try{localStorage.setItem("panchangSettings",JSON.stringify(sNext));}catch(e){}return sNext;});}return nextLoc;});};const onLocEv=(ev)=>applyExtLoc(ev&&ev.detail);const onStorageEv=(ev)=>{if(ev&&ev.key==="vaidik_universal_location"&&ev.newValue){try{applyExtLoc(JSON.parse(ev.newValue));}catch(e){}}};window.addEventListener("vaidik-location-change",onLocEv);window.addEventListener("storage",onStorageEv);return()=>{window.removeEventListener("vaidik-location-change",onLocEv);window.removeEventListener("storage",onStorageEv);};},[]);ki.useEffect(()=>{if(!anyModalOpen)return;const hEl=document.documentElement,bEl=document.body,prevH=hEl.style.overflow,prevB=bEl.style.overflow;hEl.style.overflow="hidden";bEl.style.overflow="hidden";hEl.classList.add("modal-open-perf");bEl.classList.add("modal-open-perf");return()=>{hEl.style.overflow=prevH;bEl.style.overflow=prevB;hEl.classList.remove("modal-open-perf");bEl.classList.remove("modal-open-perf");};},[anyModalOpen]);const timeFmt=settings?.timeFormat||"12h",ayanSys=settings?.ayanamsha||"lahiri";window.currentTimeFormat=timeFmt;window.selectedAyanamsha=ayanSys;window.dayStartRule="sunrise";window.getCurrentPanchangLang=()=>currentLang;ki.useEffect(()=>{try{localStorage.setItem("panchangAppLang",currentLang);}catch(e){}try{const url=new URL(window.location.href);const fullLangName=urlLangMap[currentLang]||currentLang;url.searchParams.set("lang",fullLangName);window.history.replaceState({},"",url);}catch(e){}fetchLocalizedParagraphs(currentLang);window.dispatchEvent(new CustomEvent("panchangLanguageChanged",{detail:{lang:currentLang}}));if(window.translatePanchangDOM){window.translatePanchangDOM(currentLang);}},[currentLang]);ki.useEffect(()=>{if(window.translatePanchangDOM && currentLang!=="en"){const tid=setTimeout(()=>window.translatePanchangDOM(currentLang),60);return()=>clearTimeout(tid);}},[b,r,activeTab,loc,currentLang]);ki.useEffect(()=>{const q=computePanchangCached(r,loc,timeFmt,ayanSys);o(q);let idleId=null,idleTimer=null,cancelled=!1;const prefetch=()=>{if(cancelled||document.hidden)return;try{const dNext=new Date(r.getTime());dNext.setDate(dNext.getDate()+1);computePanchangCached(dNext,loc,timeFmt,ayanSys);const dPrev=new Date(r.getTime());dPrev.setDate(dPrev.getDate()-1);computePanchangCached(dPrev,loc,timeFmt,ayanSys);}catch(e){}};idleTimer=setTimeout(()=>{if(typeof window.requestIdleCallback==="function"){idleId=window.requestIdleCallback(prefetch,{timeout:1500});}else{prefetch();}},500);return()=>{cancelled=!0;clearTimeout(idleTimer);if(idleId!==null&&typeof window.cancelIdleCallback==="function")window.cancelIdleCallback(idleId);};},[r,loc,timeFmt,ayanSys]);const H=()=>{const z=new Date(r);z.setDate(z.getDate()-1),h(z);},U=()=>{const z=new Date(r);z.setDate(z.getDate()+1),h(z);},O=z=>{if(z.target.value){const[q,V,Q]=z.target.value.split("-").map(Number);h(new Date(q,V-1,Q));}},S=z=>{const q=z.getFullYear(),V=String(z.getMonth()+1).padStart(2,"0"),Q=String(z.getDate()).padStart(2,"0");return`${q}-${V}-${Q}`;},openCalendarPicker=()=>{if(dateInputRef.current){try{if(typeof dateInputRef.current.showPicker==="function"){dateInputRef.current.showPicker();}else{dateInputRef.current.focus();dateInputRef.current.click();}}catch(e){dateInputRef.current.focus();dateInputRef.current.click();}}},getDayName=z=>z.toLocaleDateString("en-US",{weekday:"long",timeZone:(window.currentTz||"Asia/Kolkata")}),getDateStr=z=>z.toLocaleDateString("en-US",{month:"long",day:"numeric",year:"numeric",timeZone:(window.currentTz||"Asia/Kolkata")});
 
 const weekDays = ki.useMemo(() => {
   const start = new Date(r);
@@ -20464,9 +20741,9 @@ const formatBarDate = (dateObj, lang) => {
   return formatBarDateLocal(dateObj, lang);
 };
 
-return b?s.jsx("div",{className:"text-label-359",children:s.jsxs("main",{key:currentLang, className:`panchang-element-360 panchang-tab-wrapper ${(typeof isWideScript === 'function' && isWideScript(currentLang)) ? 'wide-script-compact' : ''}`, "data-active-tab": activeTab, children:[s.jsx("svg", {width: "0", height: "0", style: {position: "absolute", width: "0", height: "0"}, "aria-hidden": "true", children: s.jsxs("defs", {children: [s.jsxs("linearGradient", {id: "gradAries", x1: "0%", y1: "0%", x2: "100%", y2: "100%", children: [s.jsx("stop", {offset: "0%", stopColor: "#f12711"}), s.jsx("stop", {offset: "100%", stopColor: "#f5af19"})]}),s.jsxs("linearGradient", {id: "gradTaurus", x1: "0%", y1: "0%", x2: "100%", y2: "100%", children: [s.jsx("stop", {offset: "0%", stopColor: "#11998e"}), s.jsx("stop", {offset: "100%", stopColor: "#38ef7d"})]}),s.jsxs("linearGradient", {id: "gradGemini", x1: "0%", y1: "0%", x2: "100%", y2: "100%", children: [s.jsx("stop", {offset: "0%", stopColor: "#00c6ff"}), s.jsx("stop", {offset: "100%", stopColor: "#0072ff"})]}),s.jsxs("linearGradient", {id: "gradCancer", x1: "0%", y1: "0%", x2: "100%", y2: "100%", children: [s.jsx("stop", {offset: "0%", stopColor: "#667eea"}), s.jsx("stop", {offset: "100%", stopColor: "#764ba2"})]}),s.jsxs("linearGradient", {id: "gradLeo", x1: "0%", y1: "0%", x2: "100%", y2: "100%", children: [s.jsx("stop", {offset: "0%", stopColor: "#FF416C"}), s.jsx("stop", {offset: "100%", stopColor: "#FF4B2B"})]}),s.jsxs("linearGradient", {id: "gradVirgo", x1: "0%", y1: "0%", x2: "100%", y2: "100%", children: [s.jsx("stop", {offset: "0%", stopColor: "#DCE35B"}), s.jsx("stop", {offset: "100%", stopColor: "#45B649"})]}),s.jsxs("linearGradient", {id: "gradLibra", x1: "0%", y1: "0%", x2: "100%", y2: "100%", children: [s.jsx("stop", {offset: "0%", stopColor: "#74ebd5"}), s.jsx("stop", {offset: "100%", stopColor: "#ACB6E5"})]}),s.jsxs("linearGradient", {id: "gradScorpio", x1: "0%", y1: "0%", x2: "100%", y2: "100%", children: [s.jsx("stop", {offset: "0%", stopColor: "#8E2DE2"}), s.jsx("stop", {offset: "100%", stopColor: "#4A00E0"})]}),s.jsxs("linearGradient", {id: "gradSagittarius", x1: "0%", y1: "0%", x2: "100%", y2: "100%", children: [s.jsx("stop", {offset: "0%", stopColor: "#f857a6"}), s.jsx("stop", {offset: "100%", stopColor: "#ff5858"})]}),s.jsxs("linearGradient", {id: "gradCapricorn", x1: "0%", y1: "0%", x2: "100%", y2: "100%", children: [s.jsx("stop", {offset: "0%", stopColor: "#00b09b"}), s.jsx("stop", {offset: "100%", stopColor: "#96c93d"})]}),s.jsxs("linearGradient", {id: "gradAquarius", x1: "0%", y1: "0%", x2: "100%", y2: "100%", children: [s.jsx("stop", {offset: "0%", stopColor: "#2193b0"}), s.jsx("stop", {offset: "100%", stopColor: "#6dd5ed"})]}),s.jsxs("linearGradient", {id: "gradPisces", x1: "0%", y1: "0%", x2: "100%", y2: "100%", children: [s.jsx("stop", {offset: "0%", stopColor: "#4facfe"}), s.jsx("stop", {offset: "100%", stopColor: "#00f2fe"})]})]})}),s.jsx(LocationModal,{isOpen:showLocModal,onClose:()=>setShowLocModal(!1),onSave:n=>{
+return b?s.jsx("div",{className:"text-label-359",children:s.jsxs("main",{key:currentLang, className:`panchang-element-360 panchang-tab-wrapper ${(typeof isWideScript === 'function' && isWideScript(currentLang)) ? 'wide-script-compact' : ''}`, "data-active-tab": activeTab, children:[s.jsx("svg", {width: "0", height: "0", style: {position: "absolute", width: "0", height: "0"}, "aria-hidden": "true", children: s.jsxs("defs", {children: [s.jsxs("linearGradient", {id: "gradAries", x1: "0%", y1: "0%", x2: "100%", y2: "100%", children: [s.jsx("stop", {offset: "0%", stopColor: "#f12711"}), s.jsx("stop", {offset: "100%", stopColor: "#f5af19"})]}),s.jsxs("linearGradient", {id: "gradTaurus", x1: "0%", y1: "0%", x2: "100%", y2: "100%", children: [s.jsx("stop", {offset: "0%", stopColor: "#11998e"}), s.jsx("stop", {offset: "100%", stopColor: "#38ef7d"})]}),s.jsxs("linearGradient", {id: "gradGemini", x1: "0%", y1: "0%", x2: "100%", y2: "100%", children: [s.jsx("stop", {offset: "0%", stopColor: "#00c6ff"}), s.jsx("stop", {offset: "100%", stopColor: "#0072ff"})]}),s.jsxs("linearGradient", {id: "gradCancer", x1: "0%", y1: "0%", x2: "100%", y2: "100%", children: [s.jsx("stop", {offset: "0%", stopColor: "#667eea"}), s.jsx("stop", {offset: "100%", stopColor: "#764ba2"})]}),s.jsxs("linearGradient", {id: "gradLeo", x1: "0%", y1: "0%", x2: "100%", y2: "100%", children: [s.jsx("stop", {offset: "0%", stopColor: "#FF416C"}), s.jsx("stop", {offset: "100%", stopColor: "#FF4B2B"})]}),s.jsxs("linearGradient", {id: "gradVirgo", x1: "0%", y1: "0%", x2: "100%", y2: "100%", children: [s.jsx("stop", {offset: "0%", stopColor: "#DCE35B"}), s.jsx("stop", {offset: "100%", stopColor: "#45B649"})]}),s.jsxs("linearGradient", {id: "gradLibra", x1: "0%", y1: "0%", x2: "100%", y2: "100%", children: [s.jsx("stop", {offset: "0%", stopColor: "#74ebd5"}), s.jsx("stop", {offset: "100%", stopColor: "#ACB6E5"})]}),s.jsxs("linearGradient", {id: "gradScorpio", x1: "0%", y1: "0%", x2: "100%", y2: "100%", children: [s.jsx("stop", {offset: "0%", stopColor: "#8E2DE2"}), s.jsx("stop", {offset: "100%", stopColor: "#4A00E0"})]}),s.jsxs("linearGradient", {id: "gradSagittarius", x1: "0%", y1: "0%", x2: "100%", y2: "100%", children: [s.jsx("stop", {offset: "0%", stopColor: "#f857a6"}), s.jsx("stop", {offset: "100%", stopColor: "#ff5858"})]}),s.jsxs("linearGradient", {id: "gradCapricorn", x1: "0%", y1: "0%", x2: "100%", y2: "100%", children: [s.jsx("stop", {offset: "0%", stopColor: "#00b09b"}), s.jsx("stop", {offset: "100%", stopColor: "#96c93d"})]}),s.jsxs("linearGradient", {id: "gradAquarius", x1: "0%", y1: "0%", x2: "100%", y2: "100%", children: [s.jsx("stop", {offset: "0%", stopColor: "#2193b0"}), s.jsx("stop", {offset: "100%", stopColor: "#6dd5ed"})]}),s.jsxs("linearGradient", {id: "gradPisces", x1: "0%", y1: "0%", x2: "100%", y2: "100%", children: [s.jsx("stop", {offset: "0%", stopColor: "#4facfe"}), s.jsx("stop", {offset: "100%", stopColor: "#00f2fe"})]})]})}),s.jsx(LocationModal,{isOpen:showLocModal,currentLocation:loc,onClose:()=>setShowLocModal(!1),onSave:n=>{
     setLoc(n);
-    localStorage.setItem("savedLocation",JSON.stringify(n));
+    pushUniversalVaidikLoc(n);
     const autoSystem = detectStateMonthSystem(n);
     if (autoSystem) {
         setSettings(prev => {
@@ -20504,7 +20781,7 @@ return b?s.jsx("div",{className:"text-label-359",children:s.jsxs("main",{key:cur
                     children:formatHeaderSubtitle(b, currentLang)
                   })
                 ]}),
-                s.jsx(ShubhScoreFlashCard, { score: b.auspiciousness })
+                s.jsx(MemoShubhScoreFlashCard, { score: b.auspiciousness })
               ]}),
               s.jsxs("div",{style:{display:"flex",flexDirection:"column",width:"100%"},children:[
                 s.jsxs("div",{style:{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:"4px",gap:"8px"},children:[
@@ -20727,17 +21004,17 @@ return b?s.jsx("div",{className:"text-label-359",children:s.jsxs("main",{key:cur
             )
         }),
         s.jsx("div",{className:"panchang-element-404 panchang-grid-layout",children:s.jsxs("div",{className:"flex-col-405",children:[
-            activeTab === "Daily Panchang" && s.jsx("section",{children:s.jsx(DailyPanchangView,{data:b,settings:settings,onOpen12Months:()=>setShow12MonthsModal(!0)})}),
-            activeTab === "Muhurta & Timings" && s.jsx("section",{children:s.jsx(MuhurtaTimingsTab,{data:b,settings:settings})}),
-            activeTab === "Rashi & Nakshatra" && s.jsx("section",{children:s.jsx(RashiNakshatraTab,{data:b})}),
-            activeTab === "Chandrabalam & Tarabalam" && s.jsx("section",{children:s.jsx(BalamDoshaTab,{data:b})}),
-            activeTab === "Panchaka & Udaya Lagna" && s.jsx("section",{children:s.jsx(PanchakaLagnaTab,{data:b})}),
-            activeTab === "Regional Panjika" && s.jsx("section",{children:s.jsx(RegionalPanjikaView,{data:b,settings:settings})})
+            activeTab === "Daily Panchang" && s.jsx("section",{children:s.jsx(MemoDailyPanchangView,{data:b,settings:settings,onOpen12Months:handleOpen12Months})}),
+            activeTab === "Muhurta & Timings" && s.jsx("section",{children:s.jsx(MemoMuhurtaTimingsTab,{data:b,settings:settings})}),
+            activeTab === "Rashi & Nakshatra" && s.jsx("section",{children:s.jsx(MemoRashiNakshatraTab,{data:b})}),
+            activeTab === "Chandrabalam & Tarabalam" && s.jsx("section",{children:s.jsx(MemoBalamDoshaTab,{data:b})}),
+            activeTab === "Panchaka & Udaya Lagna" && s.jsx("section",{children:s.jsx(MemoPanchakaLagnaTab,{data:b})}),
+            activeTab === "Regional Panjika" && s.jsx("section",{children:s.jsx(MemoRegionalPanjikaView,{data:b,settings:settings})})
         ]})})]})}):s.jsx("div",{className:"flex-row-406",children:"Calculating Panchang..."});};
 function mountAppWidget(){
-  var mountNode = document.getElementById("widget-festival-app");
+  var mountNode = document.getElementById("widget-festival-app") || document.querySelector('[id^="widget-"], .blogger-app-widget-scope');
   if(!mountNode || !window.Astronomy || !window.enhancePanchang || !window.generateVedicPlan){ setTimeout(mountAppWidget, 35); return; }
-  if(!mountNode._hasMountedApp){ mountNode._hasMountedApp = true; var xx = Jh.createRoot(mountNode); xx.render(s.jsx(Gh.StrictMode, { children: s.jsx(DivyaDrishtiApp, {}) })); }
+  if(!mountNode._hasMountedApp){ mountNode._hasMountedApp = true; var xx = Jh.createRoot(mountNode); xx.render(s.jsx(Gh.StrictMode, { children: s.jsx(DivyaDrishtiApp, {}) })); setTimeout(function(){ if(typeof window.dismissVaidikSplash==="function") window.dismissVaidikSplash(); }, 320); }
 }
 if(document.readyState === "loading"){ document.addEventListener("DOMContentLoaded", mountAppWidget); } else { mountAppWidget(); }
 })();
