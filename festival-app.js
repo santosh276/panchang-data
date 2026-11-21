@@ -10279,6 +10279,22 @@ const ShubhScoreFlashCard = ({ score }) => {
   });
 };
 
+window.findNearestVaidikPlace = function(lat, lon) {
+    const list = window.__vaidikLocTier1;
+    if (!Array.isArray(list) || list.length === 0) return null;
+    const cosLat = Math.cos(lat * Math.PI / 180);
+    let best = null, bestDistSq = 2.25;
+    for (let i = 0; i < list.length; i++) {
+        const it = list[i];
+        const dLat = it.lat - lat, dLon = (it.lon - lon) * cosLat;
+        const dSq = dLat * dLat + dLon * dLon;
+        if (dSq < bestDistSq) { bestDistSq = dSq; best = it; }
+    }
+    if (!best) return null;
+    const parts = (best.saveName || "").split(",").map(s => s.trim());
+    return { name: best.saveName, city: parts[0] || best.name, state: parts[1] || "" };
+};
+
 window.fetchVaidikLocationDB = function(onStatus) {
     if (window.__vaidikLocData) return Promise.resolve(window.__vaidikLocData);
     if (window.__vaidikLocPromise) return window.__vaidikLocPromise;
@@ -10486,19 +10502,41 @@ const LocationModal = ({ isOpen, onClose, onSave, currentLocation }) => {
         }
         setGpsError(null);
         setIsDetecting(true);
+        const applyResolvedGpsName = (lat, lon, locName, city, state) => {
+            if (!locName) return;
+            try {
+                const cur = JSON.parse(localStorage.getItem("savedLocation") || "null");
+                if (!cur || Math.abs(Number(cur.latitude) - lat) > 0.001 || Math.abs(Number(cur.longitude) - lon) > 0.001) return;
+                localStorage.setItem("savedLocation", JSON.stringify({ latitude: lat, longitude: lon, name: locName, isAutoGPS: true }));
+                if (window.VaidikLocation && typeof window.VaidikLocation.set === "function") {
+                    window.VaidikLocation.set({ lat: lat, lng: lon, latitude: lat, longitude: lon, name: locName, city: city || "", state: state || "", isAutoGPS: true });
+                } else {
+                    const payload = { lat: lat, lng: lon, latitude: lat, longitude: lon, name: locName, city: city || "", state: state || "", country: "India", isAutoGPS: true, updatedAt: Date.now() };
+                    localStorage.setItem("vaidik_universal_location", JSON.stringify(payload));
+                    window.dispatchEvent(new CustomEvent("vaidik-location-change", { detail: payload }));
+                }
+            } catch (e) {}
+        };
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 const lat = position.coords.latitude;
                 const lon = position.coords.longitude;
-                onSave({
-                    latitude: lat,
-                    longitude: lon,
-                    name: "Current Location",
-                    isAutoGPS: true
-                });
+                try {
+                    const cached = JSON.parse(localStorage.getItem("vaidik_gps_geo_cache") || "null");
+                    if (cached && cached.name && Math.abs(Number(cached.lat) - lat) < 0.015 && Math.abs(Number(cached.lon) - lon) < 0.015) {
+                        onSave({ latitude: lat, longitude: lon, name: cached.name, isAutoGPS: true });
+                        setIsDetecting(false);
+                        return;
+                    }
+                } catch (e) {}
+                const offlineHit = window.findNearestVaidikPlace ? window.findNearestVaidikPlace(lat, lon) : null;
+                onSave({ latitude: lat, longitude: lon, name: offlineHit ? offlineHit.name : "Current Location", isAutoGPS: true });
                 setIsDetecting(false);
-                fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=10&addressdetails=1`)
-                    .then(r => r.ok ? r.json() : null)
+                if (navigator.onLine === false) return;
+                const ctrl = typeof AbortController !== "undefined" ? new AbortController() : null;
+                const timer = ctrl ? setTimeout(() => ctrl.abort(), 4500) : null;
+                fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=10&addressdetails=1`, ctrl ? { signal: ctrl.signal } : {})
+                    .then(r => { if (timer) clearTimeout(timer); return r.ok ? r.json() : null; })
                     .then(data => {
                         if (!data) return;
                         let city = "", state = "", locName = "";
@@ -10510,24 +10548,37 @@ const LocationModal = ({ isOpen, onClose, onSave, currentLocation }) => {
                             locName = data.display_name.split(",")[0];
                         }
                         if (!locName) return;
-                        try {
-                            const cur = JSON.parse(localStorage.getItem("savedLocation") || "null");
-                            if (!cur || Math.abs(Number(cur.latitude) - lat) > 0.001 || Math.abs(Number(cur.longitude) - lon) > 0.001) return;
-                            localStorage.setItem("savedLocation", JSON.stringify({ latitude: lat, longitude: lon, name: locName, isAutoGPS: true }));
-                            if (window.VaidikLocation && typeof window.VaidikLocation.set === "function") {
-                                window.VaidikLocation.set({ lat: lat, lng: lon, latitude: lat, longitude: lon, name: locName, city: city, state: state, isAutoGPS: true });
-                            } else {
-                                const payload = { lat: lat, lng: lon, latitude: lat, longitude: lon, name: locName, city: city, state: state, country: "India", isAutoGPS: true, updatedAt: Date.now() };
-                                localStorage.setItem("vaidik_universal_location", JSON.stringify(payload));
-                                window.dispatchEvent(new CustomEvent("vaidik-location-change", { detail: payload }));
-                            }
-                        } catch (e) {}
+                        try { localStorage.setItem("vaidik_gps_geo_cache", JSON.stringify({ lat: lat, lon: lon, name: locName, ts: Date.now() })); } catch (e) {}
+                        applyResolvedGpsName(lat, lon, locName, city, state);
                     })
-                    .catch(() => {});
+                    .catch(() => { if (timer) clearTimeout(timer); });
             },
-            () => {
-                setGpsError("GPS permission denied or unavailable. Please search or pick below.");
+            (err) => {
                 setIsDetecting(false);
+                if (err && err.code === 1) {
+                    if (window.isSecureContext === false) {
+                        setGpsError("GPS requires HTTPS website (won't work on local file://). Please test on Blogger HTTPS or search below.");
+                        return;
+                    }
+                    if (navigator.permissions && typeof navigator.permissions.query === "function") {
+                        navigator.permissions.query({ name: "geolocation" }).then((perm) => {
+                            if (perm.state === "denied") setGpsError("Location is blocked for this site. Tap 🔒 icon in address bar -> Permissions -> Allow Location.");
+                            else if (perm.state === "granted") setGpsError("Browser app lacks Phone Location permission. Enable Location for Chrome in Phone Settings -> Apps.");
+                            else setGpsError("GPS prompt blocked by in-app browser/WebView. Open in Chrome or search your city below.");
+                        }).catch(() => setGpsError("GPS permission denied. Tap 🔒 in address bar -> Allow Location, or search below."));
+                        return;
+                                          }
+                    setGpsError("GPS permission denied. Tap 🔒 in address bar -> Allow Location, or search below.");
+                } else if (err && err.code === 3) {
+                    setGpsError("GPS signal timed out. Please search your city below.");
+                } else {
+                    setGpsError("GPS unavailable. Please search or pick below.");
+                }
+            },
+            {
+                enableHighAccuracy: false,
+                maximumAge: 300000,
+                timeout: 20000
             }
         );
     };
@@ -10541,7 +10592,7 @@ const LocationModal = ({ isOpen, onClose, onSave, currentLocation }) => {
     const handleSaveManual = () => {
         if (!globalData || !selectedCountry || !selectedState) return;
         let targetData = globalData[selectedCountry]?.[selectedState];
-              if (!targetData) return;
+        if (!targetData) return;
         if (selectedCountry !== "India") {
             const cityData = (Array.isArray(targetData) ? targetData : (targetData.cities || [])).find(c => c[0] === selectedDistrict);
             if (cityData) {
@@ -16325,7 +16376,7 @@ const SettingsModal = ({ isOpen, onClose, settings, currentLang, onSelectLanguag
 
     return s.jsxs("div", {
         className: "flex-row-322",
-        style: { zIndex: 9999 },
+        style: { zIndex: 75 },
         children: [
             s.jsx("div", {
                 className: "panchang-element-323",
@@ -19123,7 +19174,7 @@ const MonthsGuideModal = ({ isOpen, onClose, settings, data }) => {
 
     return s.jsxs("div", {
         className: "flex-row-322",
-        style: { zIndex: 10001 },
+        style: { zIndex: 80 },
         children: [
             s.jsx("div", {
                 className: "panchang-element-323",
